@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb5fb1df40f80a45a3ab8e1e605f84b, type: 3}
+  m_Name: EarthTower
+  m_EditorClassIdentifier: 
+  towerType: 0
+  sightRadius: 15
+  fireRate: 0.5
+  projectileSpeed: 20
+  description: 
+  goldCostToBuild: 40
+  goldRefundedOnDisassembly: 20
+  constructDuration: 4
+  worldPrefab: {fileID: 9167506115362987185, guid: e81854fecd404b34793a635e1fd9bf0e, type: 3}
+  lineOfSightLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  projectileToShoot: {fileID: 4272433243559801609, guid: cf443ec531f6a4341bfa9cb4dacf33f0, type: 3}

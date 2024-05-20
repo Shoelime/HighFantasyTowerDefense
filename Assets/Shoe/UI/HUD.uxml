@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; align-items: flex-start;" />
+    <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" />
+</ui:UXML>

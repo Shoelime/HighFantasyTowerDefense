@@ -1,9 +1,4 @@
-# Ignore everything
-*
-
-# Except the .gitignore file itself
-!.gitignore
-
-# Include only the specific folder
-!/Assets/
-!/Assets/Shoe/
+/*
+!/Assets
+/Assets/*
+!/Assets/Shoe
