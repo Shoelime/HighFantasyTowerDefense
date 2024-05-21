@@ -1,4 +1,6 @@
+using System.Collections.Generic;
+
 public interface IHealth 
 {
-    public void TakeDamage(DamageData _damageData);
+    void TakeDamage(DamageData damageData);
 }

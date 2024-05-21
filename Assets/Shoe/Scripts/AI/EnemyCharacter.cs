@@ -27,12 +27,30 @@ public class EnemyCharacter : StateController
         if (HealthComponent == null)
             HealthComponent = GetComponent<Health>();
 
-        HealthComponent.SetHealth(enemyData.HitPoints);
+        HealthComponent.SetStartingHealth(enemyData.HitPoints);
         HealthComponent.HealthReachedZero += Death;
+        HealthComponent.FreezeApplied += FreezeUnit;
+        HealthComponent.StunApplied += StunUnit;
+        HealthComponent.BurnApplied += BurnUnit;
 
-        SetEnemyState(EnemyUnitState.AssaultingBase);
+       SetEnemyState(EnemyUnitState.AssaultingBase);
 
         CurrentWaypointIndex = 0;
+    }
+
+    private void BurnUnit(float duration)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void StunUnit(float duration)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void FreezeUnit(float duration)
+    {
+        throw new NotImplementedException();
     }
 
     public void SpawnEnemy(WaveManager waveManager)

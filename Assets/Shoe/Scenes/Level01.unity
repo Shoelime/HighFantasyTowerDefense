@@ -1420,7 +1420,7 @@ PrefabInstance:
     - target: {fileID: -7227596313732461828, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
       propertyPath: autoPlaceTower
       value: 
-      objectReference: {fileID: 11400000, guid: 77394892d7edfd9479b835ceb4ae3ee5, type: 2}
+      objectReference: {fileID: 11400000, guid: 91b100e58d0c1984ea449b14028318da, type: 2}
     - target: {fileID: 4477114150898226672, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.2
@@ -8455,6 +8455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 4489765242042422904, guid: 5ad00a66b5b7ec64994f91335f31618d, type: 3}
+      propertyPath: zoomSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 9215719885027963393, guid: 5ad00a66b5b7ec64994f91335f31618d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.1
@@ -8560,6 +8564,10 @@ PrefabInstance:
       propertyPath: waveData
       value: 
       objectReference: {fileID: 11400000, guid: 90decf6002feeec4699b2ee7a667666f, type: 2}
+    - target: {fileID: 9065492403722583281, guid: 995122b9ccffe434eb5c6ae3f0a4eecb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

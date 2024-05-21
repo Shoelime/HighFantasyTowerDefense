@@ -10,12 +10,16 @@ public class WaveManager : MonoBehaviour
 
     private int currentWave = 0;
     private int totalEnemyCount;
+    private int enemyKillCount;
     private float waveTimer;
+
+    public static event Action<MonoBehaviour> AllEnemiesKilled;
 
     private void Start()
     {
         CreateEnemyDatabase();
         waveTimer = waveData.DelayBetweenWaves - 2;
+        EnemyCharacter.EnemyDied += EnemyDied;
 
         foreach (var wave in waveData.WaveCompositions)
         {
@@ -24,8 +28,6 @@ public class WaveManager : MonoBehaviour
                 totalEnemyCount += wave.EnemyCountPerGroup[i];
             }
         }
-
-        Debug.Log("total amount of enemies is " + totalEnemyCount);
     }
 
     private void CreateEnemyDatabase()
@@ -95,6 +97,14 @@ public class WaveManager : MonoBehaviour
 
                 break; 
             }
+        }
+    }
+
+    void EnemyDied(EnemyData enemy)
+    {
+        if (++enemyKillCount >= totalEnemyCount)
+        {
+            AllEnemiesKilled?.Invoke(this);
         }
     }
 }

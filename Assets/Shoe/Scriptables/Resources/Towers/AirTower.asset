@@ -16,7 +16,6 @@ MonoBehaviour:
   sightRadius: 10
   fireRate: 3
   projectileSpeed: 0
-  description: 
   goldCostToBuild: 35
   goldRefundedOnDisassembly: 20
   constructDuration: 4
@@ -27,4 +26,11 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  projectileToShoot: {fileID: 6358119413347143782, guid: 292ed4f8dbb5cf2409bbc226b084d5b6, type: 3}
+  projectileToShoot: {fileID: 0}
+  damageData:
+    DamagePerHit: 60
+    DamagePerSecond: 0
+    DamagePerSecondDuration: 0
+    DamageRadius: 0
+    StatusEffects:
+    - {fileID: 11400000, guid: e3bb452c7ed932f428a97ca675072965, type: 2}

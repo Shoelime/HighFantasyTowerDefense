@@ -5,7 +5,7 @@ public class EconomicManager : IEconomicsManager
 {
     public int CurrentGold { get; private set; }
 
-    public event Action<int> GoldAmountChanged; // Implement the event
+    public event Action<int> GoldAmountChanged;
 
     public void Initialize()
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerPlate : MonoBehaviour
 {
     [SerializeField] private Vector3 towerBasePosition;
+    [SerializeField] private TowerData autoPlaceTower;
 
     private TowerAI placedTower;
     private bool plateSelected;
@@ -20,6 +21,10 @@ public class TowerPlate : MonoBehaviour
     void Start()
     {
         Services.Get<IInputManager>().OnLeftMouseButton += ButtonPressed;
+        if (autoPlaceTower != null)
+        {
+            BuildTower(autoPlaceTower, out bool success);
+        }
     }
 
     public void BuildTower(TowerData towerToBuild, out bool success)

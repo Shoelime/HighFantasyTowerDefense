@@ -25,6 +25,7 @@ public class GameManager : IGameManager
         // Subscribe to events
         Services.Get<IInputManager>().EscapeButton += PauseToggle;
         GemManager.AllGemsLost += GameLost;
+        WaveManager.AllEnemiesKilled += GameWon;
     }
 
     /// <summary>
@@ -45,14 +46,15 @@ public class GameManager : IGameManager
         PauseToggle();
     }
 
-    private void GameWon()
+    private void GameWon(MonoBehaviour reference)
     {
-
+        reference.Invoke(nameof(ToggleWinEvent), 3);
     }
 
     void ToggleWinEvent()
     {
         VictoryEvent?.Invoke();
+        PauseToggle();
     }
 
     private void PauseToggle()

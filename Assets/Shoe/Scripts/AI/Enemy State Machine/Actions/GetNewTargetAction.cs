@@ -36,7 +36,6 @@ public class FindTargetAction : StateAction
 
         if (colliders.Length == 0)
         {
-            //Debug.Log("no targets nearby");
             controller.TowerAiController.ClearTarget();
         }
         else SetClosestTarget(controller, colliders);
@@ -46,6 +45,7 @@ public class FindTargetAction : StateAction
     {
         Transform closestTarget = null;
         float closestDistance = float.MaxValue;
+        controller.TowerAiController.ClearEnemyList();
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -54,16 +54,21 @@ public class FindTargetAction : StateAction
                 Color.yellow,
                 controller.TowerAiController.TowerData.FireRate);
 
+            /// Not adding inactive objects
+            /// 
             if (!colliders[i].gameObject.activeInHierarchy)
             {
                 continue;
             }
 
+            /// No line of sight
+            /// 
             if (!MathUtils.HasLineOfSight(controller.transform.position + controller.TowerAiController.ProjectileStartPosition, colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers, controller.TowerAiController.TowerData.SightRadius))
             {
-                //Debug.Log("no line of sight");
                 continue;
             }
+
+            controller.TowerAiController.AddEnemyToList(colliders[i]);
 
             float distance = Vector3.Distance(controller.transform.position, colliders[i].transform.position);
             if (distance < closestDistance)
@@ -75,10 +80,8 @@ public class FindTargetAction : StateAction
 
         if (closestTarget != null)
         {
-            //Debug.Log("set target");
             controller.TowerAiController.SetTarget(closestTarget.GetComponent<EnemyCharacter>());
         }
         else controller.TowerAiController.ClearTarget();
-        //else Debug.Log("empty");
     }
 }

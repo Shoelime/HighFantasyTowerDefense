@@ -46,12 +46,14 @@ public class Projectile : PooledMonoBehaviour
         PlayEffects();
     }
 
-    void DealDamage(EnemyCharacter targetEnemy)
+    public void DealDamage(EnemyCharacter targetEnemy)
     {
         if (damageData.DamageRadius == 0)
         {
             if (targetEnemy != null)
+            {
                 targetEnemy.HealthComponent.TakeDamage(damageData);
+            }
         }
         else
         {

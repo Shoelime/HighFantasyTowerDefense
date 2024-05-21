@@ -7,20 +7,21 @@ public class Health : MonoBehaviour, IHealth
     private int currentHealth = 0;
     private int damageTickCount = 0;
 
-    public Action HealthReachedZero;
+    public event Action HealthReachedZero;
+    public event Action<float> BurnApplied;
+    public event Action<float> FreezeApplied;
+    public event Action<float> StunApplied;
 
-    public void SetHealth(int health)
+    public void SetStartingHealth(int health)
     {
         currentHealth = health;
         damageTickCount = 0;
     }
+
     public void TakeDamage(DamageData damageData)
     {
         ReduceHealth(damageData.DamagePerHit);
-        if (damageData.DamagePerSecondDuration > 0)
-            StartCoroutine(DamageTick(damageData));
     }
-
     
     private void ReduceHealth(int amount)
     {
@@ -42,5 +43,20 @@ public class Health : MonoBehaviour, IHealth
             damageTickCount--;
             ReduceHealth(damageData.DamagePerSecond);
         }
+    }
+
+    internal void ApplyBurn(float damagePerSecond, float duration)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void ApplyFreeze(float duration)
+    {
+        throw new NotImplementedException();
+    }
+
+    internal void ApplyStun(float duration)
+    {
+        throw new NotImplementedException();
     }
 }
