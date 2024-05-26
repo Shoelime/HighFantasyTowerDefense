@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FireTower
   m_EditorClassIdentifier: 
   towerType: 1
-  sightRadius: 10
+  sightRadius: 12
   fireRate: 2.2
   projectileSpeed: 8
-  goldCostToBuild: 50
-  goldRefundedOnDisassembly: 20
+  goldCostToBuild: 200
+  goldRefundedOnDisassembly: 100
   constructDuration: 4
   worldPrefab: {fileID: 372761944786130777, guid: 20df9f8c9444bbd42bc4a2795f4eb300, type: 3}
   lineOfSightLayers:
@@ -28,7 +28,7 @@ MonoBehaviour:
     m_Bits: 256
   projectileToShoot: {fileID: 6358119413347143782, guid: 292ed4f8dbb5cf2409bbc226b084d5b6, type: 3}
   damageData:
-    DamagePerHit: 0
+    DamagePerHit: 15
     DamagePerSecond: 0
     DamagePerSecondDuration: 0
     DamageRadius: 0

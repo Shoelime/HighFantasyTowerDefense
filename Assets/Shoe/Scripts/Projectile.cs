@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
+using static StatusEffectData;
 
 public class Projectile : PooledMonoBehaviour
 {
-    [SerializeField] private DamageData damageData;
+    private DamageData damageData;
     [SerializeField] private GameObject visualObject;
     [SerializeField] private ParticleSystem hitEffects;
     [SerializeField] private AudioClip hitSound;
@@ -12,6 +12,8 @@ public class Projectile : PooledMonoBehaviour
     [SerializeField] private float destroyDelay;
 
     private AudioSource audioSource;
+    public LineRenderer LineRenderer { get; private set; }
+    public void SetDamageData(DamageData damageData) { this.damageData = damageData; }
 
     private void OnEnable()
     {
@@ -19,6 +21,11 @@ public class Projectile : PooledMonoBehaviour
         {
             audioSource = GetComponent<AudioSource>();
             audioSource.clip = hitSound;
+        }
+
+        if (LineRenderer == null)
+        {
+            LineRenderer = GetComponent<LineRenderer>();
         }
 
         visualObject.SetActive(true);
@@ -43,7 +50,6 @@ public class Projectile : PooledMonoBehaviour
         }
 
         DealDamage(targetEnemy);
-        PlayEffects();
     }
 
     public void DealDamage(EnemyCharacter targetEnemy)
@@ -53,6 +59,7 @@ public class Projectile : PooledMonoBehaviour
             if (targetEnemy != null)
             {
                 targetEnemy.HealthComponent.TakeDamage(damageData);
+                ApplyStatusEffects(targetEnemy.HealthComponent);
             }
         }
         else
@@ -64,6 +71,39 @@ public class Projectile : PooledMonoBehaviour
                 if (hit.collider.TryGetComponent(out IHealth healthComponent))
                 {
                     healthComponent.TakeDamage(damageData);
+                    ApplyStatusEffects(healthComponent);
+                }
+            }
+        }
+
+        PlayEffects();
+    }
+
+    public void ApplyStatusEffects(IHealth healthComponent)
+    {
+
+        if (damageData.StatusEffects.Count > 0)
+        {
+            int randomInt = Random.Range(0, 100);
+
+            foreach (var status in damageData.StatusEffects)
+            {
+                if (randomInt < status.chanceToApply)
+                {
+                    IStatusEffect effect = null;
+                    switch (status.effectType)
+                    {
+                        case EffectType.Burn:
+                            effect = new BurningEffect(status.damagePerSecond, status.duration);
+                            break;
+                        case EffectType.Freeze:
+                            effect = new FrozenEffect(status.duration);
+                            break;
+                        case EffectType.Stun:
+                            effect = new StunnedEffect(status.duration);
+                            break;
+                    }
+                    effect?.Apply(healthComponent);
                 }
             }
         }
@@ -71,9 +111,10 @@ public class Projectile : PooledMonoBehaviour
 
     private void PlayEffects()
     {
-        audioSource.Play();
-        hitEffects.Play();
-        visualObject.SetActive(false);
+        if (audioSource != null) audioSource.Play();
+        if (hitEffects != null) hitEffects.Play();
+        if (visualObject != null) visualObject.SetActive(false);
+
         ReturnToPool(destroyDelay);
     }
 }

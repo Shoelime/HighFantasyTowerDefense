@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class InstantAttackAction : ITowerAction
 {
     public void Execute(StateController controller)
@@ -7,6 +9,19 @@ public class InstantAttackAction : ITowerAction
             return;
         }
 
-        //controller.TowerAiController.TargetToShoot.TakeDamage(controller.TowerAiController.TowerData.ZapDamage);
+        var projectile = controller.TowerAiController.TowerData.ProjectileToShoot.Get<Projectile>(
+            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition, 
+            Quaternion.identity);
+
+        Vector3 startPosition = controller.TowerAiController.transform.TransformPoint(controller.TowerAiController.ProjectileStartPosition);
+        Vector3 endPosition = controller.TowerAiController.TargetToShoot.transform.position;
+
+        projectile.LineRenderer.SetPosition(0, startPosition);
+        projectile.LineRenderer.SetPosition(1, endPosition);
+
+        projectile.SetDamageData(controller.TowerAiController.TowerData.DamageData);
+        projectile.DealDamage(controller.TowerAiController.TargetToShoot);
+
+        controller.TowerAiController.CooldownTrigger();  
     }
 }

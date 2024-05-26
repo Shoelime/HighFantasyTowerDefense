@@ -41,10 +41,10 @@ public class FrozenEffect : IStatusEffect
 
 public class BurningEffect : IStatusEffect
 {
-    public float DamagePerSecond { get; private set; }
+    public int DamagePerSecond { get; private set; }
     public float Duration { get; private set; }
 
-    public BurningEffect(float damagePerSecond, float duration)
+    public BurningEffect(int damagePerSecond, float duration)
     {
         DamagePerSecond = damagePerSecond;
         Duration = duration;

@@ -3,8 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewStatusEffectData", menuName = "StatusEffectData")]
 public class StatusEffectData : ScriptableObject
 {
-    public string effectName;
+    public enum EffectType { Stun, Freeze, Burn };
+    public EffectType effectType;
+
     public float chanceToApply;
     public float duration;
-    public float damagePerSecond;
+    public int damagePerSecond;
 }

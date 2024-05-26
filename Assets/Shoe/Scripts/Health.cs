@@ -22,7 +22,7 @@ public class Health : MonoBehaviour, IHealth
     {
         ReduceHealth(damageData.DamagePerHit);
     }
-    
+
     private void ReduceHealth(int amount)
     {
         currentHealth -= amount;
@@ -33,30 +33,31 @@ public class Health : MonoBehaviour, IHealth
         }
     }
 
-    private IEnumerator DamageTick(DamageData damageData)
+    private IEnumerator DamageTick(int damagePerSecond, float duration)
     {
-        damageTickCount = damageData.DamagePerSecondDuration;
+        damageTickCount = (int)duration;
 
         while (damageTickCount > 0)
         {
             yield return new WaitForSeconds(1);
             damageTickCount--;
-            ReduceHealth(damageData.DamagePerSecond);
+            ReduceHealth(damagePerSecond);
         }
     }
 
-    internal void ApplyBurn(float damagePerSecond, float duration)
+    internal void ApplyBurn(int damagePerSecond, float duration)
     {
-        throw new NotImplementedException();
+        BurnApplied?.Invoke(duration);
+        StartCoroutine(DamageTick(damagePerSecond, duration));
     }
 
     internal void ApplyFreeze(float duration)
     {
-        throw new NotImplementedException();
+        FreezeApplied?.Invoke(duration);
     }
 
     internal void ApplyStun(float duration)
     {
-        throw new NotImplementedException();
+        StunApplied?.Invoke(duration);
     }
 }

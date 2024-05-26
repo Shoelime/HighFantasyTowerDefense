@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9398c3113237d434c9437e279eeb3938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPoolSize: 30
+  initialPoolSize: 15
   RemainState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}
   StartState: {fileID: 11400000, guid: a9242d7dfe7031147aa0262cad88de52, type: 2}
   projectileStartPosition: {x: 0, y: 3, z: 0}

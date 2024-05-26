@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: 2
   sightRadius: 10
-  fireRate: 2.2
+  fireRate: 1
   projectileSpeed: 8
-  goldCostToBuild: 40
-  goldRefundedOnDisassembly: 20
+  goldCostToBuild: 120
+  goldRefundedOnDisassembly: 60
   constructDuration: 4
   worldPrefab: {fileID: 372761944786130777, guid: 20df9f8c9444bbd42bc4a2795f4eb300, type: 3}
   lineOfSightLayers:
@@ -26,7 +26,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  projectileToShoot: {fileID: 0}
+  projectileToShoot: {fileID: 1827994737672233690, guid: d9c0ec7dfea4df8448f0a888fd92e0ed, type: 3}
   damageData:
     DamagePerHit: 3
     DamagePerSecond: 0

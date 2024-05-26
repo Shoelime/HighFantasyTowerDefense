@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: damageData.StatusEffects.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
+      propertyPath: damageData.StatusEffects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1364a1d5932d6cf4ba1066a83412b5f2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
