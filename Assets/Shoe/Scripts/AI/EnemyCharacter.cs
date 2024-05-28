@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 
-public class EnemyCharacter : StateController
+public class EnemyCharacter : StateController, IHealth
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private GameObject visualObject;
-
+    public float CurrentMoveSpeed { get; private set; }
+    public float RelativeSpeedMultiplier { get; private set; }
     public EnemyData EnemyData => enemyData;
     public GameObject GemBeingCarried { get; private set; }
     public Health HealthComponent { get; private set; }
@@ -13,7 +14,6 @@ public class EnemyCharacter : StateController
     public EnemyUnitState CurrentEnemyState { get; private set; }
     public Vector3 PreviousPosition { get; internal set; }
     public int CurrentWaypointIndex { get; private set; }
-
     public override TowerAI TowerAiController => null;
     public override EnemyCharacter EnemyAiController => GetComponent<EnemyCharacter>();
 
@@ -29,28 +29,17 @@ public class EnemyCharacter : StateController
 
         HealthComponent.SetStartingHealth(enemyData.HitPoints);
         HealthComponent.HealthReachedZero += Death;
-        HealthComponent.FreezeApplied += FreezeUnit;
-        HealthComponent.StunApplied += StunUnit;
-        HealthComponent.BurnApplied += BurnUnit;
 
-       SetEnemyState(EnemyUnitState.AssaultingBase);
+        CurrentMoveSpeed = EnemyData.MoveSpeed;
+
+        SetEnemyState(EnemyUnitState.AssaultingBase);
 
         CurrentWaypointIndex = 0;
     }
 
-    private void BurnUnit(float duration)
+    private void FixedUpdate()
     {
-        throw new NotImplementedException();
-    }
-
-    private void StunUnit(float duration)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void FreezeUnit(float duration)
-    {
-        throw new NotImplementedException();
+        RelativeSpeedMultiplier = CurrentMoveSpeed / EnemyData.MoveSpeed;
     }
 
     public void SpawnEnemy(WaveManager waveManager)
@@ -113,6 +102,11 @@ public class EnemyCharacter : StateController
     public void DecreaseWaypointIndex()
     {
         CurrentWaypointIndex--;
+    }
+
+    public void TakeDamage(DamageData damageData)
+    {
+        throw new NotImplementedException();
     }
 }
 

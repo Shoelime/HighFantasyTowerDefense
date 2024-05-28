@@ -11,11 +11,17 @@ public class EnemyWobble : MonoBehaviour
     private Quaternion startRotation;
     private float timeOffset;
 
+    EnemyCharacter enemyCharacter;
+
     void Start()
     {
         startPosition = transform.localPosition;
         startRotation = transform.localRotation;
-        timeOffset = Random.Range(0f, 100f); // Randomize the start time for variation
+
+        // Randomize the start time for variation
+        timeOffset = Random.Range(0f, 100f); 
+
+        enemyCharacter = GetComponentInParent<EnemyCharacter>();
     }
 
     void FixedUpdate()
@@ -25,11 +31,11 @@ public class EnemyWobble : MonoBehaviour
 
     void Wobble()
     {
-        // Calculate the wobble based on sine wave
-        float wobble = Mathf.Sin((Time.time + timeOffset) * wobbleSpeed) * wobbleAmount;
+        // Calculate the wobble 
+        float wobble = Mathf.Sin((Time.time + timeOffset) * wobbleSpeed * enemyCharacter.RelativeSpeedMultiplier) * wobbleAmount;
 
-        // Calculate the tilt based on sine wave
-        float tilt = Mathf.Sin((Time.time + timeOffset) * tiltSpeed) * tiltAmount;
+        // Calculate the tilt 
+        float tilt = Mathf.Sin((Time.time + timeOffset) * tiltSpeed * enemyCharacter.RelativeSpeedMultiplier) * tiltAmount;
 
         // Apply the wobble to the Y position
         Vector3 newPosition = startPosition + new Vector3(0f, wobble, 0f);
@@ -37,7 +43,6 @@ public class EnemyWobble : MonoBehaviour
         // Apply the tilt to the rotation
         Quaternion newRotation = startRotation * Quaternion.Euler(0f, 0f, tilt);
 
-        // Apply the new position and rotation
         transform.localPosition = newPosition;
         transform.localRotation = newRotation;
     }

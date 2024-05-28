@@ -33,7 +33,7 @@ public class MoveUnitTowardsTargetAction : StateAction
         controller.EnemyAiController.PreviousPosition = controller.transform.position;
 
         // Move towards the target
-        Vector3 newPosition = controller.transform.position + controller.EnemyAiController.EnemyData.MoveSpeed * Time.deltaTime * direction.normalized;
+        Vector3 newPosition = controller.transform.position + controller.EnemyAiController.CurrentMoveSpeed * Time.deltaTime * direction.normalized;
         Quaternion newRotation = Quaternion.Lerp(controller.transform.rotation, targetRotation, controller.EnemyAiController.EnemyData.TurnSpeed * Time.deltaTime);
         controller.transform.SetPositionAndRotation(newPosition, newRotation);
 

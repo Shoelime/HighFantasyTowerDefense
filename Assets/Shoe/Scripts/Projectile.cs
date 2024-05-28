@@ -76,7 +76,7 @@ public class Projectile : PooledMonoBehaviour
             }
         }
 
-        PlayEffects();
+        PlayHitEffects();
     }
 
     public void ApplyStatusEffects(IHealth healthComponent)
@@ -109,7 +109,7 @@ public class Projectile : PooledMonoBehaviour
         }
     }
 
-    private void PlayEffects()
+    private void PlayHitEffects()
     {
         if (audioSource != null) audioSource.Play();
         if (hitEffects != null) hitEffects.Play();
