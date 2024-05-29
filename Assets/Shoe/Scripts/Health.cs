@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static StatusEffectData;
 
 public class Health : MonoBehaviour, IHealth
 {
@@ -9,9 +11,9 @@ public class Health : MonoBehaviour, IHealth
 
     public event Action HealthReachedZero;
     public event Action<int> HealthReduced;
-    public event Action<float> BurnApplied;
-    public event Action<float> FreezeApplied;
-    public event Action<float> StunApplied;
+    public event Action<StatusEffectData> EffectApplied;
+
+    private HashSet<EffectType> currentEffects = new HashSet<EffectType>();
 
     public void SetStartingHealth(int health)
     {
@@ -47,19 +49,33 @@ public class Health : MonoBehaviour, IHealth
         }
     }
 
-    internal void ApplyBurn(int damagePerSecond, float duration)
+    private void ApplyBurn(int damagePerSecond, float duration)
     {
-        BurnApplied?.Invoke(duration);
         StartCoroutine(DamageTick(damagePerSecond, duration));
     }
 
-    internal void ApplyFreeze(float duration)
+    internal void ApplyEffect(StatusEffectData status)
     {
-        FreezeApplied?.Invoke(duration);
+        if (currentEffects.Contains(status.effectType))
+            return;
+
+        EffectApplied?.Invoke(status);
+        currentEffects.Add(status.effectType);
+
+        switch (status.effectType)
+        {
+            case EffectType.Freeze:            
+                break;
+            case EffectType.Burn:
+                ApplyBurn(status.damagePerSecond, status.duration);
+                break;
+            case EffectType.Stun:
+                break;
+        }
     }
 
-    internal void ApplyStun(float duration)
+    void RemoveEffect(EffectType effectType)
     {
-        StunApplied?.Invoke(duration);
+        currentEffects.Remove(effectType);
     }
 }

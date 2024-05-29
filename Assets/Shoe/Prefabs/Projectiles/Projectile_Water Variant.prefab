@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2080985970927793627}
@@ -96,9 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f200d2b3c3ee89740a38f4270cfa84ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderer: {fileID: 8032787557843375960}
+  meshRenderer: {fileID: 8032787557843375960}
   fadeDuration: 1
-  alpha: 0
 --- !u!1001 &7175332288907533827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,11 +112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8333243950118956765, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.53164
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8333243950118956765, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.270274
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8333243950118956765, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -149,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: destroyDelay
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: damageData.StatusEffects.Array.size

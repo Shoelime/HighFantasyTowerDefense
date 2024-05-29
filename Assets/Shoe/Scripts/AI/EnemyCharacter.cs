@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
+using static StatusEffectData;
 
 public class EnemyCharacter : StateController
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private GameObject visualObject;
-    private HealthBar healthBar;
+
     public float CurrentMoveSpeed { get; private set; }
     public float RelativeSpeedMultiplier { get; private set; }
     public EnemyData EnemyData => enemyData;
@@ -23,6 +24,8 @@ public class EnemyCharacter : StateController
     public static event Action<EnemyCharacter> EnemyArrivedToBase;
     public static event Action<EnemyCharacter> EnemyArrivedHomeEvent;
 
+    private HealthBar healthBar;
+
     void OnEnable()
     {
         if (HealthComponent == null)
@@ -31,6 +34,8 @@ public class EnemyCharacter : StateController
         HealthComponent.SetStartingHealth(enemyData.HitPoints);
         HealthComponent.HealthReachedZero += Death;
         HealthComponent.HealthReduced += HealthReduced;
+        HealthComponent.EffectApplied += ApplyEffect;
+
         OnReturnToPool += RemoveEvents;
 
         CurrentMoveSpeed = EnemyData.MoveSpeed;
@@ -38,6 +43,22 @@ public class EnemyCharacter : StateController
         SetEnemyState(EnemyUnitState.AssaultingBase);
 
         CurrentWaypointIndex = 0;
+    }
+
+    private void ApplyEffect(StatusEffectData status)
+    {
+        switch (status.effectType)
+        {
+            case EffectType.Freeze:
+        
+                break;
+            case EffectType.Burn:
+  
+                break;
+            case EffectType.Stun:
+
+                break;
+        }
     }
 
     private void RemoveEvents(PooledMonoBehaviour obj)

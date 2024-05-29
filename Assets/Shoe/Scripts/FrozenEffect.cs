@@ -1,22 +1,17 @@
 ﻿public class FrozenEffect : IStatusEffect
 {
-    public float Duration { get; private set; }
+    public StatusEffectData EffectData { get; set; }
 
-    public FrozenEffect(float duration)
+    public FrozenEffect(StatusEffectData data)
     {
-        Duration = duration;
+        EffectData = data;
     }
 
     public void Apply(IHealth target)
     {
         if (target is Health healthComponent)
         {
-            healthComponent.ApplyFreeze(Duration);
+            healthComponent.ApplyEffect(EffectData);
         }
-    }
-
-    public void Remove(IHealth target)
-    {
-        throw new System.NotImplementedException();
     }
 }

@@ -1,22 +1,17 @@
 ﻿public class StunnedEffect : IStatusEffect
 {
-    public float Duration { get; private set; }
+    public StatusEffectData EffectData { get; set; }
 
-    public StunnedEffect(float duration)
+    public StunnedEffect(StatusEffectData data)
     {
-        Duration = duration;
+        EffectData = data;
     }
 
     public void Apply(IHealth target)
     {
         if (target is Health healthComponent)
         {
-            healthComponent.ApplyStun(Duration);
+            healthComponent.ApplyEffect(EffectData);
         }
-    }
-
-    public void Remove(IHealth target)
-    {
-        throw new System.NotImplementedException();
     }
 }

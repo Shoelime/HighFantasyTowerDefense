@@ -8,5 +8,6 @@ public class StatusEffectData : ScriptableObject
 
     public float chanceToApply;
     public float duration;
+    public float speedReductionPercentage;
     public int damagePerSecond;
 }

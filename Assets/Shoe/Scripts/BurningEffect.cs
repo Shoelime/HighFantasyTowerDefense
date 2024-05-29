@@ -1,24 +1,17 @@
 ﻿public class BurningEffect : IStatusEffect
 {
-    public int DamagePerSecond { get; private set; }
-    public float Duration { get; private set; }
+    public StatusEffectData EffectData { get; set; }
 
-    public BurningEffect(int damagePerSecond, float duration)
+    public BurningEffect(StatusEffectData data)
     {
-        DamagePerSecond = damagePerSecond;
-        Duration = duration;
+        EffectData = data;
     }
 
     public void Apply(IHealth target)
     {
         if (target is Health healthComponent)
         {
-            healthComponent.ApplyBurn(DamagePerSecond, Duration);
+            healthComponent.ApplyEffect(EffectData);
         }
-    }
-
-    public void Remove(IHealth target)
-    {
-        throw new System.NotImplementedException();
     }
 }

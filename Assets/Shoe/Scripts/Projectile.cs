@@ -4,16 +4,15 @@ using static StatusEffectData;
 
 public class Projectile : PooledMonoBehaviour
 {
-    private DamageData damageData;
     [SerializeField] private GameObject visualObject;
     [SerializeField] private ParticleSystem hitEffects;
     [SerializeField] private AudioClip hitSound;
 
     [SerializeField] private float destroyDelay;
 
+    private DamageData damageData;
     private AudioSource audioSource;
     public LineRenderer LineRenderer { get; private set; }
-    public void SetDamageData(DamageData damageData) { this.damageData = damageData; }
 
     private void OnEnable()
     {
@@ -81,7 +80,6 @@ public class Projectile : PooledMonoBehaviour
 
     public void ApplyStatusEffects(IHealth healthComponent)
     {
-
         if (damageData.StatusEffects.Count > 0)
         {
             int randomInt = Random.Range(0, 100);
@@ -94,19 +92,25 @@ public class Projectile : PooledMonoBehaviour
                     switch (status.effectType)
                     {
                         case EffectType.Burn:
-                            effect = new BurningEffect(status.damagePerSecond, status.duration);
+                            effect = new BurningEffect(status);
                             break;
                         case EffectType.Freeze:
-                            effect = new FrozenEffect(status.duration);
+                            effect = new FrozenEffect(status);
                             break;
                         case EffectType.Stun:
-                            effect = new StunnedEffect(status.duration);
+                            effect = new StunnedEffect(status);
                             break;
                     }
+                    Debug.Log("apply effect called " + status.effectType);
                     effect?.Apply(healthComponent);
                 }
             }
         }
+    }
+
+    public void SetDamageData(DamageData damageData)
+    {
+        this.damageData = damageData;
     }
 
     private void PlayHitEffects()

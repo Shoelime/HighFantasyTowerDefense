@@ -12,6 +12,7 @@ public class HUD : MonoBehaviour
     {
         Services.Get<IEconomicsManager>().GoldAmountChanged += UpdateGoldText;
         Services.Get<IGameManager>().VictoryEvent += VictoryText;
+        Services.Get<IGameManager>().DefeatEvent += DefeatText;
 
         UpdateGoldText(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
         InvokeRepeating(nameof(UpdateWaveTimerText), 1, 1);
@@ -34,11 +35,13 @@ public class HUD : MonoBehaviour
 
     void DefeatText()
     {
-
+        defeatText.gameObject.SetActive(true);
     }
 
     void OnDisable()
     {
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateGoldText;
+        Services.Get<IGameManager>().VictoryEvent -= VictoryText;
+        Services.Get<IGameManager>().DefeatEvent -= DefeatText;
     }
 }
