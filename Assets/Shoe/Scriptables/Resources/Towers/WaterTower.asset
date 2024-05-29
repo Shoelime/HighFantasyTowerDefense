@@ -31,6 +31,6 @@ MonoBehaviour:
     DamagePerHit: 3
     DamagePerSecond: 0
     DamagePerSecondDuration: 0
-    DamageRadius: 10
+    DamageRadius: 15
     StatusEffects:
     - {fileID: 11400000, guid: 64e165eb07e11414683e213ffd8c91fb, type: 2}

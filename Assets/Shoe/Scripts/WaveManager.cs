@@ -14,6 +14,7 @@ public class WaveManager : MonoBehaviour
     private float waveTimer;
 
     public static event Action<MonoBehaviour> AllEnemiesKilled;
+    public static event Action<EnemyCharacter> SpawnedEnemy;
 
     private void Start()
     {
@@ -94,6 +95,7 @@ public class WaveManager : MonoBehaviour
 
                 EnemyCharacter enemy = requestedEnemy.WorldPrefab.GetComponent<EnemyCharacter>().Get<EnemyCharacter>(spawnPosition, Quaternion.Euler(waveData.GetSpawnRotation));
                 enemy.SpawnEnemy(this);
+                SpawnedEnemy?.Invoke(enemy);
 
                 break; 
             }

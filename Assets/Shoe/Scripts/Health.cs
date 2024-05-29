@@ -8,6 +8,7 @@ public class Health : MonoBehaviour, IHealth
     private int damageTickCount = 0;
 
     public event Action HealthReachedZero;
+    public event Action<int> HealthReduced;
     public event Action<float> BurnApplied;
     public event Action<float> FreezeApplied;
     public event Action<float> StunApplied;
@@ -31,6 +32,7 @@ public class Health : MonoBehaviour, IHealth
             HealthReachedZero?.Invoke();
             StopCoroutine(nameof(DamageTick));
         }
+        else HealthReduced?.Invoke(currentHealth);
     }
 
     private IEnumerator DamageTick(int damagePerSecond, float duration)

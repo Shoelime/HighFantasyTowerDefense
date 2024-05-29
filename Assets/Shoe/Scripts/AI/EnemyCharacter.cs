@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-public class EnemyCharacter : StateController, IHealth
+public class EnemyCharacter : StateController
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private GameObject visualObject;
+    private HealthBar healthBar;
     public float CurrentMoveSpeed { get; private set; }
     public float RelativeSpeedMultiplier { get; private set; }
     public EnemyData EnemyData => enemyData;
@@ -29,12 +30,31 @@ public class EnemyCharacter : StateController, IHealth
 
         HealthComponent.SetStartingHealth(enemyData.HitPoints);
         HealthComponent.HealthReachedZero += Death;
+        HealthComponent.HealthReduced += HealthReduced;
+        OnReturnToPool += RemoveEvents;
 
         CurrentMoveSpeed = EnemyData.MoveSpeed;
 
         SetEnemyState(EnemyUnitState.AssaultingBase);
 
         CurrentWaypointIndex = 0;
+    }
+
+    private void RemoveEvents(PooledMonoBehaviour obj)
+    {
+        HealthComponent.HealthReachedZero -= Death;
+        HealthComponent.HealthReduced -= HealthReduced;
+        OnReturnToPool -= RemoveEvents;
+    }
+
+    public void AssignHealthBar(HealthBar healthBar)
+    {
+        this.healthBar = healthBar;
+    }
+
+    private void HealthReduced(int obj)
+    {
+        healthBar.UpdateHealthBar(obj, enemyData.HitPoints);
     }
 
     private void FixedUpdate()
@@ -88,9 +108,8 @@ public class EnemyCharacter : StateController, IHealth
         DropGem();
 
         EnemyDied?.Invoke(enemyData);
-        ResetStateMachine();
 
-        HealthComponent.HealthReachedZero -= Death;
+        ResetStateMachine();
         ReturnToPool();
     }
 
@@ -102,11 +121,6 @@ public class EnemyCharacter : StateController, IHealth
     public void DecreaseWaypointIndex()
     {
         CurrentWaypointIndex--;
-    }
-
-    public void TakeDamage(DamageData damageData)
-    {
-        throw new NotImplementedException();
     }
 }
 

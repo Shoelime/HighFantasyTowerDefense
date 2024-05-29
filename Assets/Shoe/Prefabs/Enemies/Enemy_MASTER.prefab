@@ -86,6 +86,7 @@ MonoBehaviour:
   StartState: {fileID: 11400000, guid: 2a28ee86443f5f546b1eb7372ba5de77, type: 2}
   enemyData: {fileID: 0}
   visualObject: {fileID: 8859128002565496720}
+  healthBar: {fileID: 0}
 --- !u!82 &-1367518585415160100
 AudioSource:
   m_ObjectHideFlags: 0

@@ -29,8 +29,8 @@ MonoBehaviour:
   projectileToShoot: {fileID: 6358119413347143782, guid: 292ed4f8dbb5cf2409bbc226b084d5b6, type: 3}
   damageData:
     DamagePerHit: 15
-    DamagePerSecond: 0
-    DamagePerSecondDuration: 0
-    DamageRadius: 0
+    DamagePerSecond: 2
+    DamagePerSecondDuration: 5
+    DamageRadius: 10
     StatusEffects:
     - {fileID: 11400000, guid: 1364a1d5932d6cf4ba1066a83412b5f2, type: 2}
