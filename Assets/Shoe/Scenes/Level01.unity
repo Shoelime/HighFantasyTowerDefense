@@ -369,6 +369,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 804325151}
     m_Modifications:
+    - target: {fileID: -7227596313732461828, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
+      propertyPath: autoPlaceTower
+      value: 
+      objectReference: {fileID: 11400000, guid: 77394892d7edfd9479b835ceb4ae3ee5, type: 2}
     - target: {fileID: 4477114150898226672, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.03
@@ -2696,6 +2700,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 804325151}
     m_Modifications:
+    - target: {fileID: -7227596313732461828, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
+      propertyPath: autoPlaceTower
+      value: 
+      objectReference: {fileID: 11400000, guid: 91b100e58d0c1984ea449b14028318da, type: 2}
     - target: {fileID: 4477114150898226672, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.4
@@ -3565,6 +3573,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 804325151}
     m_Modifications:
+    - target: {fileID: -7227596313732461828, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
+      propertyPath: autoPlaceTower
+      value: 
+      objectReference: {fileID: 11400000, guid: 5d6da4dfee667b049aafdf36ee553f71, type: 2}
     - target: {fileID: 4477114150898226672, guid: e8ad4473f6f8acb43a2975671885e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.4

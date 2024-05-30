@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level01 Data
   m_EditorClassIdentifier: 
   gemCount: 4
-  startingGold: 200
+  startingGold: 900
   gemContainerPrefab: {fileID: 2298790277750995018, guid: 30ab9c7bc2265434fa48d78d3af03d9d, type: 3}
   waveData: {fileID: 11400000, guid: 90decf6002feeec4699b2ee7a667666f, type: 2}

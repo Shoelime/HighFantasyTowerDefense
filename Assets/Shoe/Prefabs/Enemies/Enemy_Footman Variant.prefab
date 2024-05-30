@@ -182,6 +182,14 @@ PrefabInstance:
       propertyPath: _enemyData
       value: 
       objectReference: {fileID: 11400000, guid: 13a1705e86af0bc418e1b534344646b2, type: 2}
+    - target: {fileID: 1500742206963295956, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: meshRenderers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500742206963295956, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: meshRenderers.Array.data[0]
+      value: 
+      objectReference: {fileID: 8144918595681806496}
     - target: {fileID: 1512252008699070832, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -221,6 +229,18 @@ PrefabInstance:
     - target: {fileID: 1512252008699070832, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3945989614716533300, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947616685516752136, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.871
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947616685516752136, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.268
       objectReference: {fileID: 0}
     - target: {fileID: 4496684360863103063, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
       propertyPath: m_Name

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 419313e10d0f7694bb943ebece9d3900, type: 3}
   m_Name: Level 01 Wave Data Temp
   m_EditorClassIdentifier: 
+  spawnRotation: {x: 0, y: 0, z: 0}
   waveCompositions:
-  - OrderOfEnemies: 0000000000000000
-    EnemyCountPerGroup: 0100000001000000
-  delayBetweenGroups:
-  - 5
-  - 5
-  delayBetweenUnits:
-  - 5
+  - OrderOfEnemies: 00000000
+    EnemyCountPerGroup: 01000000
+    DelayBetweenGroups:
+    - 0
+    DelayBetweenUnits:
+    - 0
   delayBetweenWaves: 0

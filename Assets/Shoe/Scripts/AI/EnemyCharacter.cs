@@ -35,6 +35,7 @@ public class EnemyCharacter : StateController
         HealthComponent.HealthReachedZero += Death;
         HealthComponent.HealthReduced += HealthReduced;
         HealthComponent.EffectApplied += ApplyEffect;
+        HealthComponent.EffectRemoved += RemoveEffect;
 
         OnReturnToPool += RemoveEvents;
 
@@ -50,13 +51,27 @@ public class EnemyCharacter : StateController
         switch (status.effectType)
         {
             case EffectType.Freeze:
-        
+                CurrentMoveSpeed *= status.speedReductionPercentage;
                 break;
-            case EffectType.Burn:
-  
+            case EffectType.Burn: 
                 break;
             case EffectType.Stun:
+                CurrentMoveSpeed = 0;
+                break;
+        }
+    }
 
+    private void RemoveEffect(StatusEffectData status)
+    {
+        switch (status.effectType)
+        {
+            case EffectType.Freeze:
+                CurrentMoveSpeed = enemyData.MoveSpeed;
+                break;
+            case EffectType.Burn:
+                break;
+            case EffectType.Stun:
+                CurrentMoveSpeed = enemyData.MoveSpeed;
                 break;
         }
     }
@@ -129,6 +144,8 @@ public class EnemyCharacter : StateController
         DropGem();
 
         EnemyDied?.Invoke(enemyData);
+
+        healthBar.CallReturnToPool();
 
         ResetStateMachine();
         ReturnToPool();

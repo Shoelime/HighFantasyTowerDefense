@@ -63,7 +63,7 @@ public class Projectile : PooledMonoBehaviour
         }
         else
         {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageData.DamageRadius, Vector3.up);
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageData.DamageRadius/2, Vector3.up);
 
             foreach (RaycastHit hit in hits)
             {
@@ -101,7 +101,7 @@ public class Projectile : PooledMonoBehaviour
                             effect = new StunnedEffect(status);
                             break;
                     }
-                    Debug.Log("apply effect called " + status.effectType);
+                    //Debug.Log("apply effect called " + status.effectType);
                     effect?.Apply(healthComponent);
                 }
             }

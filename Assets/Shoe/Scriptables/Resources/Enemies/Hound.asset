@@ -20,4 +20,4 @@ MonoBehaviour:
   gemPickupDistance: 2
   description: 
   goldCarryCount: 10
-  worldPrefab: {fileID: 0}
+  worldPrefab: {fileID: 6956818294481242629, guid: b5a5cabda9b67074b92639af13b590a3, type: 3}

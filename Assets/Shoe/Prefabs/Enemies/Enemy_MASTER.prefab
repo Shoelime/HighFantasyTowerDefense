@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3727352739032012718}
+  - component: {fileID: 1500742206963295956}
   m_Layer: 8
   m_Name: StatusEffects
   m_TagString: Untagged
@@ -32,6 +33,21 @@ Transform:
   - {fileID: 3947616685516752136}
   m_Father: {fileID: 1512252008699070832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1500742206963295956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2175286610048144269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4e2c8c011810944ab7f473825603a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderers: []
+  frozenColor: {r: 0.13932894, g: 0.9528302, b: 0.91261584, a: 0}
+  fireObject: {fileID: 3945989614716533300}
 --- !u!1 &4496684360863103063
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +102,6 @@ MonoBehaviour:
   StartState: {fileID: 11400000, guid: 2a28ee86443f5f546b1eb7372ba5de77, type: 2}
   enemyData: {fileID: 0}
   visualObject: {fileID: 8859128002565496720}
-  healthBar: {fileID: 0}
 --- !u!82 &-1367518585415160100
 AudioSource:
   m_ObjectHideFlags: 0
@@ -325,6 +340,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c219e4dcb49b5844691b241cd5fca2f1, type: 3}
+--- !u!1 &3945989614716533300 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1273710762483042, guid: c219e4dcb49b5844691b241cd5fca2f1, type: 3}
+  m_PrefabInstance: {fileID: 3946981534803978070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3947616685516752136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4150377031524958, guid: c219e4dcb49b5844691b241cd5fca2f1, type: 3}

@@ -24,16 +24,22 @@ MonoBehaviour:
     - 0.5
     - 0
     - 1
-  - OrderOfEnemies: 0000000000000000
-    EnemyCountPerGroup: 0200000001000000
+  - OrderOfEnemies: 0000000001000000
+    EnemyCountPerGroup: 0300000004000000
     DelayBetweenGroups:
-    - 1
-    - 1
+    - 2
+    - 2
     DelayBetweenUnits:
     - 1
     - 1
-  - OrderOfEnemies: 0000000000000000
-    EnemyCountPerGroup: 0200000001000000
-    DelayBetweenGroups: []
-    DelayBetweenUnits: []
-  delayBetweenWaves: 30
+  - OrderOfEnemies: 000000000100000002000000
+    EnemyCountPerGroup: 050000000400000002000000
+    DelayBetweenGroups:
+    - 2
+    - 2
+    - 3
+    DelayBetweenUnits:
+    - 1
+    - 1
+    - 2
+  delayBetweenWaves: 10

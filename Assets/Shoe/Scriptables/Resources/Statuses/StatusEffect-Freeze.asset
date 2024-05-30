@@ -15,5 +15,5 @@ MonoBehaviour:
   effectType: 1
   chanceToApply: 100
   duration: 2
-  speedReductionPercentage: 0
+  speedReductionPercentage: 0.8
   damagePerSecond: 0
