@@ -77,6 +77,7 @@ public class GemManager : IGemManager
     /// <param name="enemyCharacter"></param>
     public void EnemySnatchesGem(Vector3 fromPos, EnemyCharacter enemyCharacter)
     {
+        // get the closest gem the enemy and disable it
         var closestGem = MathUtils.FindClosestGameObject(fromPos, spawnedGems);
         closestGem.SetActive(false);
 

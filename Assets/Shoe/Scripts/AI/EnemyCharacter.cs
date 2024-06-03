@@ -6,6 +6,7 @@ public class EnemyCharacter : StateController
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private GameObject visualObject;
+    [SerializeField] private SoundData deathSound;
 
     public float CurrentMoveSpeed { get; private set; }
     public float RelativeSpeedMultiplier { get; private set; }
@@ -25,11 +26,20 @@ public class EnemyCharacter : StateController
     public static event Action<EnemyCharacter> EnemyArrivedHomeEvent;
 
     private HealthBar healthBar;
+    private Collider enemyCollider;
+    private AudioSource audioSource;
 
     void OnEnable()
     {
         if (HealthComponent == null)
             HealthComponent = GetComponent<Health>();
+        if (enemyCollider == null)
+            enemyCollider = GetComponent<Collider>();
+        if(audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        enemyCollider.enabled = true;
+        visualObject.SetActive(true);
 
         HealthComponent.SetStartingHealth(enemyData.HitPoints);
         HealthComponent.HealthReachedZero += Death;
@@ -43,7 +53,7 @@ public class EnemyCharacter : StateController
 
         SetEnemyState(EnemyUnitState.AssaultingBase);
 
-        CurrentWaypointIndex = 0;
+        CurrentWaypointIndex = 0; 
     }
 
     private void ApplyEffect(StatusEffectData status)
@@ -146,9 +156,17 @@ public class EnemyCharacter : StateController
         EnemyDied?.Invoke(enemyData);
 
         healthBar.CallReturnToPool();
+        enemyCollider.enabled = false;
+        visualObject.SetActive(false);
+        SoundManager.Instance.PlaySound(audioSource, deathSound);
+
+        HealthComponent.HealthReachedZero -= Death;
+        HealthComponent.HealthReduced -= HealthReduced;
+        HealthComponent.EffectApplied -= ApplyEffect;
+        HealthComponent.EffectRemoved -= RemoveEffect;
 
         ResetStateMachine();
-        ReturnToPool();
+        ReturnToPool(1);
     }
 
     public void IncrementWaypointIndex()

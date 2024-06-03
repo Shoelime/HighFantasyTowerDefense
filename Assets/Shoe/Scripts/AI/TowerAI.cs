@@ -17,9 +17,12 @@ public class TowerAI : StateController
     public override EnemyCharacter EnemyAiController => null;
     public override TowerAI TowerAiController => GetComponent<TowerAI>();
     public ITowerAction TowerAction { get; private set; }
+    public AudioSource AudioSource { get; private set; }
 
     public void BuildTower()
     {
+        AudioSource = GetComponent<AudioSource>();
+
         foreach (var mover in GetComponentsInChildren<MoveObjectToPosition>())
         {
             mover.StartMovement();
@@ -74,10 +77,5 @@ public class TowerAI : StateController
     public void SetTarget(EnemyCharacter transform)
     {
         TargetToShoot = transform;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, towerData.SightRadius);
     }
 }

@@ -23,7 +23,7 @@ public class MoveObjectToPosition : MonoBehaviour
     private void MovingObject()
     {
         // Calculate the elapsed time since the movement started
-        float elapsedTime = Time.time - startTime;
+        float elapsedTime = Time.time - startTime * Time.timeScale;
 
         // Ensure the movement doesn't exceed the specified duration
         float t = Mathf.Clamp01(elapsedTime / duration);

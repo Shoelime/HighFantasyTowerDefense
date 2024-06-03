@@ -3,23 +3,25 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerMenuUI : MonoBehaviour
+public class TowerMenuUI : MonoBehaviour, IUIElementSound
 {
     [SerializeField] private Button TowerButtonPrefab;
     [SerializeField] private float menuOffset;
+    [SerializeField] private SoundData onUIDeSelectSound;
+    [SerializeField] private SoundData onUISelectSound;
 
     private Button[] towerButtons;
     private TowerButtonUI[] towerButtonUIArray;
-
     private TowerPlate selectedTowerPlate;
-
     private TowerData[] towers;
-
     private RectTransform rectTransform;
+
+    private AudioSource audioSource;
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
+        audioSource = GetComponentInParent<AudioSource>();
 
         CreateTowerDatabase();
         SetButtons();
@@ -65,6 +67,7 @@ public class TowerMenuUI : MonoBehaviour
     void OnTowerButtonClick(TowerData data)
     {
         selectedTowerPlate.BuildTower(data, out bool success);
+        OnUIElementClosed();
 
         if (success)
             TryHideButtons(selectedTowerPlate);
@@ -97,6 +100,8 @@ public class TowerMenuUI : MonoBehaviour
         {
             towerButton.gameObject.SetActive(false);
         }
+
+        OnUIElementClosed();
     }
 
     void DisplayButtons(TowerPlate plate)
@@ -113,6 +118,7 @@ public class TowerMenuUI : MonoBehaviour
 
         selectedTowerPlate = plate;
         UpdateButtons(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
+        OnUIElementOpened();
     }
 
     private void PositionMenu()
@@ -144,5 +150,15 @@ public class TowerMenuUI : MonoBehaviour
         TowerPlate.PlateSelected -= DisplayButtons;
         TowerPlate.PlateUnSelected -= TryHideButtons;
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateButtons;
+    }
+
+    public void OnUIElementOpened()
+    {
+        SoundManager.Instance.PlaySound(audioSource, onUISelectSound, 1);
+    }
+
+    public void OnUIElementClosed()
+    {
+      SoundManager.Instance.PlaySound(audioSource, onUIDeSelectSound, 1);
     }
 }

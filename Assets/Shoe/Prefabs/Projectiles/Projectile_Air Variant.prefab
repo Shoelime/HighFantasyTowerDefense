@@ -53,8 +53,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 84446705876d4ec44b96ee0f0c24efbb, type: 2}
+    - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: destroyDelay
-      value: 0.1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: initialPoolSize
@@ -142,7 +146,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.068374634
+        value: 0.11110863
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -150,8 +154,8 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.49015746
-        value: 0.11965564
+        time: 0.4921411
+        value: 0.15385059
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -160,7 +164,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 0.9960789
-        value: 0.0683719
+        value: 0.11965669
         inSlope: 0
         outSlope: 0
         tangentMode: 0

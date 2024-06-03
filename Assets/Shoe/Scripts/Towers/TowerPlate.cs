@@ -1,14 +1,19 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class TowerPlate : MonoBehaviour
 {
+    [Header("Where to instantiate tower relative to plate")]
     [SerializeField] private Vector3 towerBasePosition;
+    [Header("Autobuild a tower, for testing purposes")]
     [SerializeField] private TowerData autoPlaceTower;
+    [Header("Audio")]
+    [SerializeField] private SoundData buildTowerAudio;
+    [SerializeField] private SoundData buildErrorAudio;
 
     private TowerAI placedTower;
     private bool plateSelected;
+    private AudioSource audioSource;
 
     public static event Action<TowerPlate> PlateSelected;
     public static event Action<TowerPlate> PlateUnSelected;
@@ -20,9 +25,14 @@ public class TowerPlate : MonoBehaviour
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         Services.Get<IInputManager>().OnLeftMouseButton += ButtonPressed;
+
+        // For testing purposes if we want to start with a tower, spawn one here
         if (autoPlaceTower != null)
         {
+            Services.Get<IEconomicsManager>().AddGold(autoPlaceTower.GoldCostToBuild);
             BuildTower(autoPlaceTower, out bool success);
         }
     }
@@ -34,11 +44,13 @@ public class TowerPlate : MonoBehaviour
             placedTower = Instantiate(towerToBuild.WorldPrefab, transform.position + towerBasePosition, transform.rotation, transform).GetComponent<TowerAI>();
             placedTower.BuildTower();
             success = true;
+
+            SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
         }
         else
         {
             success = false;
-            Debug.Log("can't afford to build tower!");
+            SoundManager.Instance.PlaySound(audioSource, buildErrorAudio, 1);
         }
     }
 
@@ -54,5 +66,10 @@ public class TowerPlate : MonoBehaviour
             plateSelected = false;
             PlateUnSelected?.Invoke(this);
         }
+    }
+
+    private void OnDisable()
+    {
+        Services.Get<IInputManager>().OnLeftMouseButton -= ButtonPressed;
     }
 }

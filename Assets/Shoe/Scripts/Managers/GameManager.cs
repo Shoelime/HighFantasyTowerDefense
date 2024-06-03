@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : IGameManager
 {
     private bool pauseOn;
-
     private LevelData currentLevelData;
-
     public LevelData GetLevelData => currentLevelData;
 
     public Action VictoryEvent { get; set;}
@@ -26,6 +24,12 @@ public class GameManager : IGameManager
         Services.Get<IInputManager>().EscapeButton += PauseToggle;
         GemManager.AllGemsLost += GameLost;
         WaveManager.AllEnemiesKilled += GameWon;
+        HUD.OnRestartButton += RestartGame;
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
@@ -62,13 +66,15 @@ public class GameManager : IGameManager
         pauseOn = !pauseOn;
 
         if (pauseOn)
-            GamePaused.Invoke();
-        else GameUnPaused.Invoke();
+            GamePaused?.Invoke();
+        else GameUnPaused?.Invoke();
     }
 
     void Disable()
     {
         Services.Get<IInputManager>().EscapeButton -= PauseToggle;
         GemManager.AllGemsLost -= GameLost;
+        WaveManager.AllEnemiesKilled -= GameWon;
+        HUD.OnRestartButton -= RestartGame;
     }
 }

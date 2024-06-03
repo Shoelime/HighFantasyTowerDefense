@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class TimeManager : IUpdateableService
+public class TimeManager : ITimeManager
 {
     public float GameDuration;
 
-    public void Initialize()
-    {
-
-    }
-
-    void SetTimeScale(float timeScale)
+    public void SetTimeScale(float timeScale)
     {
         Time.timeScale = timeScale;
+    }
+
+    internal void Initialize()
+    {
     }
 
     void IUpdateableService.Update()

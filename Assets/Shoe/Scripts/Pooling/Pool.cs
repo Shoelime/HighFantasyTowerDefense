@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Pool : MonoBehaviour
 {
@@ -49,7 +50,14 @@ public class Pool : MonoBehaviour
 
     private void AddObjectToAvailableQueue(PooledMonoBehaviour pooledObject)
     {
-        pooledObject.transform.SetParent(this.transform);
+        if (!gameObject.activeSelf)
+        {
+            return;
+        }
+        if (pooledObject.gameObject.activeSelf)
+        {
+            pooledObject.transform.SetParent(this.transform);
+        }
         objects.Enqueue(pooledObject);
     }
 }

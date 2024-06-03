@@ -13,12 +13,6 @@ public class EconomicManager : IEconomicsManager
         EnemyCharacter.EnemyDied += (enemyData) => AddGold(enemyData.GoldCarryCount);       
     }
 
-    void AddGold(int gold)
-    {
-        CurrentGold += gold;
-        GoldAmountChanged?.Invoke(CurrentGold);
-    }
-
     public bool AttemptToPurchase(int cost)
     {
         if (CurrentGold < cost)
@@ -42,5 +36,11 @@ public class EconomicManager : IEconomicsManager
     public int GetCurrentGoldAmount()
     {
         return CurrentGold;
+    }
+
+    public void AddGold(int gold)
+    {
+        CurrentGold += gold;
+        GoldAmountChanged?.Invoke(CurrentGold);
     }
 }

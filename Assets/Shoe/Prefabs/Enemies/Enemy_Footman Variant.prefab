@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: _enemyData
       value: 
       objectReference: {fileID: 11400000, guid: 13a1705e86af0bc418e1b534344646b2, type: 2}
+    - target: {fileID: -7699905441266893936, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 4badc15de8bfb3b40802c6fb9ce2d43f, type: 2}
     - target: {fileID: 1500742206963295956, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
       propertyPath: meshRenderers.Array.size
       value: 1

@@ -49,7 +49,7 @@ public abstract class StateController : PooledMonoBehaviour
 
     public bool CheckIfCountDownElapsed(float duration)
     {
-        stateTimeElapsed += Time.deltaTime;
+        stateTimeElapsed += Time.deltaTime * Time.timeScale;
         return stateTimeElapsed >= duration;
     }
 

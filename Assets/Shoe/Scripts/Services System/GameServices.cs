@@ -20,11 +20,15 @@ public class GameServices : Services
         var inputManager = new InputManager();
         AddService<IInputManager>(inputManager);
 
+        var timeManager = new TimeManager();
+        AddService<ITimeManager>(timeManager);
+
         inputManager.Initialize();
         gameManager.Initialize();
         pathFinder.Initialize();
         economicsManager.Initialize();
         gemManager.Initialize();
         gameStateHandler.Initialize();
+        timeManager.Initialize();
     }
 }

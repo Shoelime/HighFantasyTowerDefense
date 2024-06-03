@@ -6,7 +6,7 @@ public class Projectile : PooledMonoBehaviour
 {
     [SerializeField] private GameObject visualObject;
     [SerializeField] private ParticleSystem hitEffects;
-    [SerializeField] private AudioClip hitSound;
+    [SerializeField] private SoundData hitSound;
 
     [SerializeField] private float destroyDelay;
 
@@ -19,7 +19,6 @@ public class Projectile : PooledMonoBehaviour
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
-            audioSource.clip = hitSound;
         }
 
         if (LineRenderer == null)
@@ -41,9 +40,9 @@ public class Projectile : PooledMonoBehaviour
         Vector3 direction = (targetPosition - initialPosition).normalized;
         float distance = Vector3.Distance(initialPosition, targetPosition);
 
-        while (Time.time - startTime < duration)
+        while (Time.time - startTime * Time.timeScale < duration)
         {
-            float t = (Time.time - startTime) / duration;
+            float t = (Time.time - startTime * Time.timeScale) / duration;
             transform.position = initialPosition + direction * (distance * t);
             yield return null;
         }
@@ -101,7 +100,7 @@ public class Projectile : PooledMonoBehaviour
                             effect = new StunnedEffect(status);
                             break;
                     }
-                    //Debug.Log("apply effect called " + status.effectType);
+
                     effect?.Apply(healthComponent);
                 }
             }
@@ -115,10 +114,28 @@ public class Projectile : PooledMonoBehaviour
 
     private void PlayHitEffects()
     {
-        if (audioSource != null) audioSource.Play();
-        if (hitEffects != null) hitEffects.Play();
-        if (visualObject != null) visualObject.SetActive(false);
+        if (hitEffects != null)
+        {
+            hitEffects.Play();
+        }
+
+        if (visualObject != null)
+        {
+            visualObject.SetActive(false);
+        }
+
+        if (LineRenderer != null && LineRenderer.enabled)
+        {
+            Invoke(nameof(DisableLineRenderer), 0.1f);
+        }
+
+        SoundManager.Instance.PlaySound(audioSource, hitSound, 1);
 
         ReturnToPool(destroyDelay);
+    }
+
+    private void DisableLineRenderer()
+    {
+        LineRenderer.enabled = false;
     }
 }

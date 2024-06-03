@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerButtonPrefab: {fileID: 2648167652349601559, guid: 074936e35f590a14c85c9c20120c17b0, type: 3}
+  menuOffset: 0
+  onUIDeSelectSound: {fileID: 11400000, guid: fd99557075342d84ab1be6d15bb79eb4, type: 2}
+  onUISelectSound: {fileID: 11400000, guid: 24f9224b5798a1f4fa12db8d0899b048, type: 2}
 --- !u!114 &349071401904882538
 MonoBehaviour:
   m_ObjectHideFlags: 0

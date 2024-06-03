@@ -17,14 +17,6 @@ public class Health : MonoBehaviour, IHealth
     private HashSet<EffectType> currentEffects = new HashSet<EffectType>();
     private Dictionary<EffectType, Coroutine> runningCoroutines = new Dictionary<EffectType, Coroutine>();
 
-    public bool HasEffect;
-
-
-    void Update()
-    {
-         HasEffect = currentEffects.Count > 0;
-    }
-
     public void SetStartingHealth(int health)
     {
         currentHealth = health;

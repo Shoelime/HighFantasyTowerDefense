@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance;
     [SerializeField] private WaveData waveData;
 
     private EnemyData[] enemies;
@@ -12,14 +13,31 @@ public class WaveManager : MonoBehaviour
     private int totalEnemyCount;
     private int enemyKillCount;
     private float waveTimer;
+    private bool waveWaitingToBeSpawned = true;
+
+    public float TimeUntilNextWave { get; set; } 
 
     public static event Action<MonoBehaviour> AllEnemiesKilled;
     public static event Action<EnemyCharacter> SpawnedEnemy;
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
     private void Start()
     {
         CreateEnemyDatabase();
-        waveTimer = waveData.DelayBetweenWaves - 2;
+        waveTimer = waveData.DelayBetweenWaves - 5;
         EnemyCharacter.EnemyDied += EnemyDied;
 
         foreach (var wave in waveData.WaveCompositions)
@@ -46,13 +64,17 @@ public class WaveManager : MonoBehaviour
         if (currentWave >= waveData.WaveCompositions.Length)
             return;
 
-        waveTimer += Time.deltaTime * Time.timeScale;
+        if (waveWaitingToBeSpawned)
+            waveTimer += Time.deltaTime * Time.timeScale;
 
         if (waveTimer >= waveData.DelayBetweenWaves)
         {
             waveTimer = 0;
+            waveWaitingToBeSpawned = false;
             StartCoroutine(SpawnWave());
         }
+
+        TimeUntilNextWave = waveData.DelayBetweenWaves - waveTimer;
     }
 
     private IEnumerator SpawnWave()
@@ -81,6 +103,7 @@ public class WaveManager : MonoBehaviour
             }
         }
 
+        waveWaitingToBeSpawned = true;
         currentWave++;
     }
 
@@ -108,5 +131,10 @@ public class WaveManager : MonoBehaviour
         {
             AllEnemiesKilled?.Invoke(this);
         }
+    }
+
+    private void OnDisable()
+    {
+        EnemyCharacter.EnemyDied -= EnemyDied;
     }
 }

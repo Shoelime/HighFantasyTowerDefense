@@ -112,7 +112,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 2.041, z: 0.16}
-  m_LocalScale: {x: 0.8, y: 0.5, z: 0.9}
+  m_LocalScale: {x: 0.8, y: 0.332805, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6665243806266667438}
@@ -511,6 +511,10 @@ PrefabInstance:
       propertyPath: enemyData
       value: 
       objectReference: {fileID: 11400000, guid: db9e46cb869bc6a4ca5b2dd122498872, type: 2}
+    - target: {fileID: -7699905441266893936, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 11400000, guid: 4badc15de8bfb3b40802c6fb9ce2d43f, type: 2}
     - target: {fileID: -7699905441266893936, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}
       propertyPath: initialPoolSize
       value: 20

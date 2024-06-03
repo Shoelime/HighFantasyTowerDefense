@@ -15,9 +15,9 @@ MonoBehaviour:
   spawnRotation: {x: 0, y: 0, z: 0}
   waveCompositions:
   - OrderOfEnemies: 00000000
-    EnemyCountPerGroup: 01000000
+    EnemyCountPerGroup: 05000000
     DelayBetweenGroups:
-    - 0
+    - 1
     DelayBetweenUnits:
-    - 0
-  delayBetweenWaves: 0
+    - 1
+  delayBetweenWaves: 1
