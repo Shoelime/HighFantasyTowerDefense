@@ -15,7 +15,8 @@ public class HUD : MonoBehaviour, IUIElementSound
 
     private AudioSource audioSource;
     public static event Action OnRestartButton;
-    
+    public static event Action NextWave;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -56,22 +57,23 @@ public class HUD : MonoBehaviour, IUIElementSound
 
     public void GameSpeedButton()
     {
-        switch (Time.timeScale)
-        {
-            case 0:
-                break;
-            case 1:
-                Services.Get<ITimeManager>().SetTimeScale(2);
-                break;
-            case 2:
-                Services.Get<ITimeManager>().SetTimeScale(3);
-                break;
-            case 3:
-                Services.Get<ITimeManager>().SetTimeScale(1);
-                break;
-        }
+        NextWave?.Invoke();
+        //switch (Time.timeScale)
+        //{
+        //    case 0:
+        //        break;
+        //    case 1:
+        //        Services.Get<ITimeManager>().SetTimeScale(2);
+        //        break;
+        //    case 2:
+        //        Services.Get<ITimeManager>().SetTimeScale(3);
+        //        break;
+        //    case 3:
+        //        Services.Get<ITimeManager>().SetTimeScale(1);
+        //        break;
+        //}
 
-        gameSpeedText.text = Time.timeScale.ToString() + "x";
+        //gameSpeedText.text = Time.timeScale.ToString() + "x";
         OnUIElementOpened();
     }
 

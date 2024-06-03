@@ -64,8 +64,11 @@ public class TowerAI : StateController
 
     public void CooldownTrigger()
     {
-        AttackCooldownActive = true;
-        StartCoroutine(CooldownCoroutine());
+        if (!AttackCooldownActive)
+        {
+            AttackCooldownActive = true;
+            StartCoroutine(CooldownCoroutine());
+        }
     }
 
     public IEnumerator CooldownCoroutine()

@@ -19,5 +19,5 @@ MonoBehaviour:
   gemCheckInterval: 0.33
   gemPickupDistance: 2
   description: 
-  goldCarryCount: 8
+  goldCarryCount: 30
   worldPrefab: {fileID: 828277828128543774, guid: 97ac25aec47e9624f964ea7ce3c9afb8, type: 3}

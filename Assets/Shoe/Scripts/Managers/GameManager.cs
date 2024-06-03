@@ -50,12 +50,7 @@ public class GameManager : IGameManager
         PauseToggle();
     }
 
-    private void GameWon(MonoBehaviour reference)
-    {
-        reference.Invoke(nameof(ToggleWinEvent), 3);
-    }
-
-    void ToggleWinEvent()
+    private void GameWon()
     {
         VictoryEvent?.Invoke();
         PauseToggle();

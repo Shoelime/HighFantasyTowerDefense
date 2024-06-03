@@ -17,7 +17,7 @@ public class WaveManager : MonoBehaviour
 
     public float TimeUntilNextWave { get; set; } 
 
-    public static event Action<MonoBehaviour> AllEnemiesKilled;
+    public static event Action AllEnemiesKilled;
     public static event Action<EnemyCharacter> SpawnedEnemy;
 
     private void Awake()
@@ -39,6 +39,7 @@ public class WaveManager : MonoBehaviour
         CreateEnemyDatabase();
         waveTimer = waveData.DelayBetweenWaves - 5;
         EnemyCharacter.EnemyDied += EnemyDied;
+        HUD.NextWave += AttemptToSpawn;
 
         foreach (var wave in waveData.WaveCompositions)
         {
@@ -47,6 +48,12 @@ public class WaveManager : MonoBehaviour
                 totalEnemyCount += wave.EnemyCountPerGroup[i];
             }
         }
+    }
+
+    private void AttemptToSpawn()
+    {
+        if (waveWaitingToBeSpawned)
+            waveTimer = waveData.DelayBetweenWaves;
     }
 
     private void CreateEnemyDatabase()
@@ -129,7 +136,7 @@ public class WaveManager : MonoBehaviour
     {
         if (++enemyKillCount >= totalEnemyCount)
         {
-            AllEnemiesKilled?.Invoke(this);
+            AllEnemiesKilled?.Invoke();
         }
     }
 

@@ -79,6 +79,11 @@ public class GemManager : IGemManager
     {
         // get the closest gem the enemy and disable it
         var closestGem = MathUtils.FindClosestGameObject(fromPos, spawnedGems);
+        if (closestGem == null)
+        {
+            Debug.Log("can't steal gem");
+            return;
+        }
         closestGem.SetActive(false);
 
         SnatchedGems.Add(closestGem);

@@ -741,7 +741,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2.32
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!4 &8257049699980884030 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3204897239284173420, guid: 77bd691cc59c53d438ae603a57c944f0, type: 3}

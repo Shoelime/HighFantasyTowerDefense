@@ -8,7 +8,7 @@ public class MaterialAlphaFade : MonoBehaviour
     public float fadeDuration = 1f;
     Color color;
 
-    void Start()
+    void OnEnable()
     {
         color = meshRenderer.material.color;
         StartCoroutine(FadeToTransparent());

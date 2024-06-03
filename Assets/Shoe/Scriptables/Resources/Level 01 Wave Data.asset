@@ -42,44 +42,70 @@ MonoBehaviour:
     - 1
     - 1
     - 1
-  - OrderOfEnemies: 000000000100000002000000
-    EnemyCountPerGroup: 050000000400000002000000
+  - OrderOfEnemies: 00000000010000000200000001000000
+    EnemyCountPerGroup: 05000000040000000200000005000000
     DelayBetweenGroups:
     - 2
     - 2
+    - 3
+    - 2
+    DelayBetweenUnits:
+    - 1
+    - 1
+    - 2
+    - 1
+  - OrderOfEnemies: 01000000000000000100000000000000
+    EnemyCountPerGroup: 06000000080000000a0000000c000000
+    DelayBetweenGroups:
+    - 2
+    - 2
+    - 3
+    - 2
+    DelayBetweenUnits:
+    - 2
+    - 1
+    - 1
+    - 1.5
+  - OrderOfEnemies: 0000000001000000020000000000000002000000
+    EnemyCountPerGroup: 0800000005000000030000000f00000003000000
+    DelayBetweenGroups:
+    - 2
+    - 2
+    - 3
+    - 3
     - 3
     DelayBetweenUnits:
     - 1
     - 1
     - 2
-  - OrderOfEnemies: 010000000000000001000000
-    EnemyCountPerGroup: 06000000080000000a000000
+    - 0.5
+    - 2
+  - OrderOfEnemies: 0000000001000000020000000100000002000000
+    EnemyCountPerGroup: 0a00000006000000040000000a00000004000000
     DelayBetweenGroups:
     - 2
     - 2
     - 3
-    DelayBetweenUnits:
     - 2
+    - 3
+    DelayBetweenUnits:
     - 1
-    - 1
-  - OrderOfEnemies: 000000000100000002000000
-    EnemyCountPerGroup: 080000000500000003000000
+    - 0.25
+    - 2
+    - 0.25
+    - 0.5
+  - OrderOfEnemies: 0000000001000000020000000200000002000000
+    EnemyCountPerGroup: 0a00000006000000040000000400000004000000
     DelayBetweenGroups:
     - 2
     - 2
+    - 3
+    - 3
     - 3
     DelayBetweenUnits:
     - 1
     - 1
     - 2
-  - OrderOfEnemies: 000000000100000002000000
-    EnemyCountPerGroup: 0a0000000600000004000000
-    DelayBetweenGroups:
-    - 2
-    - 2
-    - 3
-    DelayBetweenUnits:
     - 1
-    - 1
-    - 2
+    - 0.5
   delayBetweenWaves: 30

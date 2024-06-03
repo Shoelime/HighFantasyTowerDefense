@@ -158,7 +158,9 @@ public class EnemyCharacter : StateController
         healthBar.CallReturnToPool();
         enemyCollider.enabled = false;
         visualObject.SetActive(false);
-        SoundManager.Instance.PlaySound(audioSource, deathSound);
+
+        if (deathSound != null)
+            SoundManager.Instance.PlaySound(audioSource, deathSound);
 
         HealthComponent.HealthReachedZero -= Death;
         HealthComponent.HealthReduced -= HealthReduced;

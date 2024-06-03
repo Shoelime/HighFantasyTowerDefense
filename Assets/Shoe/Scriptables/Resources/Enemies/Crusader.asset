@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Crusader
   m_EditorClassIdentifier: 
   enemyType: 2
-  _hitPoints: 500
+  _hitPoints: 600
   moveSpeed: 3
   turnSpeed: 3
   gemCheckInterval: 0.33
   gemPickupDistance: 2
   description: 
-  goldCarryCount: 20
+  goldCarryCount: 70
   worldPrefab: {fileID: 5648297302956229525, guid: 15277cd4482369249bf3843f4a44a104, type: 3}

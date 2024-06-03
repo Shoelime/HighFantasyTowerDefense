@@ -16,7 +16,7 @@ MonoBehaviour:
   sightRadius: 15
   fireRate: 0.5
   projectileSpeed: 20
-  goldCostToBuild: 100
+  goldCostToBuild: 120
   goldRefundedOnDisassembly: 50
   constructDuration: 4
   worldPrefab: {fileID: 9167506115362987185, guid: e81854fecd404b34793a635e1fd9bf0e, type: 3}

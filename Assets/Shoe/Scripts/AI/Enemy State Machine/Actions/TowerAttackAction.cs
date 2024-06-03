@@ -10,7 +10,5 @@ public class TowerAttackAction : StateAction
             return;
 
         controller.TowerAiController.TowerAction.Execute(controller);
-
-        controller.TowerAiController.CooldownTrigger();
     }
 }

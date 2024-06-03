@@ -16,6 +16,7 @@ public class InstantAttackAction : ITowerAction
         Vector3 startPosition = controller.TowerAiController.transform.TransformPoint(controller.TowerAiController.ProjectileStartPosition);
         Vector3 endPosition = controller.TowerAiController.TargetToShoot.transform.position;
 
+        projectile.LineRenderer.enabled = true;
         projectile.LineRenderer.SetPosition(0, startPosition);
         projectile.LineRenderer.SetPosition(1, endPosition);
 
