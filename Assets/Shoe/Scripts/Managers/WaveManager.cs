@@ -5,7 +5,9 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance;
+
     [SerializeField] private WaveData waveData;
+    [SerializeField] private int firstWaveStartTimer;
 
     private EnemyData[] enemies;
 
@@ -37,10 +39,15 @@ public class WaveManager : MonoBehaviour
     private void Start()
     {
         CreateEnemyDatabase();
-        waveTimer = waveData.DelayBetweenWaves - 5;
+
+        // Start the first wave after set delay
+        waveTimer = waveData.DelayBetweenWaves - firstWaveStartTimer;
+
+        // Sub to all events
         EnemyCharacter.EnemyDied += EnemyDied;
         HUD.NextWave += AttemptToSpawn;
 
+        // Get total enemy count
         foreach (var wave in waveData.WaveCompositions)
         {
             for (int i = 0; i < wave.EnemyCountPerGroup.Length; i++)
@@ -50,12 +57,18 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawn next wave ahead of time if called from UI and allowed
+    /// </summary>
     private void AttemptToSpawn()
     {
         if (waveWaitingToBeSpawned)
             waveTimer = waveData.DelayBetweenWaves;
     }
 
+    /// <summary>
+    /// Get a lost of all enemy types
+    /// </summary>
     private void CreateEnemyDatabase()
     {
         var _obj = Resources.LoadAll("", typeof(EnemyData));
@@ -68,6 +81,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
+        // Don't advance timer if all waves are spawned
         if (currentWave >= waveData.WaveCompositions.Length)
             return;
 
@@ -84,6 +98,10 @@ public class WaveManager : MonoBehaviour
         TimeUntilNextWave = waveData.DelayBetweenWaves - waveTimer;
     }
 
+    /// <summary>
+    /// Spawn new wave
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator SpawnWave()
     {
         Debug.Log("Spawn wave " + currentWave);
@@ -114,17 +132,22 @@ public class WaveManager : MonoBehaviour
         currentWave++;
     }
 
+    /// <summary>
+    /// Spawn an enemy based on the type requested by the spawner
+    /// </summary>
+    /// <param name="enemyType"></param>
     private void SpawnEnemy(EnemyType enemyType)
     {
         foreach (var requestedEnemy in enemies)
         {
             if (requestedEnemy.EnemyType == enemyType)
             {
+                // Randomise spawn position so they don't always spawn on top of each other
                 Vector3 randomVector = new Vector3(UnityEngine.Random.Range(-1, 1), 0, UnityEngine.Random.Range(-1, 1));
                 Vector3 spawnPosition = Services.Get<IPathFinder>().EntrancePoint.position + randomVector;
 
                 EnemyCharacter enemy = requestedEnemy.WorldPrefab.GetComponent<EnemyCharacter>().Get<EnemyCharacter>(spawnPosition, Quaternion.Euler(waveData.GetSpawnRotation));
-                enemy.SpawnEnemy(this);
+                enemy.SpawnEnemy();
                 SpawnedEnemy?.Invoke(enemy);
 
                 break; 
@@ -132,14 +155,22 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Event called each time an enemies dies
+    /// </summary>
+    /// <param name="enemy"></param>
     void EnemyDied(EnemyData enemy)
     {
         if (++enemyKillCount >= totalEnemyCount)
         {
+            // once all enemies are killed, call the event
             AllEnemiesKilled?.Invoke();
         }
     }
 
+    /// <summary>
+    /// Unsubscribe from events
+    /// </summary>
     private void OnDisable()
     {
         EnemyCharacter.EnemyDied -= EnemyDied;

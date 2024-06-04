@@ -13,7 +13,6 @@ public class EnemyCharacter : StateController
     public EnemyData EnemyData => enemyData;
     public GameObject GemBeingCarried { get; private set; }
     public Health HealthComponent { get; private set; }
-    public WaveManager WaveManager { get; private set; }
     public EnemyUnitState CurrentEnemyState { get; private set; }
     public Vector3 PreviousPosition { get; internal set; }
     public int CurrentWaypointIndex { get; private set; }
@@ -56,6 +55,10 @@ public class EnemyCharacter : StateController
         CurrentWaypointIndex = 0; 
     }
 
+    /// <summary>
+    /// Apply effect from damage
+    /// </summary>
+    /// <param name="status"></param>
     private void ApplyEffect(StatusEffectData status)
     {
         switch (status.effectType)
@@ -71,6 +74,10 @@ public class EnemyCharacter : StateController
         }
     }
 
+    /// <summary>
+    /// Remove effect that was applied from damage
+    /// </summary>
+    /// <param name="status"></param>
     private void RemoveEffect(StatusEffectData status)
     {
         switch (status.effectType)
@@ -86,6 +93,10 @@ public class EnemyCharacter : StateController
         }
     }
 
+    /// <summary>
+    /// Remove events when returned to pool
+    /// </summary>
+    /// <param name="obj"></param>
     private void RemoveEvents(PooledMonoBehaviour obj)
     {
         HealthComponent.HealthReachedZero -= Death;
@@ -93,27 +104,45 @@ public class EnemyCharacter : StateController
         OnReturnToPool -= RemoveEvents;
     }
 
+    /// <summary>
+    /// Add healthbar to enemy
+    /// </summary>
+    /// <param name="healthBar"></param>
     public void AssignHealthBar(HealthBar healthBar)
     {
         this.healthBar = healthBar;
     }
 
+    /// <summary>
+    /// Update healthbar
+    /// </summary>
+    /// <param name="obj"></param>
     private void HealthReduced(int obj)
     {
         healthBar.UpdateHealthBar(obj, enemyData.HitPoints);
     }
 
+    /// <summary>
+    /// Update speed based on condition
+    /// </summary>
     private void FixedUpdate()
     {
         RelativeSpeedMultiplier = CurrentMoveSpeed / EnemyData.MoveSpeed;
     }
 
-    public void SpawnEnemy(WaveManager waveManager)
+    /// <summary>
+    /// Spawn enemy
+    /// </summary>
+    /// <param name="waveManager"></param>
+    public void SpawnEnemy()
     {
-        WaveManager = waveManager;
         SetupAI(true);
     }
 
+    /// <summary>
+    /// When enemy picks up the gem
+    /// </summary>
+    /// <param name="gemObject"></param>
     public void PickupGem(GameObject gemObject)
     {
         GemBeingCarried = gemObject;
@@ -121,6 +150,9 @@ public class EnemyCharacter : StateController
         EnemySnatchedGem?.Invoke(this);
     }
 
+    /// <summary>
+    /// Drop the gem on death if carried
+    /// </summary>
     void DropGem()
     {
         if (GemBeingCarried == null)
@@ -131,17 +163,27 @@ public class EnemyCharacter : StateController
         GemBeingCarried.transform.SetParent(null);
     }
 
+    /// <summary>
+    /// When enemy reaches players base
+    /// </summary>
     public void EnemyReachedBase()
     {
         SetEnemyState(EnemyUnitState.GoingHome);
         EnemyArrivedToBase?.Invoke(this);
     }
 
+    /// <summary>
+    /// Update current state of enemy
+    /// </summary>
+    /// <param name="enemyState"></param>
     public void SetEnemyState(EnemyUnitState enemyState)
     {
         CurrentEnemyState = enemyState;
     }
 
+    /// <summary>
+    /// When enemy arrives back home
+    /// </summary>
     public void EnemyArrivedHome()
     {
         EnemyArrivedHomeEvent?.Invoke(this);

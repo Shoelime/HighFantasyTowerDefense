@@ -13,7 +13,6 @@ public class CameraControls : MonoBehaviour
     [SerializeField] private float zoomSpeed = 10f;
 
     private IGameStateHandler gameState;
-    public float debugValue;
 
     private void Start()
     {
@@ -64,7 +63,7 @@ public class CameraControls : MonoBehaviour
     {
         // Get input from mouse scroll wheel
         float scrollInput = Input.GetAxis("Mouse ScrollWheel");
-        debugValue = scrollInput;
+
         // Calculate the new zoom position
         float newZoom = transform.position.y - scrollInput * zoomSpeed * Time.deltaTime;
 
