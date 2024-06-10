@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +13,13 @@ public class TowerAI : StateController
     public EnemyCharacter TargetToShoot { get; private set; }
     public List<Collider> AllTargets { get; private set; }
     public bool AttackCooldownActive { get; private set; }
-    public override EnemyCharacter EnemyAiController => null;
-    public override TowerAI TowerAiController => GetComponent<TowerAI>();
     public ITowerAction TowerAction { get; private set; }
+
+    private void OnEnable()
+    {
+        if (TowerAiController == null)
+            TowerAiController = this;
+    }
 
     public void BuildTower()
     {

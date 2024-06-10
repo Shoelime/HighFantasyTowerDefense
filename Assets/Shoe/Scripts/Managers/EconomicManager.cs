@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-public class EconomicManager : IEconomicsManager
+public class EconomicManager : IEconomicsManager, IDisposable
 {
     public int CurrentGold { get; private set; }
 
     public event Action<int> GoldAmountChanged;
 
-    public void Initialize()
+    public EconomicManager()
     {
         AddGold(Services.Get<IGameManager>().GetLevelData.StartingGold);
         EnemyCharacter.EnemyDied += (enemyData) => AddGold(enemyData.GoldCarryCount);       
@@ -28,11 +28,6 @@ public class EconomicManager : IEconomicsManager
         }
     }
 
-    public void Disable()
-    {
-        EnemyCharacter.EnemyDied -= (enemyData) => AddGold(enemyData.GoldCarryCount);
-    }
-
     public int GetCurrentGoldAmount()
     {
         return CurrentGold;
@@ -42,5 +37,10 @@ public class EconomicManager : IEconomicsManager
     {
         CurrentGold += gold;
         GoldAmountChanged?.Invoke(CurrentGold);
+    }
+
+    public void Dispose()
+    {
+        EnemyCharacter.EnemyDied -= (enemyData) => AddGold(enemyData.GoldCarryCount);
     }
 }

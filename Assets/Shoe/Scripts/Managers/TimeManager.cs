@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class TimeManager : ITimeManager
@@ -8,10 +7,6 @@ public class TimeManager : ITimeManager
     public void SetTimeScale(float timeScale)
     {
         Time.timeScale = timeScale;
-    }
-
-    internal void Initialize()
-    {
     }
 
     void IUpdateableService.Update()

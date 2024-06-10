@@ -12,8 +12,8 @@ public abstract class StateController : PooledMonoBehaviour
     private float stateTimeElapsed;
     private bool aiActive;
 
-    public abstract TowerAI TowerAiController { get; }
-    public abstract EnemyCharacter EnemyAiController { get; }
+    public TowerAI TowerAiController { get; protected set; }
+    public EnemyCharacter EnemyAiController { get; protected set; }
 
     protected void SetupAI(bool activate)
     {

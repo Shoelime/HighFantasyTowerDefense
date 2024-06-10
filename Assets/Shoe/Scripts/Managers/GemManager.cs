@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GemManager : IGemManager
+public class GemManager : IGemManager, IDisposable
 {
     private GameObject[] gemPrefabs;
     public int GemCountAtBase { get; private set; }
@@ -14,7 +14,7 @@ public class GemManager : IGemManager
     private GameObject[] spawnedGems;
     private GemContainer container;
 
-    public void Initialize()
+    public GemManager()
     {
         gemPrefabs = Resources.LoadAll<GameObject>("Gems");
         SpawnGems();
@@ -104,5 +104,11 @@ public class GemManager : IGemManager
 
         if (AvailableGems.Count == 0)
             AllGemsLost?.Invoke();
+    }
+
+    public void Dispose()
+    {
+        EnemyCharacter.EnemyArrivedToBase -= (enemyData) => EnemyReachedBase(enemyData);
+        EnemyCharacter.EnemyArrivedHomeEvent -= (enemyData) => GemStolen(enemyData.GemBeingCarried);
     }
 }

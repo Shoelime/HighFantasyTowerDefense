@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using static StatusEffectData;
-
 public class EnemyCharacter : StateController
 {
     [SerializeField] private EnemyData enemyData;
@@ -16,8 +15,6 @@ public class EnemyCharacter : StateController
     public EnemyUnitState CurrentEnemyState { get; private set; }
     public Vector3 PreviousPosition { get; internal set; }
     public int CurrentWaypointIndex { get; private set; }
-    public override TowerAI TowerAiController => null;
-    public override EnemyCharacter EnemyAiController => GetComponent<EnemyCharacter>();
 
     public static event Action<EnemyData> EnemyDied;
     public static event Action<EnemyCharacter> EnemySnatchedGem;
@@ -32,10 +29,15 @@ public class EnemyCharacter : StateController
     {
         if (HealthComponent == null)
             HealthComponent = GetComponent<Health>();
+
         if (enemyCollider == null)
             enemyCollider = GetComponent<Collider>();
+
         if(audioSource == null)
             audioSource = GetComponent<AudioSource>();
+
+        if (EnemyAiController == null)
+            EnemyAiController = this;
 
         enemyCollider.enabled = true;
         visualObject.SetActive(true);

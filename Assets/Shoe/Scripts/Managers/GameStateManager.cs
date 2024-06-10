@@ -3,7 +3,7 @@ public class GameStateHandler : IGameStateHandler
     private GameState currentGameState;
     public GameState GetCurrentGameState => currentGameState;
 
-    public void Initialize()
+    public GameStateHandler()
     {
         SetGameState(GameState.Normal);
     }
@@ -20,5 +20,6 @@ public enum GameState
     Normal,
     Preparation,
     Paused,
-    Victory
+    Victory,
+    Defeat
 }

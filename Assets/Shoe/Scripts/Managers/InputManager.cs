@@ -4,14 +4,13 @@ using UnityEngine.EventSystems;
 
 public class InputManager : IInputManager
 {
-    MouseRaycastDetector mouseRaycastDetector;
+    private MouseRaycastDetector mouseRaycastDetector;
 
     public Action<Vector3, GameObject> OnLeftMouseButton { get; set; }
     public Action EscapeButton { get; set; }
-
     public Vector2 MousePosition { get; private set; }
 
-    public void Initialize()
+    public InputManager()
     {
         mouseRaycastDetector =  new MouseRaycastDetector();
         mouseRaycastDetector.Initialize();

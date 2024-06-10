@@ -72,4 +72,25 @@ public abstract class Services : MonoBehaviour
             updateableServices[i].Update();
         }
     }
+
+    private void OnDisable()
+    {
+        // Dispose services in serviceMap
+        foreach (var service in serviceMap)
+        {
+            if (service.Value is IDisposable disposableService)
+            {
+                disposableService.Dispose();
+            }
+        }
+
+        // Dispose services in updateableServices
+        foreach (var updateableService in updateableServices)
+        {
+            if (updateableService is IDisposable disposableUpdateableService)
+            {
+                disposableUpdateableService.Dispose();
+            }
+        }
+    }
 }

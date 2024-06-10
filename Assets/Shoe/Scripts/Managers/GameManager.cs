@@ -3,25 +3,24 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : IGameManager
+public class GameManager : IGameManager, IDisposable
 {
     private bool pauseOn;
     private LevelData currentLevelData;
     public LevelData GetLevelData => currentLevelData;
-
     public Action VictoryEvent { get; set;}
     public Action DefeatEvent { get; set; }
 
     public event Action GamePaused;
     public event Action GameUnPaused;
 
-    public void Initialize()
+    public GameManager(IInputManager inputManager) 
     {
         // Set level specific data
         SetLevelData();
 
         // Subscribe to events
-        Services.Get<IInputManager>().EscapeButton += PauseToggle;
+        inputManager.EscapeButton += PauseToggle;
         GemManager.AllGemsLost += GameLost;
         WaveManager.AllEnemiesKilled += GameWon;
         HUD.OnRestartButton += RestartGame;
@@ -48,12 +47,16 @@ public class GameManager : IGameManager
     {
         DefeatEvent?.Invoke();
         PauseToggle();
+        Services.Get<GameStateHandler>().SetGameState(GameState.Defeat);
+        Services.Get<TimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void GameWon()
     {
         VictoryEvent?.Invoke();
         PauseToggle();
+        Services.Get<GameStateHandler>().SetGameState(GameState.Victory);
+        Services.Get<TimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void PauseToggle()
@@ -61,11 +64,18 @@ public class GameManager : IGameManager
         pauseOn = !pauseOn;
 
         if (pauseOn)
+        {
             GamePaused?.Invoke();
-        else GameUnPaused?.Invoke();
+            Services.Get<TimeManager>().SetTimeScale(0.0000001f);
+        }
+        else
+        {
+            GameUnPaused?.Invoke();
+            Services.Get<TimeManager>().SetTimeScale(1f);
+        }
     }
 
-    void Disable()
+    public void Dispose()
     {
         Services.Get<IInputManager>().EscapeButton -= PauseToggle;
         GemManager.AllGemsLost -= GameLost;
