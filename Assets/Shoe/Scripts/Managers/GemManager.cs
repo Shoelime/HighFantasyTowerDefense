@@ -9,10 +9,10 @@ public class GemManager : IGemManager, IDisposable
     public List<GameObject> SnatchedGems { get; private set; }
     public List<GameObject> AvailableGems { get; private set; }
 
-    public static event Action AllGemsLost;
-
     private GameObject[] spawnedGems;
     private GemContainer container;
+
+    public event Action AllGemsLost;
 
     public GemManager()
     {

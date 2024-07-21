@@ -35,6 +35,7 @@ public class Health : MonoBehaviour, IHealth
         {
             HealthReachedZero?.Invoke();
             StopCoroutine(nameof(DamageTick));
+            RemoveAllEffects();
         }
         else HealthReduced?.Invoke(currentHealth);
     }
@@ -102,6 +103,12 @@ public class Health : MonoBehaviour, IHealth
         currentEffects.Remove(status.effectType);
         runningCoroutines.Remove(status.effectType);
         EffectRemoved?.Invoke(status);
+    }
+
+    void RemoveAllEffects()
+    {
+        currentEffects.Clear();
+        runningCoroutines.Clear();
     }
 
     void OnDisable()

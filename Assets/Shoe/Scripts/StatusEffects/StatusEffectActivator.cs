@@ -15,10 +15,13 @@ public class StatusEffectActivator : MonoBehaviour
 
     private void OnEnable()
     {
-        originalColors = new Color[meshRenderers.Length];
-        for (int i = 0; i < originalColors.Length; i++)
+        if (originalColors.Length == 0)
         {
-            originalColors[i] = meshRenderers[i].material.color;
+            originalColors = new Color[meshRenderers.Length];
+            for (int i = 0; i < originalColors.Length; i++)
+            {
+                originalColors[i] = meshRenderers[i].material.color;
+            }
         }
 
         if (enemyCharacter == null)
@@ -27,7 +30,6 @@ public class StatusEffectActivator : MonoBehaviour
         enemyCharacter.HealthComponent.EffectApplied += Activate;
         enemyCharacter.HealthComponent.EffectRemoved += Restore;
 
-        StatusEffectData status = new StatusEffectData();
         foreach (EffectType effect in Enum.GetValues(typeof(EffectType)))
         {
             Restore(effect);

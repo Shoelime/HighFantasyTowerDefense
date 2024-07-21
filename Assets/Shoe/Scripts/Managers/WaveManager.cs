@@ -13,13 +13,13 @@ public class WaveManager : MonoBehaviour
 
     private int currentWave = 0;
     private int totalEnemyCount;
-    private int enemyKillCount;
+    private int enemyDespawnCount;
     private float waveTimer;
     private bool waveWaitingToBeSpawned = true;
 
     public float TimeUntilNextWave { get; set; } 
 
-    public static event Action AllEnemiesKilled;
+    public static event Action AllEnemiesProcessed;
     public static event Action<EnemyCharacter> SpawnedEnemy;
 
     private void Awake()
@@ -44,7 +44,8 @@ public class WaveManager : MonoBehaviour
         waveTimer = waveData.DelayBetweenWaves - firstWaveStartTimer;
 
         // Sub to all events
-        EnemyCharacter.EnemyDied += EnemyDied;
+        EnemyCharacter.EnemyArrivedHomeEvent += EnemyDespawned;
+        EnemyCharacter.EnemyDied += EnemyKilled;
         HUD.NextWave += AttemptToSpawn;
 
         // Get total enemy count
@@ -159,12 +160,26 @@ public class WaveManager : MonoBehaviour
     /// Event called each time an enemies dies
     /// </summary>
     /// <param name="enemy"></param>
-    void EnemyDied(EnemyData enemy)
+    void EnemyKilled(EnemyData enemy)
     {
-        if (++enemyKillCount >= totalEnemyCount)
+        if (++enemyDespawnCount >= totalEnemyCount)
         {
             // once all enemies are killed, call the event
-            AllEnemiesKilled?.Invoke();
+            AllEnemiesProcessed?.Invoke();
+        }
+    }
+
+    /// <summary>
+    /// When enemy reaches base, they will be counted as despawned
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void EnemyDespawned(EnemyCharacter obj)
+    {
+        if (++enemyDespawnCount >= totalEnemyCount)
+        {
+            // once all enemies are killed, call the event
+            AllEnemiesProcessed?.Invoke();
         }
     }
 
@@ -173,6 +188,6 @@ public class WaveManager : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        EnemyCharacter.EnemyDied -= EnemyDied;
+        EnemyCharacter.EnemyDied -= EnemyKilled;
     }
 }

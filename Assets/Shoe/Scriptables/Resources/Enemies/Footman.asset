@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Footman
   m_EditorClassIdentifier: 
   enemyType: 0
-  _hitPoints: 100
+  _hitPoints: 110
   moveSpeed: 4
   turnSpeed: 4
   gemCheckInterval: 0.33
   gemPickupDistance: 2
   description: 
-  goldCarryCount: 30
+  goldCarryCount: 25
   worldPrefab: {fileID: 828277828128543774, guid: 97ac25aec47e9624f964ea7ce3c9afb8, type: 3}

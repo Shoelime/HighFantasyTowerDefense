@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Hound
   m_EditorClassIdentifier: 
   enemyType: 1
-  _hitPoints: 60
+  _hitPoints: 75
   moveSpeed: 6
   turnSpeed: 6
   gemCheckInterval: 0.33
   gemPickupDistance: 2
   description: 
-  goldCarryCount: 25
+  goldCarryCount: 20
   worldPrefab: {fileID: 6956818294481242629, guid: b5a5cabda9b67074b92639af13b590a3, type: 3}

@@ -20,6 +20,9 @@ public class HealthBar : PooledMonoBehaviour
     private void Update()
     {
         UpdatePosition();
+
+        if (!healthTarget.gameObject.activeSelf)
+            CallReturnToPool();
     }
 
     void UpdatePosition()
@@ -36,6 +39,7 @@ public class HealthBar : PooledMonoBehaviour
 
         rectTransform.anchoredPosition = localPoint;
     }
+
     public void HealthbarTarget(Transform healthTarget)
     {
         this.healthTarget = healthTarget;
@@ -51,7 +55,7 @@ public class HealthBar : PooledMonoBehaviour
     internal void SetCanvas(Canvas canvas)
     {
         this.canvas = canvas;
-        transform.parent = canvas.transform;
+        transform.SetParent(canvas.transform);
         healthBarFill.enabled = false;
         backgroundImage.enabled = false;
     }

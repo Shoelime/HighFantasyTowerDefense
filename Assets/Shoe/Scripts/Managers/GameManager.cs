@@ -21,8 +21,8 @@ public class GameManager : IGameManager, IDisposable
 
         // Subscribe to events
         inputManager.EscapeButton += PauseToggle;
-        GemManager.AllGemsLost += GameLost;
-        WaveManager.AllEnemiesKilled += GameWon;
+        Services.Get<IGemManager>().AllGemsLost += GameLost;
+        WaveManager.AllEnemiesProcessed += GameWon;
         HUD.OnRestartButton += RestartGame;
     }
 
@@ -78,8 +78,8 @@ public class GameManager : IGameManager, IDisposable
     public void Dispose()
     {
         Services.Get<IInputManager>().EscapeButton -= PauseToggle;
-        GemManager.AllGemsLost -= GameLost;
-        WaveManager.AllEnemiesKilled -= GameWon;
+        Services.Get<IGemManager>().AllGemsLost -= GameLost;
+        WaveManager.AllEnemiesProcessed -= GameWon;
         HUD.OnRestartButton -= RestartGame;
     }
 }

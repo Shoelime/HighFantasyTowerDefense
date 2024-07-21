@@ -163,6 +163,7 @@ public class EnemyCharacter : StateController
         GemBeingCarried.transform.position = transform.position + Vector3.up;
         GemBeingCarried.SetActive(true);
         GemBeingCarried.transform.SetParent(null);
+        GemBeingCarried = null;
     }
 
     /// <summary>

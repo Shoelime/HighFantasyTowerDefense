@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveData: {fileID: 11400000, guid: 0f83d2d24ba02284b803a1e7a5a3ac8a, type: 2}
+  firstWaveStartTimer: 0
 --- !u!114 &7223911537497263951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,9 +86,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf603af1082176489659d24329efbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSimultaneousImpactSounds: 3
-  maxSimultaneousDeathSounds: 3
-  maxSimultaneousLaunchSounds: 3
+  maxSimultaneousImpactSounds: 4
+  maxSimultaneousDeathSounds: 6
+  maxSimultaneousLaunchSounds: 4
   maxSimultaneousOtherSounds: 10
 --- !u!1 &6685256637924348873
 GameObject:
