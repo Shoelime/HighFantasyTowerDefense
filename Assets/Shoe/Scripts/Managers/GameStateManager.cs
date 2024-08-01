@@ -3,7 +3,7 @@ public class GameStateHandler : IGameStateHandler
     private GameState currentGameState;
     public GameState GetCurrentGameState => currentGameState;
 
-    public GameStateHandler()
+    public void Initialize()
     {
         SetGameState(GameState.Normal);
     }

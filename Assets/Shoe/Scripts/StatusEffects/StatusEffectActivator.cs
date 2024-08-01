@@ -15,7 +15,7 @@ public class StatusEffectActivator : MonoBehaviour
 
     private void OnEnable()
     {
-        if (originalColors.Length == 0)
+        if (originalColors == null)
         {
             originalColors = new Color[meshRenderers.Length];
             for (int i = 0; i < originalColors.Length; i++)

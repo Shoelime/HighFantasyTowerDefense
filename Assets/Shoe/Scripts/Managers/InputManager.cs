@@ -10,7 +10,7 @@ public class InputManager : IInputManager
     public Action EscapeButton { get; set; }
     public Vector2 MousePosition { get; private set; }
 
-    public InputManager()
+    public void Initialize()
     {
         mouseRaycastDetector =  new MouseRaycastDetector();
         mouseRaycastDetector.Initialize();

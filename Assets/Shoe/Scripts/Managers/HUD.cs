@@ -6,7 +6,6 @@ public class HUD : MonoBehaviour, IUIElementSound
 {
     [SerializeField] private TextMeshProUGUI goldTextGUI;
     [SerializeField] private TextMeshProUGUI nextWaveTimerTextGUI;
-    [SerializeField] private TextMeshProUGUI victoryText;
     [SerializeField] private TextMeshProUGUI defeatText;
     [SerializeField] private TextMeshProUGUI gameSpeedText;
 
@@ -14,6 +13,8 @@ public class HUD : MonoBehaviour, IUIElementSound
     [SerializeField] private SoundData onUISelectSound;
 
     private AudioSource audioSource;
+    private VictoryCanvas victoryCanvas;    
+
     public static event Action OnRestartButton;
     public static event Action NextWave;
 
@@ -22,8 +23,8 @@ public class HUD : MonoBehaviour, IUIElementSound
         audioSource = GetComponent<AudioSource>();
 
         Services.Get<IEconomicsManager>().GoldAmountChanged += UpdateGoldText;
-        Services.Get<IGameManager>().VictoryEvent += VictoryText;
-        Services.Get<IGameManager>().DefeatEvent += DefeatText;
+        Services.Get<IGameManager>().VictoryEvent += DisplayVictoryCanvas;
+        Services.Get<IGameManager>().DefeatEvent += DisplayDefeatText;
 
         UpdateGoldText(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
         InvokeRepeating(nameof(UpdateWaveTimerText), 0, 1);
@@ -40,12 +41,12 @@ public class HUD : MonoBehaviour, IUIElementSound
         nextWaveTimerTextGUI.text = secondsTillNextWave.ToString();
     }
 
-    void VictoryText()
+    void DisplayVictoryCanvas()
     {
-        victoryText.gameObject.SetActive(true);
+        victoryCanvas.TriggerCanvas();
     }
 
-    void DefeatText()
+    void DisplayDefeatText()
     {
         defeatText.gameObject.SetActive(true);
     }
@@ -80,8 +81,8 @@ public class HUD : MonoBehaviour, IUIElementSound
     void OnDisable()
     {
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateGoldText;
-        Services.Get<IGameManager>().VictoryEvent -= VictoryText;
-        Services.Get<IGameManager>().DefeatEvent -= DefeatText;
+        Services.Get<IGameManager>().VictoryEvent -= DisplayVictoryCanvas;
+        Services.Get<IGameManager>().DefeatEvent -= DisplayDefeatText;
     }
 
     public void OnUIElementOpened()

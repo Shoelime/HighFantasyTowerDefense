@@ -14,13 +14,13 @@ public class GameManager : IGameManager, IDisposable
     public event Action GamePaused;
     public event Action GameUnPaused;
 
-    public GameManager(IInputManager inputManager) 
+    public void Initialize()
     {
         // Set level specific data
         SetLevelData();
 
         // Subscribe to events
-        inputManager.EscapeButton += PauseToggle;
+        Services.Get<IInputManager>().EscapeButton += PauseToggle;
         Services.Get<IGemManager>().AllGemsLost += GameLost;
         WaveManager.AllEnemiesProcessed += GameWon;
         HUD.OnRestartButton += RestartGame;

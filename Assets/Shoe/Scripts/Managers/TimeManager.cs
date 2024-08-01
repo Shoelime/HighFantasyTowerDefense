@@ -13,4 +13,6 @@ public class TimeManager : ITimeManager
     {
         GameDuration += Time.deltaTime * Time.timeScale;
     }
+
+    public void Initialize() { }
 }

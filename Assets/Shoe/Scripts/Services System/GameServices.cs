@@ -5,7 +5,7 @@ public class GameServices : Services
         var inputManager = new InputManager();
         AddService<IInputManager>(inputManager);
 
-        var gameManager = new GameManager(inputManager);
+        var gameManager = new GameManager();
         AddService<IGameManager>(gameManager);
 
         var pathFinder = new Pathfinder();
@@ -22,5 +22,11 @@ public class GameServices : Services
 
         var timeManager = new TimeManager();
         AddService<ITimeManager>(timeManager);
+
+        // Initialize all services
+        foreach (var service in serviceMap.Values)
+        {
+            service.Initialize();
+        }
     }
 }

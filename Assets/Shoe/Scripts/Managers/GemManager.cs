@@ -14,13 +14,14 @@ public class GemManager : IGemManager, IDisposable
 
     public event Action AllGemsLost;
 
-    public GemManager()
+    public void Initialize() 
     {
         gemPrefabs = Resources.LoadAll<GameObject>("Gems");
-        SpawnGems();
 
         EnemyCharacter.EnemyArrivedToBase += (enemyData) => EnemyReachedBase(enemyData);
         EnemyCharacter.EnemyArrivedHomeEvent += (enemyData) => GemStolen(enemyData.GemBeingCarried);
+
+        SpawnGems();
     }
 
     /// <summary>

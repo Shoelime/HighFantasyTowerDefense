@@ -82,6 +82,11 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            AllEnemiesProcessed?.Invoke();
+        }
+
         // Don't advance timer if all waves are spawned
         if (currentWave >= waveData.WaveCompositions.Length)
             return;
@@ -105,7 +110,6 @@ public class WaveManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnWave()
     {
-        Debug.Log("Spawn wave " + currentWave);
         WaveComposition waveComposition = waveData.WaveCompositions[currentWave];
 
         // Iterate over each group in the wave composition

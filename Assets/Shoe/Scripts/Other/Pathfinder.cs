@@ -9,7 +9,7 @@ public class Pathfinder : IPathFinder
     private Transform entrancePoint;
     public Transform EntrancePoint => entrancePoint;
 
-    public Pathfinder()
+    public void Initialize()
     {
         entrancePoint = GameObject.Find("EnemySpawnPosition").transform;
 

@@ -7,7 +7,7 @@ public class EconomicManager : IEconomicsManager, IDisposable
 
     public event Action<int> GoldAmountChanged;
 
-    public EconomicManager()
+    public void Initialize()
     {
         AddGold(Services.Get<IGameManager>().GetLevelData.StartingGold);
         EnemyCharacter.EnemyDied += (enemyData) => AddGold(enemyData.GoldCarryCount);       

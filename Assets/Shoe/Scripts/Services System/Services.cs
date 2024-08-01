@@ -7,7 +7,7 @@ public abstract class Services : MonoBehaviour
 {
     private static Services instance;
 
-    private Dictionary<Type, IService> serviceMap = new Dictionary<Type, IService>();
+    protected Dictionary<Type, IService> serviceMap = new Dictionary<Type, IService>();
     private List<IUpdateableService> updateableServices = new List<IUpdateableService>();
 
     private void Awake()

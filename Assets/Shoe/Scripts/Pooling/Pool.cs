@@ -49,6 +49,16 @@ public class Pool : MonoBehaviour
 
     private void AddObjectToAvailableQueue(PooledMonoBehaviour pooledObject)
     {
+        if (LevelManager.Instance.IsShuttingDown || LevelManager.Instance.IsChangingScene)
+        {
+            return;
+        }
+        if (pooledObject == null || pooledObject.gameObject == null)
+        {
+            Debug.LogWarning("Attempted to add a destroyed pooled object to the queue.");
+            return;
+        }
+
         if (!gameObject.activeSelf)
         {
             return;
