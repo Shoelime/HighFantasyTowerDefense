@@ -1,5 +1,7 @@
 The idea for this project was to create a simple game for trying different programming concepts in a sandbox environment.
 
+Playable version here: https://play.unity.com/en/games/12cfc2fa-ced7-4dda-b91b-7efef4877212/elemental-towers
+
 Use WASD to move around and Mouse to build towers.
 
 Credits
