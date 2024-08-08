@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGemManager : IService
+public interface IGemManager : IUpdateableService
 {
     public List<GameObject> AvailableGems { get; }
     public int GemCountAtBase { get; }

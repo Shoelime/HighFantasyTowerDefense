@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f684ea290577a9543ac09c0918798115, type: 3}
+  m_Name: Level02 Data
+  m_EditorClassIdentifier: 
+  gemCount: 4
+  startingGold: 450
+  gemContainerPrefab: {fileID: 2298790277750995018, guid: 30ab9c7bc2265434fa48d78d3af03d9d, type: 3}
+  waveData: {fileID: 11400000, guid: 0d94664e59fcf3846bf7d9203102e131, type: 2}

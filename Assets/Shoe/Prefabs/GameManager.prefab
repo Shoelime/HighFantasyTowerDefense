@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 427041140158282177}
-  - component: {fileID: 9065492403722583281}
   - component: {fileID: 7223911537497263951}
   - component: {fileID: 1427900258723883834}
   - component: {fileID: -2228287580330642965}
@@ -36,20 +35,6 @@ Transform:
   - {fileID: 6092162193145324593}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9065492403722583281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5757493566315106120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa485e65fb18cd04eb9aa191d3335e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waveData: {fileID: 11400000, guid: 0f83d2d24ba02284b803a1e7a5a3ac8a, type: 2}
-  firstWaveStartTimer: 0
 --- !u!114 &7223911537497263951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf603af1082176489659d24329efbc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSimultaneousImpactSounds: 4
+  maxSimultaneousImpactSounds: 6
   maxSimultaneousDeathSounds: 6
   maxSimultaneousLaunchSounds: 4
   maxSimultaneousOtherSounds: 10

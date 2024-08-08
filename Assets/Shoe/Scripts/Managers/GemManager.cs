@@ -112,4 +112,14 @@ public class GemManager : IGemManager, IDisposable
         EnemyCharacter.EnemyArrivedToBase -= (enemyData) => EnemyReachedBase(enemyData);
         EnemyCharacter.EnemyArrivedHomeEvent -= (enemyData) => GemStolen(enemyData.GemBeingCarried);
     }
+
+    public void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            AllGemsLost?.Invoke();
+        }
+#endif
+    }
 }

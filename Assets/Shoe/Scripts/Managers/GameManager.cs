@@ -8,7 +8,7 @@ public class GameManager : IGameManager, IDisposable
     private bool pauseOn;
     private LevelData currentLevelData;
     public LevelData GetLevelData => currentLevelData;
-    public Action VictoryEvent { get; set;}
+    public Action VictoryEvent { get; set; }
     public Action DefeatEvent { get; set; }
 
     public event Action GamePaused;
@@ -28,7 +28,8 @@ public class GameManager : IGameManager, IDisposable
 
     private void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        PauseToggle();
+        Loader.Load(Loader.GetCurrentScene());
     }
 
     /// <summary>
@@ -47,16 +48,16 @@ public class GameManager : IGameManager, IDisposable
     {
         DefeatEvent?.Invoke();
         PauseToggle();
-        Services.Get<GameStateHandler>().SetGameState(GameState.Defeat);
-        Services.Get<TimeManager>().SetTimeScale(0.0000001f);
+        Services.Get<IGameStateHandler>().SetGameState(GameState.Defeat);
+        Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void GameWon()
     {
         VictoryEvent?.Invoke();
         PauseToggle();
-        Services.Get<GameStateHandler>().SetGameState(GameState.Victory);
-        Services.Get<TimeManager>().SetTimeScale(0.0000001f);
+        Services.Get<IGameStateHandler>().SetGameState(GameState.Victory);
+        Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void PauseToggle()
@@ -66,12 +67,12 @@ public class GameManager : IGameManager, IDisposable
         if (pauseOn)
         {
             GamePaused?.Invoke();
-            Services.Get<TimeManager>().SetTimeScale(0.0000001f);
+            Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
         }
         else
         {
             GameUnPaused?.Invoke();
-            Services.Get<TimeManager>().SetTimeScale(1f);
+            Services.Get<ITimeManager>().SetTimeScale(1f);
         }
     }
 

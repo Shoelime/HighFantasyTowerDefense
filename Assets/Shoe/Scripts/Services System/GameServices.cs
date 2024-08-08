@@ -23,6 +23,9 @@ public class GameServices : Services
         var timeManager = new TimeManager();
         AddService<ITimeManager>(timeManager);
 
+        var waveManager = new WaveManager();
+        AddService<IWaveManager>(waveManager);
+
         // Initialize all services
         foreach (var service in serviceMap.Values)
         {

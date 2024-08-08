@@ -1,16 +1,12 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static Loader;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : IWaveManager, IDisposable
 {
-    public static WaveManager Instance;
-
-    [SerializeField] private WaveData waveData;
-    [SerializeField] private int firstWaveStartTimer;
-
     private EnemyData[] enemies;
-
+    private WaveData waveData;
     private int currentWave = 0;
     private int totalEnemyCount;
     private int enemyDespawnCount;
@@ -22,26 +18,20 @@ public class WaveManager : MonoBehaviour
     public static event Action AllEnemiesProcessed;
     public static event Action<EnemyCharacter> SpawnedEnemy;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
+    GameObject spawnerCoroutineObject;
+    CoroutineMonoBehavior spawnerCoroutine;
 
-    private void Start()
+    public void Initialize()
     {
         CreateEnemyDatabase();
 
+        spawnerCoroutineObject = new GameObject("Loading Game Object");
+        spawnerCoroutine = spawnerCoroutineObject.AddComponent<CoroutineMonoBehavior>();
+
+        waveData = Services.Get<IGameManager>().GetLevelData.WaveData;
+
         // Start the first wave after set delay
-        waveTimer = waveData.DelayBetweenWaves - firstWaveStartTimer;
+        waveTimer = waveData.DelayBetweenWaves - waveData.FirstWaveStartTimer;
 
         // Sub to all events
         EnemyCharacter.EnemyArrivedHomeEvent += EnemyDespawned;
@@ -80,13 +70,16 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void Update()
     {
+#if UNITY_EDITOR
+        /// Quick cheat to move on to next level
+        /// 
         if (Input.GetKeyDown(KeyCode.J))
         {
             AllEnemiesProcessed?.Invoke();
         }
-
+#endif
         // Don't advance timer if all waves are spawned
         if (currentWave >= waveData.WaveCompositions.Length)
             return;
@@ -98,7 +91,7 @@ public class WaveManager : MonoBehaviour
         {
             waveTimer = 0;
             waveWaitingToBeSpawned = false;
-            StartCoroutine(SpawnWave());
+            spawnerCoroutine.StartCoroutine(SpawnWave());
         }
 
         TimeUntilNextWave = waveData.DelayBetweenWaves - waveTimer;
@@ -190,7 +183,7 @@ public class WaveManager : MonoBehaviour
     /// <summary>
     /// Unsubscribe from events
     /// </summary>
-    private void OnDisable()
+    public void Dispose()
     {
         EnemyCharacter.EnemyDied -= EnemyKilled;
     }

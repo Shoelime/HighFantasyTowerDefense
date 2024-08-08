@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class VictoryCanvas : MonoBehaviour
     [SerializeField] private Transform starContainer;
 
     [SerializeField] private GameObject victoryText;
+    [SerializeField] private GameObject levelLoaderButton;
 
     private Image[] starObjects = new Image[5];
 
@@ -29,5 +31,13 @@ public class VictoryCanvas : MonoBehaviour
         {
             starObjects[i].gameObject.SetActive(true);
         }
+
+        string buttonText;
+
+        if (Loader.GetCurrentScene() == Loader.Scene.Level02)
+            buttonText = "Main Menu";
+        else buttonText = "Next Level";
+
+        levelLoaderButton.GetComponentInChildren<TextMeshProUGUI>().text = buttonText;
     }
 }

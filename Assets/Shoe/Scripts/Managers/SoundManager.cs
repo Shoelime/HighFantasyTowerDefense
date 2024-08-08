@@ -18,12 +18,6 @@ public class SoundManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);      
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
         }
 
         InitializeSoundLimits();
@@ -60,6 +54,7 @@ public class SoundManager : MonoBehaviour
             }
             else Debug.LogError("Can't play sound because of lack of components");
         }
+        else Debug.LogError($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
     }
 
     /// <summary>

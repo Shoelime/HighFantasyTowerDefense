@@ -7,9 +7,11 @@ public class WaveData : ScriptableObject
     public Vector3 GetSpawnRotation => spawnRotation;
 
     [SerializeField] private WaveComposition[] waveCompositions = null;
+    [SerializeField] private float firstWaveStartTimer;
     [SerializeField] private float delayBetweenWaves;
     public WaveComposition[] WaveCompositions => waveCompositions;
     public float DelayBetweenWaves => delayBetweenWaves;
+    public float FirstWaveStartTimer => firstWaveStartTimer;
 }
 
 [System.Serializable]

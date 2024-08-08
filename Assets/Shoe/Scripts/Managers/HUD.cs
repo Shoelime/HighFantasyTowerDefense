@@ -26,6 +26,8 @@ public class HUD : MonoBehaviour, IUIElementSound
         Services.Get<IGameManager>().VictoryEvent += DisplayVictoryCanvas;
         Services.Get<IGameManager>().DefeatEvent += DisplayDefeatText;
 
+        victoryCanvas = GetComponentInChildren<VictoryCanvas>();
+
         UpdateGoldText(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
         InvokeRepeating(nameof(UpdateWaveTimerText), 0, 1);
     }
@@ -37,7 +39,7 @@ public class HUD : MonoBehaviour, IUIElementSound
 
     private void UpdateWaveTimerText()
     {
-        int secondsTillNextWave = Mathf.FloorToInt(WaveManager.Instance.TimeUntilNextWave);
+        int secondsTillNextWave = Mathf.FloorToInt(Services.Get<IWaveManager>().TimeUntilNextWave);
         nextWaveTimerTextGUI.text = secondsTillNextWave.ToString();
     }
 
@@ -59,22 +61,6 @@ public class HUD : MonoBehaviour, IUIElementSound
     public void GameSpeedButton()
     {
         NextWave?.Invoke();
-        //switch (Time.timeScale)
-        //{
-        //    case 0:
-        //        break;
-        //    case 1:
-        //        Services.Get<ITimeManager>().SetTimeScale(2);
-        //        break;
-        //    case 2:
-        //        Services.Get<ITimeManager>().SetTimeScale(3);
-        //        break;
-        //    case 3:
-        //        Services.Get<ITimeManager>().SetTimeScale(1);
-        //        break;
-        //}
-
-        //gameSpeedText.text = Time.timeScale.ToString() + "x";
         OnUIElementOpened();
     }
 
@@ -83,6 +69,8 @@ public class HUD : MonoBehaviour, IUIElementSound
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateGoldText;
         Services.Get<IGameManager>().VictoryEvent -= DisplayVictoryCanvas;
         Services.Get<IGameManager>().DefeatEvent -= DisplayDefeatText;
+
+        CancelInvoke(nameof(UpdateWaveTimerText));
     }
 
     public void OnUIElementOpened()

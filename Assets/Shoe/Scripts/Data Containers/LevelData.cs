@@ -11,4 +11,5 @@ public class LevelData : ScriptableObject
     public int StartingGold => startingGold;
     public int GemCount => gemCount;
     public GameObject GemContainerPrefab => gemContainerPrefab;
+    public WaveData WaveData => waveData;
 }
