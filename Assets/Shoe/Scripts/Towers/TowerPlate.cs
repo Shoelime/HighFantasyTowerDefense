@@ -5,6 +5,7 @@ public class TowerPlate : MonoBehaviour
 {
     [Header("Where to instantiate tower relative to plate")]
     [SerializeField] private Vector3 towerBasePosition;
+
     [Header("Autobuild a tower, for testing purposes")]
     [SerializeField] private TowerData autoPlaceTower;
     [Header("Audio")]
@@ -14,6 +15,8 @@ public class TowerPlate : MonoBehaviour
     private TowerAI placedTower;
     private bool plateSelected;
     private AudioSource audioSource;
+
+    public Vector3 GetBasePosition => towerBasePosition;
 
     public static event Action<TowerPlate> PlateSelected;
     public static event Action<TowerPlate> PlateUnSelected;

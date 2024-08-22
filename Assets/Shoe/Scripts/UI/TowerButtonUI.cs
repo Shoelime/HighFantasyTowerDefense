@@ -1,12 +1,16 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TowerButtonUI : MonoBehaviour
+public class TowerButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] TextMeshProUGUI towerNameText;
     [SerializeField] TextMeshProUGUI towerCostText;
 
     public TowerData TowerData { get; private set; }
+    public event Action<TowerData> ButtonSelected;
+    public event Action ButtonUnselected;
 
     public void SetTowerData(TowerData towerData)
     {
@@ -30,5 +34,15 @@ public class TowerButtonUI : MonoBehaviour
         if (Services.Get<IEconomicsManager>().GetCurrentGoldAmount() >= TowerData.GoldCostToBuild)
             towerCostText.color = Color.black;
         else towerCostText.color = Color.red;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ButtonSelected?.Invoke(TowerData);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        ButtonUnselected?.Invoke();
     }
 }

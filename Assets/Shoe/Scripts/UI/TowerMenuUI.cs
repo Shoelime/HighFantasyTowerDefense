@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,16 +11,19 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     private Button[] towerButtons;
     private TowerButtonUI[] towerButtonUIArray;
-    private TowerPlate selectedTowerPlate;
+    public TowerPlate SelectedTowerPlate { get; private set; }
     private TowerData[] towers;
     private RectTransform rectTransform;
 
     private AudioSource audioSource;
+    private TowerRangeDisplayer towerRangeDisplayer;
 
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         audioSource = GetComponentInParent<AudioSource>();
+        towerRangeDisplayer = GetComponent<TowerRangeDisplayer>();
+        towerRangeDisplayer.Initialize(this);
 
         CreateTowerDatabase();
         SetButtons();
@@ -49,33 +51,32 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
         for (int i = 0; i < 4; i++)
         {
-            // Capture the current value of i because lambda captures the variable itself, not the reference
-            int index = i;  
+            int index = i;
 
             towerButtons[index] = Instantiate(TowerButtonPrefab, Vector3.zero, Quaternion.identity, this.transform);
             towerButtonUIArray[index] = towerButtons[index].GetComponent<TowerButtonUI>();
             towerButtonUIArray[index].SetTowerData(towers[index]);
 
-            // Capture the TowerButtonUI instance
             TowerButtonUI buttonUI = towerButtonUIArray[index];
 
-            // Pass the TowerButtonUI's TowerData to the click event
             towerButtons[index].onClick.AddListener(() => OnTowerButtonClick(buttonUI.TowerData));
-    }
+            buttonUI.ButtonSelected += towerRangeDisplayer.DisplayTowerRange;
+            buttonUI.ButtonUnselected += towerRangeDisplayer.HideTowerRange;
+        }
     }
 
     void OnTowerButtonClick(TowerData data)
     {
-        selectedTowerPlate.BuildTower(data, out bool success);
+        SelectedTowerPlate.BuildTower(data, out bool success);
         OnUIElementClosed();
 
         if (success)
-            TryHideButtons(selectedTowerPlate);
+            TryHideButtons(SelectedTowerPlate);
     }
 
     void UpdateButtons(int goldCount)
     {
-        if (selectedTowerPlate == null)
+        if (SelectedTowerPlate == null)
             return;
 
         for (int i = 0; i < towerButtonUIArray.Length; i++)
@@ -86,7 +87,7 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     void TryHideButtons(TowerPlate plate)
     {
-        if (selectedTowerPlate == plate)
+        if (SelectedTowerPlate == plate)
         {
             HideButtons();
         }
@@ -94,12 +95,14 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     void HideButtons()
     {
-        selectedTowerPlate = null;
+        SelectedTowerPlate = null;
 
         foreach (var towerButton in towerButtons)
         {
             towerButton.gameObject.SetActive(false);
         }
+
+        towerRangeDisplayer.HideTowerRange();
 
         OnUIElementClosed();
     }
@@ -116,7 +119,7 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
             towerButton.gameObject.SetActive(true);
         }
 
-        selectedTowerPlate = plate;
+        SelectedTowerPlate = plate;
         UpdateButtons(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
         OnUIElementOpened();
     }
@@ -150,6 +153,12 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
         TowerPlate.PlateSelected -= DisplayButtons;
         TowerPlate.PlateUnSelected -= TryHideButtons;
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateButtons;
+
+        foreach (var buttonUI in towerButtonUIArray)
+        {
+            buttonUI.ButtonSelected -= towerRangeDisplayer.DisplayTowerRange;
+            buttonUI.ButtonUnselected -= towerRangeDisplayer.HideTowerRange;
+        }
     }
 
     public void OnUIElementOpened()
