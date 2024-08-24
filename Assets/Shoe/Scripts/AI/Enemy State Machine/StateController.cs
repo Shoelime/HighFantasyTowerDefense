@@ -6,7 +6,7 @@ public abstract class StateController : PooledMonoBehaviour
     public State RemainState;
     public State StartState;
 
-    private State currentState;
+    public State CurrentState { get; private set; }
     private State previousState;
 
     private float stateTimeElapsed;
@@ -29,19 +29,19 @@ public abstract class StateController : PooledMonoBehaviour
         if (!aiActive)
             return;
 
-        currentState.UpdateState(this);
+        CurrentState.UpdateState(this);
     }
 
     public void TransitionToState(State nextState)
     {
         if (nextState != RemainState)
         {
-            if (currentState != null)
-                previousState = currentState;
+            if (CurrentState != null)
+                previousState = CurrentState;
             else previousState = nextState;
 
-            previousState = currentState;
-            currentState = nextState;
+            previousState = CurrentState;
+            CurrentState = nextState;
 
             OnExitState();
         }

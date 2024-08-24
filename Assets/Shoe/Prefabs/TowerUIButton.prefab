@@ -137,6 +137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerNameText: {fileID: 4945037534548526847}
   towerCostText: {fileID: 3281877107019432072}
+  originalFontSize: 18
+  fontSizeWhenUpgrading: 13
 --- !u!1 &2335998298302463892
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,10 +20,10 @@ public class ShootProjectileAction : ITowerAction
             projectile.transform.position,
             currentPosition,
             previousPosition,
-            controller.TowerAiController.TowerData.ProjectileSpeed,
+            controller.TowerAiController.GetTowerSpecs().ProjectileSpeed,
             out float duration);
-
-        projectile.SetDamageData(controller.TowerAiController.TowerData.DamageData);
+        
+        projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
         projectile.CallCoroutine(projectile.transform.position, interceptPoint, duration, controller.TowerAiController.TargetToShoot);
 
         controller.TowerAiController.CooldownTrigger();

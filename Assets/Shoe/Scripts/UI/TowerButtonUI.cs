@@ -7,6 +7,8 @@ public class TowerButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 {
     [SerializeField] TextMeshProUGUI towerNameText;
     [SerializeField] TextMeshProUGUI towerCostText;
+    [SerializeField] float originalFontSize;
+    [SerializeField] float fontSizeWhenUpgrading;
 
     public TowerData TowerData { get; private set; }
     public event Action<TowerData> ButtonSelected;
@@ -15,12 +17,16 @@ public class TowerButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void SetTowerData(TowerData towerData)
     {
         TowerData = towerData;
-        SetTitleText(towerData.TowerType.ToString());
+        SetTitleText(towerData.TowerType.ToString(), false);
         SetGoldText(towerData.GoldCostToBuild.ToString());
     }
 
-    public void SetTitleText(string v)
+    public void SetTitleText(string v, bool upgrading)
     {
+        if (upgrading)
+            towerNameText.fontSize = fontSizeWhenUpgrading;
+        else towerNameText.fontSize = originalFontSize;
+
         towerNameText.text = v;
     }
 
@@ -29,9 +35,22 @@ public class TowerButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         towerCostText.text = v;
     }
 
-    public void SetCostTextColor()
+    public void SetCostTextColor(bool tryingToUpgrade, TowerPlate towerPlate)
     {
-        if (Services.Get<IEconomicsManager>().GetCurrentGoldAmount() >= TowerData.GoldCostToBuild)
+        bool canAfford = tryingToUpgrade ?
+            Services.Get<IEconomicsManager>().GetCurrentGoldAmount() >= towerPlate.PlacedTower.GetTowerSpecs().GoldCostToUpgrade :
+            Services.Get<IEconomicsManager>().GetCurrentGoldAmount() >= TowerData.GoldCostToBuild;
+
+        if (tryingToUpgrade)
+        {
+            SetTitleText("Upgrade", true);
+        }
+        else
+        {
+            SetTitleText(TowerData.TowerType.ToString(), false);
+        }
+
+        if (canAfford)
             towerCostText.color = Color.black;
         else towerCostText.color = Color.red;
     }

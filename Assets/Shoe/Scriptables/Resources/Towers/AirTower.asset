@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: AirTower
   m_EditorClassIdentifier: 
   towerType: 3
-  sightRadius: 10
-  fireRate: 1.5
-  projectileSpeed: 0
   goldCostToBuild: 150
   goldRefundedOnDisassembly: 75
   constructDuration: 4
@@ -27,10 +24,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   projectileToShoot: {fileID: 65595590194294711, guid: c7f31873f11f4f74dac88c280fa73c29, type: 3}
-  damageData:
-    DamagePerHit: 40
-    DamagePerSecond: 0
-    DamagePerSecondDuration: 0
-    DamageRadius: 0
-    StatusEffects:
-    - {fileID: 11400000, guid: e3bb452c7ed932f428a97ca675072965, type: 2}
+  upgradeableVariables:
+  - SightRadius: 10
+    FireRate: 1.5
+    ProjectileSpeed: 0
+    GoldCostToUpgrade: 110
+    DamageData:
+      DamagePerHit: 55
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 0
+      StatusEffects:
+      - {fileID: 11400000, guid: e3bb452c7ed932f428a97ca675072965, type: 2}
+  - SightRadius: 12
+    FireRate: 1.3
+    ProjectileSpeed: 0
+    GoldCostToUpgrade: 0
+    DamageData:
+      DamagePerHit: 55
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 0
+      StatusEffects:
+      - {fileID: 11400000, guid: e3bb452c7ed932f428a97ca675072965, type: 2}

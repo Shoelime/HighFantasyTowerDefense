@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: EarthTower
   m_EditorClassIdentifier: 
   towerType: 0
-  sightRadius: 15
-  fireRate: 0.5
-  projectileSpeed: 20
   goldCostToBuild: 120
   goldRefundedOnDisassembly: 50
   constructDuration: 4
@@ -27,9 +24,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   projectileToShoot: {fileID: 4272433243559801609, guid: cf443ec531f6a4341bfa9cb4dacf33f0, type: 3}
-  damageData:
-    DamagePerHit: 8
-    DamagePerSecond: 0
-    DamagePerSecondDuration: 0
-    DamageRadius: 0
-    StatusEffects: []
+  upgradeableVariables:
+  - SightRadius: 15
+    FireRate: 0.5
+    ProjectileSpeed: 20
+    GoldCostToUpgrade: 90
+    DamageData:
+      DamagePerHit: 9
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 0
+      StatusEffects: []
+  - SightRadius: 16
+    FireRate: 0.4
+    ProjectileSpeed: 20
+    GoldCostToUpgrade: 0
+    DamageData:
+      DamagePerHit: 9
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 0
+      StatusEffects: []

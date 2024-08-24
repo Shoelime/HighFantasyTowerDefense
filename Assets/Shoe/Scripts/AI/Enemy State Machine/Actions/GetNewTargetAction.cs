@@ -6,7 +6,7 @@ public class FindTargetAction : StateAction
 {
     public override void Act(StateController controller)
     {
-        if (!controller.CheckIfCountDownElapsed(controller.TowerAiController.TowerData.FireRate / 2))
+        if (!controller.CheckIfCountDownElapsed(controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).FireRate / 2))
             return;
 
         if (controller.TowerAiController.TargetToShoot != null)
@@ -14,8 +14,12 @@ public class FindTargetAction : StateAction
             /// Find a new target to shoot if we can't see current target or current target is too far away
             /// 
             if (!MathUtils.HasLineOfSight(
-                controller.transform.position + controller.TowerAiController.ProjectileStartPosition, controller.TowerAiController.TargetToShoot.transform, controller.TowerAiController.TowerData.LineOfSightLayers, controller.TowerAiController.TowerData.SightRadius) ||
-                Vector3.Distance(controller.transform.position, controller.TowerAiController.TargetToShoot.transform.position) > controller.TowerAiController.TowerData.SightRadius)
+                controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
+                controller.TowerAiController.TargetToShoot.transform, controller.TowerAiController.TowerData.LineOfSightLayers, 
+                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius) 
+                ||
+                Vector3.Distance(controller.transform.position, controller.TowerAiController.TargetToShoot.transform.position) > 
+                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius)
             {
                 GetNearbyTargets(controller);
             }
@@ -32,7 +36,7 @@ public class FindTargetAction : StateAction
 
     void GetNearbyTargets(StateController controller)
     {
-        Collider[] colliders = Physics.OverlapSphere(controller.transform.position, controller.TowerAiController.TowerData.SightRadius, controller.TowerAiController.TowerData.EnemyLayer);
+        Collider[] colliders = Physics.OverlapSphere(controller.transform.position, controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius, controller.TowerAiController.TowerData.EnemyLayer);
 
         if (colliders.Length == 0)
         {
@@ -52,7 +56,7 @@ public class FindTargetAction : StateAction
             Debug.DrawRay(controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
                 (colliders[i].transform.position + (Vector3.up * 0.5f)) - (controller.transform.position + controller.TowerAiController.ProjectileStartPosition), 
                 Color.yellow,
-                controller.TowerAiController.TowerData.FireRate);
+                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).FireRate);
 
             /// Not adding inactive objects
             /// 
@@ -63,7 +67,10 @@ public class FindTargetAction : StateAction
 
             /// No line of sight
             /// 
-            if (!MathUtils.HasLineOfSight(controller.transform.position + controller.TowerAiController.ProjectileStartPosition, colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers, controller.TowerAiController.TowerData.SightRadius))
+            if (!MathUtils.HasLineOfSight(
+                controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
+                colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers, 
+                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius))
             {
                 continue;
             }

@@ -13,7 +13,7 @@ public class AreaAttackAction : ITowerAction
             controller.TowerAiController.transform.position,
             Quaternion.identity);
 
-        projectile.SetDamageData(controller.TowerAiController.TowerData.DamageData);
+        projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
         projectile.DealDamage(null);
 
         controller.TowerAiController.CooldownTrigger();

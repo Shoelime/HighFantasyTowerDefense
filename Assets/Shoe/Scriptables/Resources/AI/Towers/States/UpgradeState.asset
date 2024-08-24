@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeState
   m_EditorClassIdentifier: 
   actions: []
-  transitions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: a7b6e32602d40f24692e30d108982cb8, type: 2}
+    trueState: {fileID: 11400000, guid: 2310a84f89a26e04f819c04641de35e2, type: 2}
+    falseState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}

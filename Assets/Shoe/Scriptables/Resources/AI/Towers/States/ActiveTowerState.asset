@@ -15,4 +15,7 @@ MonoBehaviour:
   actions:
   - {fileID: 11400000, guid: 8a2f97f9404ea104dab5b57771c1e1ac, type: 2}
   - {fileID: 11400000, guid: fec743352362f95478ba305047ebeb55, type: 2}
-  transitions: []
+  transitions:
+  - decision: {fileID: 11400000, guid: c4dba17d16e8a6c4884252c4a9244efe, type: 2}
+    trueState: {fileID: 11400000, guid: e3e084614b765f843bcf55fcd9558cff, type: 2}
+    falseState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}

@@ -12,8 +12,8 @@ public class MoveObjectToPosition : MonoBehaviour
     private void Start()
     {
         startPosition = transform.localPosition;
-        startTime = Time.time;
     }
+
     private void Update()
     {
         if (moving)
@@ -34,7 +34,6 @@ public class MoveObjectToPosition : MonoBehaviour
         // Lerp from the starting position to the target position based on the interpolation factor
         transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);
 
-        // If movement is completed, you can perform additional actions here
         if (t >= 1.0f)
         {
             moving = false;
@@ -43,6 +42,8 @@ public class MoveObjectToPosition : MonoBehaviour
 
     public void StartMovement()
     {
+        startTime = Time.time;
+
         moving = true;
     }
 }

@@ -17,6 +17,7 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     private AudioSource audioSource;
     private TowerRangeDisplayer towerRangeDisplayer;
+    public bool Upgrading { get; private set; }
 
     private void Start()
     {
@@ -67,7 +68,13 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     void OnTowerButtonClick(TowerData data)
     {
-        SelectedTowerPlate.BuildTower(data, out bool success);
+        bool success;
+
+        if (SelectedTowerPlate.ContainsTower())
+            SelectedTowerPlate.UpgradeTower(out success);
+        else
+            SelectedTowerPlate.BuildTower(data, out success);
+
         OnUIElementClosed();
 
         if (success)
@@ -81,7 +88,12 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
         for (int i = 0; i < towerButtonUIArray.Length; i++)
         {
-            towerButtonUIArray[i].SetCostTextColor();
+            towerButtonUIArray[i].SetCostTextColor(Upgrading, SelectedTowerPlate);
+
+            if (Upgrading)
+            {
+                break;
+            }
         }
     }
 
@@ -109,16 +121,31 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     void DisplayButtons(TowerPlate plate)
     {
-        if (plate.ContainsTower())
-            return;
+        Upgrading = false;
 
-        PositionMenu();
+        if (plate.ContainsTower())
+        {
+            if (plate.PlacedTower.IsMaxLevel() || plate.PlacedTower.CurrentState == plate.PlacedTower.StartState)
+                return;
+
+            Upgrading = true;
+            towerButtons[0].gameObject.SetActive(true);
+
+            ButtonsOpened(plate);
+            return;
+        }
 
         foreach (var towerButton in towerButtons)
         {
             towerButton.gameObject.SetActive(true);
         }
 
+        ButtonsOpened(plate);
+    }
+
+    void ButtonsOpened(TowerPlate plate)
+    {
+        PositionMenu();
         SelectedTowerPlate = plate;
         UpdateButtons(Services.Get<IEconomicsManager>().GetCurrentGoldAmount());
         OnUIElementOpened();
@@ -150,6 +177,8 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     private void OnDisable()
     {
+        Upgrading = false;
+
         TowerPlate.PlateSelected -= DisplayButtons;
         TowerPlate.PlateUnSelected -= TryHideButtons;
         Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateButtons;

@@ -12,18 +12,18 @@ public class TowerPlate : MonoBehaviour
     [SerializeField] private SoundData buildTowerAudio;
     [SerializeField] private SoundData buildErrorAudio;
 
-    private TowerAI placedTower;
+    public TowerAI PlacedTower { get; private set; }
     private bool plateSelected;
     private AudioSource audioSource;
-
     public Vector3 GetBasePosition => towerBasePosition;
+
 
     public static event Action<TowerPlate> PlateSelected;
     public static event Action<TowerPlate> PlateUnSelected;
 
     public bool ContainsTower()
     {
-        return placedTower != null;
+        return PlacedTower != null;
     }
 
     void Start()
@@ -44,10 +44,26 @@ public class TowerPlate : MonoBehaviour
     {
         if (Services.Get<IEconomicsManager>().AttemptToPurchase(towerToBuild.GoldCostToBuild))
         {
-            placedTower = Instantiate(towerToBuild.WorldPrefab, transform.position + towerBasePosition, transform.rotation, transform).GetComponent<TowerAI>();
-            placedTower.BuildTower();
+            PlacedTower = Instantiate(towerToBuild.WorldPrefab, transform.position + towerBasePosition, transform.rotation, transform).GetComponent<TowerAI>();
+            PlacedTower.BuildTower();
             success = true;
 
+            SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
+        }
+        else
+        {
+            success = false;
+            SoundManager.Instance.PlaySound(audioSource, buildErrorAudio, 1);
+        }
+    }
+
+    public void UpgradeTower(out bool success)
+    {
+        if (Services.Get<IEconomicsManager>().AttemptToPurchase(PlacedTower.GetTowerSpecs().GoldCostToUpgrade))
+        {
+            success = true;
+
+            PlacedTower.UpgradeTower();
             SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
         }
         else

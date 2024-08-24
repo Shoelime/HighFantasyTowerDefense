@@ -20,7 +20,7 @@ public class InstantAttackAction : ITowerAction
         projectile.LineRenderer.SetPosition(0, startPosition);
         projectile.LineRenderer.SetPosition(1, endPosition);
 
-        projectile.SetDamageData(controller.TowerAiController.TowerData.DamageData);
+        projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
         projectile.DealDamage(controller.TowerAiController.TargetToShoot);
 
         controller.TowerAiController.CooldownTrigger();  

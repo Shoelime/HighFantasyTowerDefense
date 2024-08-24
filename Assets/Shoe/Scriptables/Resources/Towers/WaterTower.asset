@@ -13,9 +13,6 @@ MonoBehaviour:
   m_Name: WaterTower
   m_EditorClassIdentifier: 
   towerType: 2
-  sightRadius: 10
-  fireRate: 2
-  projectileSpeed: 8
   goldCostToBuild: 130
   goldRefundedOnDisassembly: 60
   constructDuration: 4
@@ -27,10 +24,26 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   projectileToShoot: {fileID: 1827994737672233690, guid: d9c0ec7dfea4df8448f0a888fd92e0ed, type: 3}
-  damageData:
-    DamagePerHit: 3
-    DamagePerSecond: 0
-    DamagePerSecondDuration: 0
-    DamageRadius: 20
-    StatusEffects:
-    - {fileID: 11400000, guid: 64e165eb07e11414683e213ffd8c91fb, type: 2}
+  upgradeableVariables:
+  - SightRadius: 9
+    FireRate: 2
+    ProjectileSpeed: 8
+    GoldCostToUpgrade: 100
+    DamageData:
+      DamagePerHit: 3
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 18
+      StatusEffects:
+      - {fileID: 11400000, guid: 64e165eb07e11414683e213ffd8c91fb, type: 2}
+  - SightRadius: 10
+    FireRate: 1.75
+    ProjectileSpeed: 8
+    GoldCostToUpgrade: 0
+    DamageData:
+      DamagePerHit: 4
+      DamagePerSecond: 0
+      DamagePerSecondDuration: 0
+      DamageRadius: 20
+      StatusEffects:
+      - {fileID: 11400000, guid: 64e165eb07e11414683e213ffd8c91fb, type: 2}
