@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,9 +62,16 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
             TowerButtonUI buttonUI = towerButtonUIArray[index];
 
             towerButtons[index].onClick.AddListener(() => OnTowerButtonClick(buttonUI.TowerData));
-            buttonUI.ButtonSelected += towerRangeDisplayer.DisplayTowerRange;
+            buttonUI.ButtonSelected += DisplayTowerRange;
             buttonUI.ButtonUnselected += towerRangeDisplayer.HideTowerRange;
         }
+    }
+
+    private void DisplayTowerRange(TowerData data)
+    {
+        if (SelectedTowerPlate.ContainsTower())
+            towerRangeDisplayer.DisplayTowerRange(SelectedTowerPlate.PlacedTower.TowerData);
+        else towerRangeDisplayer.DisplayTowerRange(data);
     }
 
     void OnTowerButtonClick(TowerData data)

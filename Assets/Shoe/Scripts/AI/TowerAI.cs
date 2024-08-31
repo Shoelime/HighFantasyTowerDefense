@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +19,8 @@ public class TowerAI : StateController
     public int TowerLevel { get; private set; }
     public bool IsMaxLevel() { return TowerLevel == 1; }
 
+    private TowerPlate towerPlate;
+
     private void OnEnable()
     {
         TowerLevel = -1;
@@ -28,7 +29,7 @@ public class TowerAI : StateController
             TowerAiController = this;
     }
 
-    public void BuildTower()
+    public void BuildTower(TowerPlate towerPlate)
     {
         foreach (var mover in basePieces.GetComponentsInChildren<MoveObjectToPosition>())
         {
@@ -42,6 +43,8 @@ public class TowerAI : StateController
         Invoke(nameof(SetTowerStartingTimers), towerData.ConstructDuration);
 
         AllTargets = new List<Collider>();
+
+        this.towerPlate = towerPlate;
     }
 
     public void UpgradeTower()
@@ -69,6 +72,20 @@ public class TowerAI : StateController
             TowerType.Fire => new ShootProjectileAction(),
             _ => default,
         };
+    }
+
+    public void ButtonPressed(Vector3 clickPosition, GameObject clickedObject)
+    {
+        if (clickedObject == this.gameObject)
+        {
+            if (towerPlate.plateSelected)
+                towerPlate.SelectPlate(false);
+            else towerPlate.SelectPlate(true);
+        }
+        else if (towerPlate.plateSelected)
+        {
+            towerPlate.SelectPlate(false);
+        }
     }
 
     public void ClearTarget()
@@ -119,5 +136,11 @@ public class TowerAI : StateController
     public TowerUpgradableVariables GetTowerSpecs()
     {
         return TowerData.GetTowerSpecs(TowerLevel);
+    }
+
+    private new void OnDisable()
+    {
+        Services.Get<IInputManager>().OnLeftMouseButton -= ButtonPressed;
+        base.OnDisable();
     }
 }

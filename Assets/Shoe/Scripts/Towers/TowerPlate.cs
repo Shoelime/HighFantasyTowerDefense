@@ -13,10 +13,9 @@ public class TowerPlate : MonoBehaviour
     [SerializeField] private SoundData buildErrorAudio;
 
     public TowerAI PlacedTower { get; private set; }
-    private bool plateSelected;
+    public bool plateSelected { get; private set; }
     private AudioSource audioSource;
     public Vector3 GetBasePosition => towerBasePosition;
-
 
     public static event Action<TowerPlate> PlateSelected;
     public static event Action<TowerPlate> PlateUnSelected;
@@ -45,7 +44,7 @@ public class TowerPlate : MonoBehaviour
         if (Services.Get<IEconomicsManager>().AttemptToPurchase(towerToBuild.GoldCostToBuild))
         {
             PlacedTower = Instantiate(towerToBuild.WorldPrefab, transform.position + towerBasePosition, transform.rotation, transform).GetComponent<TowerAI>();
-            PlacedTower.BuildTower();
+            PlacedTower.BuildTower(this);
             success = true;
 
             SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
@@ -77,10 +76,23 @@ public class TowerPlate : MonoBehaviour
     {
         if (clickedObject == this.gameObject)
         {
+            SelectPlate(true);
+
+        }
+        else if (plateSelected)
+        {
+            SelectPlate(false);
+        }
+    }
+
+    public void SelectPlate(bool value)
+    {
+        if (value)
+        {
             PlateSelected?.Invoke(this);
             plateSelected = true;
         }
-        else if (plateSelected)
+        else
         {
             plateSelected = false;
             PlateUnSelected?.Invoke(this);

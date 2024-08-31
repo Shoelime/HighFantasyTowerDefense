@@ -2,55 +2,58 @@ using UnityEngine;
 
 public class TowerRangeDisplayer : MonoBehaviour
 {
-    [SerializeField] private GameObject towerRangeDisplayPrefab;
-    [SerializeField] private GameObject towerUpgradedRangeDisplayPrefab;
+    [SerializeField] private GameObject towerRangePrefab;
+    [SerializeField] private GameObject towerUpgradedRangePrefab;
     [SerializeField] private GameObject towerPreviousRangeDisplayPrefab;
 
-    private GameObject towerRangeDisplayerObject;
-    private GameObject towerUpgradedRangeDisplayerObject;
-    private GameObject towerPreviousRangeDisplayerObject;
+    private GameObject towerRangeDisplayer;
+    private GameObject towerUpgradedRangeDisplayer;
+    private GameObject towerPreviousRangeDisplayer;
     private TowerMenuUI towerMenuUI;
 
     public void Initialize(TowerMenuUI towerMenuUI)
     {
         this.towerMenuUI = towerMenuUI;
-        towerRangeDisplayerObject = Instantiate(towerRangeDisplayPrefab, null);
-        towerRangeDisplayerObject.SetActive(false);
+        towerRangeDisplayer = Instantiate(towerRangePrefab, null);
+        towerRangeDisplayer.SetActive(false);
 
-        towerUpgradedRangeDisplayerObject = Instantiate(towerUpgradedRangeDisplayPrefab, null);
-        towerUpgradedRangeDisplayerObject.SetActive(false);
+        towerUpgradedRangeDisplayer = Instantiate(towerUpgradedRangePrefab, null);
+        towerUpgradedRangeDisplayer.SetActive(false);
 
-        towerPreviousRangeDisplayerObject = Instantiate(towerPreviousRangeDisplayPrefab, null);
-        towerPreviousRangeDisplayerObject.SetActive(false);
+        towerPreviousRangeDisplayer = Instantiate(towerPreviousRangeDisplayPrefab, null);
+        towerPreviousRangeDisplayer.SetActive(false);
     }
 
     public void DisplayTowerRange(TowerData towerData)
     {
         if (towerMenuUI.Upgrading)
         {
-            towerUpgradedRangeDisplayerObject.SetActive(true);
-            towerPreviousRangeDisplayerObject.SetActive(true);
+            towerUpgradedRangeDisplayer.SetActive(true);
+            towerPreviousRangeDisplayer.SetActive(true);
 
-            towerUpgradedRangeDisplayerObject.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
-            towerPreviousRangeDisplayerObject.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
+            int towerLevel = towerMenuUI.SelectedTowerPlate.PlacedTower.TowerLevel;
 
-            towerUpgradedRangeDisplayerObject.transform.localScale = RangeConversion(towerData, towerMenuUI.SelectedTowerPlate.PlacedTower.TowerLevel + 1);
-            towerPreviousRangeDisplayerObject.transform.localScale = RangeConversion(towerData, towerMenuUI.SelectedTowerPlate.PlacedTower.TowerLevel);
+            towerUpgradedRangeDisplayer.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
+            towerPreviousRangeDisplayer.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
+
+            towerUpgradedRangeDisplayer.transform.localScale = RangeConversion(towerData, towerLevel + 1);
+            towerPreviousRangeDisplayer.transform.localScale = RangeConversion(towerData, towerLevel);
+
         }
         else
         {
-            towerRangeDisplayerObject.SetActive(true);
+            towerRangeDisplayer.SetActive(true);
 
-            towerRangeDisplayerObject.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
-            towerRangeDisplayerObject.transform.localScale = RangeConversion(towerData, 0);
+            towerRangeDisplayer.transform.position = towerMenuUI.SelectedTowerPlate.transform.position + towerMenuUI.SelectedTowerPlate.GetBasePosition;
+            towerRangeDisplayer.transform.localScale = RangeConversion(towerData, 0);
         }
     }
 
     public void HideTowerRange()
     {
-        towerRangeDisplayerObject.SetActive(false);
-        towerUpgradedRangeDisplayerObject.SetActive(false);
-        towerPreviousRangeDisplayerObject.SetActive(false);
+        towerRangeDisplayer.SetActive(false);
+        towerUpgradedRangeDisplayer.SetActive(false);
+        towerPreviousRangeDisplayer.SetActive(false);
     }
 
     Vector3 RangeConversion(TowerData towerData, int towerLevel)

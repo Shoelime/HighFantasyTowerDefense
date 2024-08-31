@@ -4,10 +4,15 @@ using static StatusEffectData;
 
 public class Projectile : PooledMonoBehaviour
 {
+    [Header("Visual object of projectile")]
     [SerializeField] private GameObject visualObject;
+    [Header("For area effect projectiles like the freeze circle")]
+    [SerializeField] private GameObject areaEffectObject;
+    [Header("Effects to play when hit")]
     [SerializeField] private ParticleSystem hitEffects;
+    [Header("SFX to play on hit")]
     [SerializeField] private SoundData hitSound;
-
+    [Header("Delay before disabling object")]
     [SerializeField] private float destroyDelay;
 
     private DamageData damageData;
@@ -110,6 +115,14 @@ public class Projectile : PooledMonoBehaviour
     public void SetDamageData(DamageData damageData)
     {
         this.damageData = damageData;
+
+        /// Set the effect size if not null
+        /// 
+        if (areaEffectObject != null)
+        {
+            Vector3 areaEffectSize = new Vector3(damageData.DamageRadius, damageData.DamageRadius, damageData.DamageRadius);
+            areaEffectObject.transform.localScale = areaEffectSize;
+        }
     }
 
     private void PlayHitEffects()

@@ -92,6 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2342fcb65aabf449af33dc97171c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerRangeDisplayPrefab: {fileID: 7129109965628500512, guid: 4103282f51024f948895a43f52d110a5, type: 3}
-  towerUpgradedRangeDisplayPrefab: {fileID: 5489577660281167681, guid: 0ebe31615e8417747b06b04c038ea788, type: 3}
+  towerRangePrefab: {fileID: 7129109965628500512, guid: 4103282f51024f948895a43f52d110a5, type: 3}
+  towerUpgradedRangePrefab: {fileID: 5489577660281167681, guid: 0ebe31615e8417747b06b04c038ea788, type: 3}
   towerPreviousRangeDisplayPrefab: {fileID: 8103550411608622908, guid: 5701a8a6070ccfc45abd93085772581e, type: 3}

@@ -110,6 +110,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Projectile_Water Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6213403395195840876, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8333243950118956765, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -154,6 +158,10 @@ PrefabInstance:
       propertyPath: destroyDelay
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
+      propertyPath: areaEffectObject
+      value: 
+      objectReference: {fileID: 4024281758024184799}
     - target: {fileID: 8848923680278183129, guid: ab050d2e68daf6245ba6e0d4523d08f1, type: 3}
       propertyPath: damageData.StatusEffects.Array.size
       value: 1

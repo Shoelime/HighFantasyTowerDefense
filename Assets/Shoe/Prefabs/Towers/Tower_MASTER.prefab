@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 4847598911612020051}
   - component: {fileID: 1504645913258370492}
   - component: {fileID: 484823859997152194}
+  - component: {fileID: 3864644362527296337}
   m_Layer: 7
   m_Name: AntennaPiece
   m_TagString: Untagged
@@ -270,6 +271,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0.0606606, z: -1.26066}
   duration: 4
+--- !u!114 &3864644362527296337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2434241539281083080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618af75ea7fe3d47a00294a20489eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerController: {fileID: -1428390529696515579}
 --- !u!1 &2473154670015977737
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +297,7 @@ GameObject:
   - component: {fileID: 5564804226326740583}
   - component: {fileID: 2533148093107240946}
   - component: {fileID: 5374073389392929561}
+  - component: {fileID: 8823419623213465040}
   m_Layer: 7
   m_Name: TopPiece
   m_TagString: Untagged
@@ -390,6 +405,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 2.25, z: 0}
   duration: 4
+--- !u!114 &8823419623213465040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473154670015977737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618af75ea7fe3d47a00294a20489eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerController: {fileID: -1428390529696515579}
 --- !u!1 &3659933807975849710
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +498,7 @@ GameObject:
   - component: {fileID: 4735927513111886225}
   - component: {fileID: 4526004605196946719}
   - component: {fileID: 9073806742841078727}
+  - component: {fileID: 3174378486043184838}
   m_Layer: 7
   m_Name: BottomPiece
   m_TagString: Untagged
@@ -577,6 +606,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0, z: 0}
   duration: 1
+--- !u!114 &3174378486043184838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7050140452099519143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618af75ea7fe3d47a00294a20489eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerController: {fileID: -1428390529696515579}
 --- !u!1 &7106647542526757754
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,6 +632,7 @@ GameObject:
   - component: {fileID: 443419941430509068}
   - component: {fileID: 1940088594132198702}
   - component: {fileID: 3852514589957865169}
+  - component: {fileID: 4957622244734706827}
   m_Layer: 7
   m_Name: MiddlePiece
   m_TagString: Untagged
@@ -697,6 +740,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 1, z: 0}
   duration: 2.5
+--- !u!114 &4957622244734706827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7106647542526757754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618af75ea7fe3d47a00294a20489eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerController: {fileID: -1428390529696515579}
 --- !u!1 &8728423534464590760
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,6 +766,7 @@ GameObject:
   - component: {fileID: 4615411251761586138}
   - component: {fileID: 2951261549087558784}
   - component: {fileID: 4136133070196497957}
+  - component: {fileID: 656746433629188200}
   m_Layer: 7
   m_Name: AntennaPiece (1)
   m_TagString: Untagged
@@ -817,6 +874,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0.0606606, z: 1.26066}
   duration: 4
+--- !u!114 &656746433629188200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8728423534464590760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a618af75ea7fe3d47a00294a20489eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerController: {fileID: -1428390529696515579}
 --- !u!1 &8893224275741872738
 GameObject:
   m_ObjectHideFlags: 0
