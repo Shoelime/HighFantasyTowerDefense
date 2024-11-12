@@ -12,6 +12,7 @@ public class WaveData : ScriptableObject
     public WaveComposition[] WaveCompositions => waveCompositions;
     public float DelayBetweenWaves => delayBetweenWaves;
     public float FirstWaveStartTimer => firstWaveStartTimer;
+    public int WaveCount => waveCompositions.Length;
 }
 
 [System.Serializable]

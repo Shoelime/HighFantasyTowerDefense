@@ -53,7 +53,7 @@ public class SoundManager : ISoundManager
             }
             else Debug.LogError("Can't play sound because of lack of components");
         }
-        else Debug.Log($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
+        //else Debug.Log($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
     }
 
     /// <summary>

@@ -13,10 +13,13 @@ public class WaveManager : IWaveManager, IDisposable
     private float waveTimer;
     private bool waveWaitingToBeSpawned = true;
 
-    public float TimeUntilNextWave { get; set; } 
+    public float TimeUntilNextWave { get; set; }
+
+    public bool IsLastWave() { return currentWave == waveData.WaveCount; }
 
     public static event Action AllEnemiesProcessed;
     public static event Action<EnemyCharacter> SpawnedEnemy;
+    public event Action NewWaveStarted;
 
     GameObject spawnerCoroutineObject;
     CoroutineMonoBehavior spawnerCoroutine;
@@ -70,6 +73,11 @@ public class WaveManager : IWaveManager, IDisposable
         }
     }
 
+    public (int, int) WaveCounter()
+    {
+        return (currentWave, waveData.WaveCount);
+    }
+
     public void Update()
     {
         // Don't advance timer if all waves are spawned
@@ -97,6 +105,9 @@ public class WaveManager : IWaveManager, IDisposable
     {
         WaveComposition waveComposition = waveData.WaveCompositions[currentWave];
 
+        currentWave++;
+        NewWaveStarted?.Invoke();
+
         // Iterate over each group in the wave composition
         for (int groupIndex = 0; groupIndex < waveComposition.OrderOfEnemies.Length; groupIndex++)
         {
@@ -119,7 +130,6 @@ public class WaveManager : IWaveManager, IDisposable
         }
 
         waveWaitingToBeSpawned = true;
-        currentWave++;
     }
 
     /// <summary>
