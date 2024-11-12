@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public static class Loader
 {
-    public enum Scene 
-    { 
-        Level01, 
-        Level02, 
-        LoadingScreen, 
-        MainMenu 
+    public enum Scene
+    {
+        Level01,
+        Level02,
+        LoadingScreen,
+        MainMenu
     }
 
     public static Action onLoaderCallback;
@@ -22,7 +22,7 @@ public static class Loader
     {
         /// Load the next scene asyncronously in the background
         /// 
-        onLoaderCallback = () => 
+        onLoaderCallback = () =>
         {
             GameObject loadingGameObject = new GameObject("Loading Game Object");
             loadingGameObject.AddComponent<CoroutineMonoBehavior>().StartCoroutine(LoadSceneAsync(scene));

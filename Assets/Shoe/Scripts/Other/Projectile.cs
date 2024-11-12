@@ -67,7 +67,7 @@ public class Projectile : PooledMonoBehaviour
         }
         else
         {
-            RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageData.DamageRadius/2, Vector3.up);
+            RaycastHit[] hits = Physics.SphereCastAll(transform.position, damageData.DamageRadius / 2, Vector3.up);
 
             foreach (RaycastHit hit in hits)
             {

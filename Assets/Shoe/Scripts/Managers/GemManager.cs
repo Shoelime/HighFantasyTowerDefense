@@ -14,7 +14,7 @@ public class GemManager : IGemManager, IDisposable
 
     public event Action AllGemsLost;
 
-    public void Initialize() 
+    public void Initialize()
     {
         gemPrefabs = Resources.LoadAll<GameObject>("Gems");
 
@@ -49,9 +49,9 @@ public class GemManager : IGemManager, IDisposable
         for (int i = 0; i < GemCountAtBase; i++)
         {
             spawnedGems[i] = GameObject.Instantiate(
-                gemPrefabs[i], 
-                container.GemHolders[i].position, 
-                Quaternion.identity, 
+                gemPrefabs[i],
+                container.GemHolders[i].position,
+                Quaternion.identity,
                 container.GemHolders[i]);
 
             AvailableGems.Add(spawnedGems[i]);

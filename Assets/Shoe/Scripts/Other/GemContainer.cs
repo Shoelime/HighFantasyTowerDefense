@@ -5,7 +5,7 @@ public class GemContainer : MonoBehaviour
     public Transform[] GemHolders { get; private set; }
 
     public void Initialize()
-    {    
+    {
         int childCount = transform.childCount;
         GemHolders = new Transform[childCount];
         Transform[] allTransforms = GetComponentsInChildren<Transform>();

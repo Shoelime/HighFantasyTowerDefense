@@ -16,7 +16,7 @@ public class HUD : MonoBehaviour, IUIElementSound
     [SerializeField] private SoundData onUISelectSound;
 
     private AudioSource audioSource;
-    private VictoryCanvas victoryCanvas;    
+    private VictoryCanvas victoryCanvas;
 
     public static event Action OnRestartButton;
     public static event Action NextWave;

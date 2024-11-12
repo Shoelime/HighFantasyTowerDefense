@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class EnemyWobble : MonoBehaviour
 {
-    [SerializeField] private float wobbleSpeed = 20f; 
-    [SerializeField] private float wobbleAmount = 10f; 
-    [SerializeField] private float tiltAmount = 5f; 
-    [SerializeField] private float tiltSpeed = 20f; 
+    [SerializeField] private float wobbleSpeed = 20f;
+    [SerializeField] private float wobbleAmount = 10f;
+    [SerializeField] private float tiltAmount = 5f;
+    [SerializeField] private float tiltSpeed = 20f;
 
     private Vector3 startPosition;
     private Quaternion startRotation;
@@ -19,7 +19,7 @@ public class EnemyWobble : MonoBehaviour
         startRotation = transform.localRotation;
 
         // Randomize the start time for variation
-        timeOffset = Random.Range(0f, 100f); 
+        timeOffset = Random.Range(0f, 100f);
 
         enemyCharacter = GetComponentInParent<EnemyCharacter>();
     }

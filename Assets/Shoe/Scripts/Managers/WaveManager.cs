@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using static Loader;
 
 public class WaveManager : IWaveManager, IDisposable
 {
@@ -150,7 +149,7 @@ public class WaveManager : IWaveManager, IDisposable
                 enemy.SpawnEnemy();
                 SpawnedEnemy?.Invoke(enemy);
 
-                break; 
+                break;
             }
         }
     }

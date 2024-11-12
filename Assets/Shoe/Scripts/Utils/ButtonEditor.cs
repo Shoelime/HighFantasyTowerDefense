@@ -1,7 +1,8 @@
-using UnityEngine;
-using UnityEditor;
-using System.Reflection;
+#if UNITY_EDITOR
 using System;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(MonoBehaviour), true)]
 public class ButtonEditor : Editor
@@ -36,3 +37,4 @@ public class ButtonEditor : Editor
 
 [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
 public class ButtonAttribute : PropertyAttribute { }
+#endif

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -167,8 +166,8 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
         // Convert screen position to Canvas/RectTransform position
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rectTransform.parent.GetComponent<RectTransform>(),
-            mousePosition, 
-            null, 
+            mousePosition,
+            null,
             out Vector2 localPoint);
 
         // Apply offset to the position
@@ -206,6 +205,6 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
     public void OnUIElementClosed()
     {
-      Services.Get<ISoundManager>().PlaySound(audioSource, onUIDeSelectSound, 1);
+        Services.Get<ISoundManager>().PlaySound(audioSource, onUIDeSelectSound, 1);
     }
 }

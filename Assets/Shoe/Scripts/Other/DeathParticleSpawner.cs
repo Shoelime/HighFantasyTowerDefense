@@ -14,7 +14,7 @@ public class DeathParticleSpawner : MonoBehaviour
     {
         EnemyCharacter.EnemyDied += SpawnDeathParticles;
     }
-
+#if UNITY_EDITOR
     /// <summary>
     /// For fast testing
     /// </summary>
@@ -24,7 +24,7 @@ public class DeathParticleSpawner : MonoBehaviour
         int randomData = Random.Range(0, 3);
         SpawnDeathParticles(enemyData[randomData], new Vector3(-5 + randomData, 0, 6 + randomData));
     }
-
+#endif
     /// <summary>
     /// Spawn death particles based on enemy type, to their death location
     /// </summary>

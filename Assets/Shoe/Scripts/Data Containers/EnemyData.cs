@@ -20,7 +20,7 @@ public class EnemyData : ScriptableObject
     public float GemCheckInterval { get { return gemCheckInterval; } }
     public float GemPickupDistance { get { return gemPickupDistance; } }
     public string Description { get { return description; } }
-    public int GoldCarryCount  { get { return goldCarryCount; } }
+    public int GoldCarryCount { get { return goldCarryCount; } }
     public GameObject WorldPrefab { get { return worldPrefab; } }
 }
 

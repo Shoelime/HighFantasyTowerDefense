@@ -13,7 +13,7 @@ public class ShootProjectileAction : ITowerAction
         Vector3 currentPosition = controller.TowerAiController.TargetToShoot.transform.position;
 
         var projectile = controller.TowerAiController.TowerData.ProjectileToShoot.Get<Projectile>(
-            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition, 
+            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition,
             Quaternion.identity);
 
         Vector3 interceptPoint = MathUtils.CalculateInterceptPoint(
@@ -22,7 +22,7 @@ public class ShootProjectileAction : ITowerAction
             previousPosition,
             controller.TowerAiController.GetTowerSpecs().ProjectileSpeed,
             out float duration);
-        
+
         projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
         projectile.CallCoroutine(projectile.transform.position, interceptPoint, duration, controller.TowerAiController.TargetToShoot);
 

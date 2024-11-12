@@ -33,7 +33,7 @@ public class EnemyCharacter : StateController
         if (enemyCollider == null)
             enemyCollider = GetComponent<Collider>();
 
-        if(audioSource == null)
+        if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
         if (EnemyAiController == null)
@@ -54,7 +54,7 @@ public class EnemyCharacter : StateController
 
         SetEnemyState(EnemyUnitState.AssaultingBase);
 
-        CurrentWaypointIndex = 0; 
+        CurrentWaypointIndex = 0;
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class EnemyCharacter : StateController
             case EffectType.Freeze:
                 CurrentMoveSpeed *= status.speedReductionPercentage;
                 break;
-            case EffectType.Burn: 
+            case EffectType.Burn:
                 break;
             case EffectType.Stun:
                 CurrentMoveSpeed = 0;

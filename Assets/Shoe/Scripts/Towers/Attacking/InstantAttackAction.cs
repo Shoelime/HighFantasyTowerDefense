@@ -10,7 +10,7 @@ public class InstantAttackAction : ITowerAction
         }
 
         var projectile = controller.TowerAiController.TowerData.ProjectileToShoot.Get<Projectile>(
-            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition, 
+            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition,
             Quaternion.identity);
 
         Vector3 startPosition = controller.TowerAiController.transform.TransformPoint(controller.TowerAiController.ProjectileStartPosition);
@@ -23,6 +23,6 @@ public class InstantAttackAction : ITowerAction
         projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
         projectile.DealDamage(controller.TowerAiController.TargetToShoot);
 
-        controller.TowerAiController.CooldownTrigger();  
+        controller.TowerAiController.CooldownTrigger();
     }
 }

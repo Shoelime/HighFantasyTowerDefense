@@ -41,7 +41,7 @@ public class MoveUnitTowardsTargetAction : StateAction
         {
             if (controller.EnemyAiController.CurrentEnemyState == EnemyUnitState.AssaultingBase)
             {
-                if (controller.EnemyAiController.CurrentWaypointIndex<Services.Get<IPathFinder>().Waypoints.Length - 1)
+                if (controller.EnemyAiController.CurrentWaypointIndex < Services.Get<IPathFinder>().Waypoints.Length - 1)
                     controller.EnemyAiController.IncrementWaypointIndex();
             }
             else

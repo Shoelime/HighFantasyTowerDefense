@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MaterialAlphaFade : MonoBehaviour
 {
-    public MeshRenderer meshRenderer; 
+    public MeshRenderer meshRenderer;
 
     public float fadeDuration = 1f;
     Color color;

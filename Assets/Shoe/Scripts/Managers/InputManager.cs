@@ -12,7 +12,7 @@ public class InputManager : IInputManager
 
     public void Initialize()
     {
-        mouseRaycastDetector =  new MouseRaycastDetector();
+        mouseRaycastDetector = new MouseRaycastDetector();
         mouseRaycastDetector.Initialize();
     }
 

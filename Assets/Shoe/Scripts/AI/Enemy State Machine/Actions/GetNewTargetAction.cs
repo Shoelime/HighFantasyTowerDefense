@@ -14,11 +14,11 @@ public class FindTargetAction : StateAction
             /// Find a new target to shoot if we can't see current target or current target is too far away
             /// 
             if (!MathUtils.HasLineOfSight(
-                controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
-                controller.TowerAiController.TargetToShoot.transform, controller.TowerAiController.TowerData.LineOfSightLayers, 
-                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius) 
+                controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
+                controller.TowerAiController.TargetToShoot.transform, controller.TowerAiController.TowerData.LineOfSightLayers,
+                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius)
                 ||
-                Vector3.Distance(controller.transform.position, controller.TowerAiController.TargetToShoot.transform.position) > 
+                Vector3.Distance(controller.transform.position, controller.TowerAiController.TargetToShoot.transform.position) >
                 controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius)
             {
                 GetNearbyTargets(controller);
@@ -53,8 +53,8 @@ public class FindTargetAction : StateAction
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            Debug.DrawRay(controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
-                (colliders[i].transform.position + (Vector3.up * 0.5f)) - (controller.transform.position + controller.TowerAiController.ProjectileStartPosition), 
+            Debug.DrawRay(controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
+                (colliders[i].transform.position + (Vector3.up * 0.5f)) - (controller.transform.position + controller.TowerAiController.ProjectileStartPosition),
                 Color.yellow,
                 controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).FireRate);
 
@@ -68,8 +68,8 @@ public class FindTargetAction : StateAction
             /// No line of sight
             /// 
             if (!MathUtils.HasLineOfSight(
-                controller.transform.position + controller.TowerAiController.ProjectileStartPosition, 
-                colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers, 
+                controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
+                colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers,
                 controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius))
             {
                 continue;
