@@ -159,7 +159,7 @@ public class WaveManager : IWaveManager, IDisposable
     /// Event called each time an enemies dies
     /// </summary>
     /// <param name="enemy"></param>
-    void EnemyKilled(EnemyData enemy)
+    void EnemyKilled(EnemyData enemy, Vector3 pos)
     {
         if (++enemyDespawnCount >= totalEnemyCount)
         {

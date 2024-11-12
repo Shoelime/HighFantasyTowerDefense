@@ -16,7 +16,7 @@ public class EnemyCharacter : StateController
     public Vector3 PreviousPosition { get; internal set; }
     public int CurrentWaypointIndex { get; private set; }
 
-    public static event Action<EnemyData> EnemyDied;
+    public static event Action<EnemyData, Vector3> EnemyDied;
     public static event Action<EnemyCharacter> EnemySnatchedGem;
     public static event Action<EnemyCharacter> EnemyArrivedToBase;
     public static event Action<EnemyCharacter> EnemyArrivedHomeEvent;
@@ -198,7 +198,7 @@ public class EnemyCharacter : StateController
     {
         DropGem();
 
-        EnemyDied?.Invoke(enemyData);
+        EnemyDied?.Invoke(enemyData, transform.position);
 
         healthBar.CallReturnToPool();
         enemyCollider.enabled = false;

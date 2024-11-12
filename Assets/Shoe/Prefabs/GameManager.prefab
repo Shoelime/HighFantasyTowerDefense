@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 427041140158282177}
   - component: {fileID: 7223911537497263951}
   - component: {fileID: 1427900258723883834}
+  - component: {fileID: 3512960815609658754}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -58,6 +59,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ee1a2fa18a34f478ce8c581f3ff3b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3512960815609658754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5757493566315106120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d1299cb3e4e314c9dbfbd7d0bde2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footmanDeathParticles: {fileID: 5769630098306577183, guid: 93359f01a7b84b844a04c9336a3bd487, type: 3}
+  houndDeathParticles: {fileID: 5411676380522809038, guid: cc70b004d707bfb4ab3d223a34d6812c, type: 3}
+  crusaderDeathParticles: {fileID: 2378878092828519450, guid: 8c0e2faa4600caa40b232d64ba90b357, type: 3}
+  spawnRotation: {x: -90, y: 0, z: 0}
+  enemyData:
+  - {fileID: 11400000, guid: 13a1705e86af0bc418e1b534344646b2, type: 2}
+  - {fileID: 11400000, guid: db9e46cb869bc6a4ca5b2dd122498872, type: 2}
+  - {fileID: 11400000, guid: ecb72d7c4762c7241b331819ca82d9d7, type: 2}
 --- !u!1 &6685256637924348873
 GameObject:
   m_ObjectHideFlags: 0
