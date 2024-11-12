@@ -76,15 +76,25 @@ public class TowerAI : StateController
 
     public void ButtonPressed(Vector3 clickPosition, GameObject clickedObject)
     {
-        if (clickedObject == this.gameObject)
+        var isInHierarchy = MathUtils.IsInParentHierarchy(clickedObject, transform);
+
+        if (isInHierarchy == null)
         {
             if (towerPlate.plateSelected)
                 towerPlate.SelectPlate(false);
-            else towerPlate.SelectPlate(true);
         }
-        else if (towerPlate.plateSelected)
+        else if (isInHierarchy == true)
         {
-            towerPlate.SelectPlate(false);
+            // The clicked object is in the tower's hierarchy
+            if (towerPlate.plateSelected)
+                towerPlate.SelectPlate(false);
+            else
+                towerPlate.SelectPlate(true);
+        }
+        else
+        {
+            if (towerPlate.plateSelected)
+                towerPlate.SelectPlate(false);
         }
     }
 

@@ -175,4 +175,30 @@ public static class MathUtils
 
         return closestObject;
     }
+
+    public static bool? IsInParentHierarchy(GameObject target, Transform childTransform)
+    {
+        if (target == null)
+        {
+            return null;
+        }
+
+        Transform currentTransform = target.transform;
+
+        // Loop through the parent hierarchy
+        while (currentTransform != null)
+        {
+            // If the current transform is the same as this GameObject's transform, return true
+            if (currentTransform == childTransform)
+            {
+                return true;
+            }
+
+            // Move to the next parent in the hierarchy
+            currentTransform = currentTransform.parent;
+        }
+
+        // Return false if no match is found in the hierarchy
+        return false;
+    }
 }

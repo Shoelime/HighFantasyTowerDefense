@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Loader;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : ISoundManager
 {
-    public static SoundManager Instance { get; private set; }
-
-    public int maxSimultaneousImpactSounds = 3;
-    public int maxSimultaneousDeathSounds = 3;
-    public int maxSimultaneousLaunchSounds = 3;
-    public int maxSimultaneousOtherSounds = 10;
+    int maxSimultaneousImpactSounds = 3;
+    int maxSimultaneousDeathSounds = 3;
+    int maxSimultaneousLaunchSounds = 3;
+    int maxSimultaneousOtherSounds = 10;
 
     private Dictionary<SoundType, int> activeSounds;
+    CoroutineMonoBehavior audioPlayerCoroutine;
+    GameObject audioPlayerCoroutineObject;
 
-    private void Awake()
+    public void Initialize()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
         InitializeSoundLimits();
+
+        audioPlayerCoroutineObject = new GameObject("Audio Player Object");
+        audioPlayerCoroutine = audioPlayerCoroutineObject.AddComponent<CoroutineMonoBehavior>();
     }
 
     /// <summary>
@@ -50,11 +49,11 @@ public class SoundManager : MonoBehaviour
         {
             if (audioSource != null && data != null)
             {
-                StartCoroutine(PlaySoundCoroutine(audioSource, data.GetRandomClip(), data.soundType, volume));
+                audioPlayerCoroutine.StartCoroutine(PlaySoundCoroutine(audioSource, data.GetRandomClip(), data.soundType, volume));
             }
             else Debug.LogError("Can't play sound because of lack of components");
         }
-        else Debug.LogError($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
+        else Debug.Log($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
     }
 
     /// <summary>

@@ -72,14 +72,6 @@ public class WaveManager : IWaveManager, IDisposable
 
     public void Update()
     {
-#if UNITY_EDITOR
-        /// Quick cheat to move on to next level
-        /// 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            AllEnemiesProcessed?.Invoke();
-        }
-#endif
         // Don't advance timer if all waves are spawned
         if (currentWave >= waveData.WaveCompositions.Length)
             return;

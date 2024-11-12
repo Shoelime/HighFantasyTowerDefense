@@ -26,6 +26,9 @@ public class GameServices : Services
         var waveManager = new WaveManager();
         AddService<IWaveManager>(waveManager);
 
+        var soundManager = new SoundManager();
+        AddService<ISoundManager>(soundManager);
+
         // Initialize all services
         foreach (var service in serviceMap.Values)
         {

@@ -11,7 +11,7 @@ public class TowerSelector : MonoBehaviour
 
     private void ButtonPressed(Vector3 clickPosition, GameObject clickObject)
     {
-        towerController.ButtonPressed(clickPosition, towerController.gameObject);
+        towerController.ButtonPressed(clickPosition, clickObject);
     }
 
     private void OnDisable()

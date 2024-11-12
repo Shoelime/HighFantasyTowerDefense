@@ -5,11 +5,6 @@ using UnityEngine.SceneManagement;
 
 public static class Loader
 {
-    /// <summary>
-    /// Used as a placeholder class to run the coroutine thats otherwise inaccessible to this class
-    /// </summary>
-    public class CoroutineMonoBehavior : MonoBehaviour { }
-
     public enum Scene 
     { 
         Level01, 
@@ -20,6 +15,8 @@ public static class Loader
 
     public static Action onLoaderCallback;
     private static AsyncOperation loadingAsyncOperation;
+
+    public static event Action OnSceneLoaded;
 
     public static void Load(Scene scene)
     {
@@ -34,6 +31,8 @@ public static class Loader
         /// Display loading screen while we load the actual screne
         /// 
         SceneManager.LoadSceneAsync(Scene.LoadingScreen.ToString());
+
+        OnSceneLoaded?.Invoke();
     }
 
     public static void Restart()
@@ -57,6 +56,7 @@ public static class Loader
         /// Display loading screen while we load the actual screne
         /// 
         SceneManager.LoadSceneAsync(Scene.LoadingScreen.ToString());
+        OnSceneLoaded?.Invoke();
     }
 
     public static Scene GetCurrentScene()
@@ -103,3 +103,8 @@ public static class Loader
         }
     }
 }
+
+/// <summary>
+/// Used as a placeholder class to run the coroutine thats otherwise inaccessible to this class
+/// </summary>
+public class CoroutineMonoBehavior : MonoBehaviour { }

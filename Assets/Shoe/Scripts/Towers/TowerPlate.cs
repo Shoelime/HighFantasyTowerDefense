@@ -47,12 +47,12 @@ public class TowerPlate : MonoBehaviour
             PlacedTower.BuildTower(this);
             success = true;
 
-            SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
+            Services.Get<ISoundManager>().PlaySound(audioSource, buildTowerAudio, 1);
         }
         else
         {
             success = false;
-            SoundManager.Instance.PlaySound(audioSource, buildErrorAudio, 1);
+            Services.Get<ISoundManager>().PlaySound(audioSource, buildErrorAudio, 1);
         }
     }
 
@@ -63,12 +63,12 @@ public class TowerPlate : MonoBehaviour
             success = true;
 
             PlacedTower.UpgradeTower();
-            SoundManager.Instance.PlaySound(audioSource, buildTowerAudio, 1);
+            Services.Get<ISoundManager>().PlaySound(audioSource, buildTowerAudio, 1);
         }
         else
         {
             success = false;
-            SoundManager.Instance.PlaySound(audioSource, buildErrorAudio, 1);
+            Services.Get<ISoundManager>().PlaySound(audioSource, buildErrorAudio, 1);
         }
     }
 

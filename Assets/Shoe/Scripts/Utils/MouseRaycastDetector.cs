@@ -20,6 +20,9 @@ public class MouseRaycastDetector
         {
             CurrentMouseTarget = hitInfo.collider.gameObject;
         }
-        else CurrentMouseTarget = null;
+        else
+        {
+            CurrentMouseTarget = null;
+        }
     }
 }

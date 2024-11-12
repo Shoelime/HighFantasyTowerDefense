@@ -75,11 +75,11 @@ public class HUD : MonoBehaviour, IUIElementSound
 
     public void OnUIElementOpened()
     {
-        SoundManager.Instance.PlaySound(audioSource, onUISelectSound, 1);
+        Services.Get<ISoundManager>().PlaySound(audioSource, onUISelectSound, 1);
     }
 
     public void OnUIElementClosed()
     {
-        SoundManager.Instance.PlaySound(audioSource, onUIDeSelectSound, 1);
+        Services.Get<ISoundManager>().PlaySound(audioSource, onUIDeSelectSound, 1);
     }
 }

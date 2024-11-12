@@ -205,7 +205,7 @@ public class EnemyCharacter : StateController
         visualObject.SetActive(false);
 
         if (deathSound != null)
-            SoundManager.Instance.PlaySound(audioSource, deathSound);
+            Services.Get<ISoundManager>().PlaySound(audioSource, deathSound);
 
         HealthComponent.HealthReachedZero -= Death;
         HealthComponent.HealthReduced -= HealthReduced;

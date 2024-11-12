@@ -142,7 +142,7 @@ public class Projectile : PooledMonoBehaviour
             Invoke(nameof(DisableLineRenderer), 0.1f);
         }
 
-        SoundManager.Instance.PlaySound(audioSource, hitSound, 1);
+        Services.Get<ISoundManager>().PlaySound(audioSource, hitSound, 1);
 
         ReturnToPool(destroyDelay);
     }

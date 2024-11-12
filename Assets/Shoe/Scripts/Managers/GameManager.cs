@@ -24,12 +24,14 @@ public class GameManager : IGameManager, IDisposable
         Services.Get<IGemManager>().AllGemsLost += GameLost;
         WaveManager.AllEnemiesProcessed += GameWon;
         HUD.OnRestartButton += RestartGame;
+
+        Services.Get<ITimeManager>().SetTimeScale(1f);
     }
 
     private void RestartGame()
     {
         PauseToggle();
-        Loader.Load(Loader.GetCurrentScene());
+        Loader.Restart();
     }
 
     /// <summary>
@@ -48,16 +50,16 @@ public class GameManager : IGameManager, IDisposable
     {
         DefeatEvent?.Invoke();
         PauseToggle();
+
         Services.Get<IGameStateHandler>().SetGameState(GameState.Defeat);
-        Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void GameWon()
     {
         VictoryEvent?.Invoke();
         PauseToggle();
+
         Services.Get<IGameStateHandler>().SetGameState(GameState.Victory);
-        Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
     }
 
     private void PauseToggle()
@@ -82,5 +84,20 @@ public class GameManager : IGameManager, IDisposable
         Services.Get<IGemManager>().AllGemsLost -= GameLost;
         WaveManager.AllEnemiesProcessed -= GameWon;
         HUD.OnRestartButton -= RestartGame;
+    }
+
+    public void CallRestart()
+    {
+        RestartGame();
+    }
+
+    public void CallWinState()
+    {
+        GameWon();
+    }
+
+    public void CallLoseState()
+    {
+        GameLost();
     }
 }

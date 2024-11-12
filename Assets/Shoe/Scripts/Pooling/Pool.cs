@@ -8,6 +8,11 @@ public class Pool : MonoBehaviour
     private Queue<PooledMonoBehaviour> objects = new Queue<PooledMonoBehaviour>();
     private PooledMonoBehaviour prefab;
 
+    static Pool()
+    {
+        Loader.OnSceneLoaded += ClearPools;
+    }
+
     public static Pool GetPool(PooledMonoBehaviour prefab)
     {
         if (pools.ContainsKey(prefab))
@@ -55,14 +60,21 @@ public class Pool : MonoBehaviour
             return;
         }
 
-        if (!gameObject.activeSelf)
+        // Check if the pool instance is destroyed or inactive
+        if (this == null || !gameObject.activeSelf)
         {
             return;
         }
-        if (pooledObject.gameObject.activeSelf)
+
+        if (pooledObject.gameObject.activeInHierarchy)
         {
             pooledObject.transform.SetParent(this.transform);
         }
         objects.Enqueue(pooledObject);
+    }
+
+    private static void ClearPools()
+    {
+        pools.Clear();
     }
 }
