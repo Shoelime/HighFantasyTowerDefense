@@ -9,29 +9,16 @@ public class SoundManager : ISoundManager
     int maxSimultaneousLaunchSounds = 3;
     int maxSimultaneousOtherSounds = 10;
 
-    private Dictionary<SoundType, int> activeSounds;
-    CoroutineMonoBehavior audioPlayerCoroutine;
-    GameObject audioPlayerCoroutineObject;
+    private Dictionary<SoundType, Queue<SoundData>> activeSounds;
+    private CoroutineMonoBehavior audioPlayerCoroutine;
+    private GameObject audioPlayerCoroutineObject;
 
     public void Initialize()
     {
-        InitializeSoundLimits();
+        activeSounds = new Dictionary<SoundType, Queue<SoundData>>();
 
         audioPlayerCoroutineObject = new GameObject("Audio Player Object");
         audioPlayerCoroutine = audioPlayerCoroutineObject.AddComponent<CoroutineMonoBehavior>();
-    }
-
-    /// <summary>
-    /// Set the starting values
-    /// </summary>
-    private void InitializeSoundLimits()
-    {
-        activeSounds = new Dictionary<SoundType, int>();
-
-        activeSounds[SoundType.Impact] = 0;
-        activeSounds[SoundType.Death] = 0;
-        activeSounds[SoundType.Launch] = 0;
-        activeSounds[SoundType.Other] = 0;
     }
 
     /// <summary>
@@ -44,15 +31,24 @@ public class SoundManager : ISoundManager
     {
         int maxSimultaneousSounds = GetMaxSimultaneousSounds(data.soundType);
 
-        if (activeSounds[data.soundType] < maxSimultaneousSounds)
+        if (!activeSounds.ContainsKey(data.soundType))
         {
-            if (audioSource != null && data != null)
-            {
-                audioPlayerCoroutine.StartCoroutine(PlaySoundCoroutine(audioSource, data.GetRandomClip(), data.soundType, volume));
-            }
-            else Debug.LogError("Can't play sound because of lack of components");
+            activeSounds[data.soundType] = new Queue<SoundData>();
         }
-        //else Debug.Log($"Can't play sound {data.soundType} because max limit {GetMaxSimultaneousSounds(data.soundType)} exceeded");
+
+        Queue<SoundData> soundQueue = activeSounds[data.soundType];
+
+        if (soundQueue.Count >= GetMaxSimultaneousSounds(data.soundType))
+        {
+            // Remove oldest sound only if it's still in the queue
+            if (soundQueue.TryDequeue(out SoundData oldestSound))
+            {
+                audioSource.Stop();
+            }
+        }
+
+        audioPlayerCoroutine.StartCoroutine(PlaySoundCoroutine(audioSource, data, volume));
+        soundQueue.Enqueue(data);
     }
 
     /// <summary>
@@ -63,15 +59,17 @@ public class SoundManager : ISoundManager
     /// <param name="soundType"></param>
     /// <param name="volume"></param>
     /// <returns></returns>
-    private IEnumerator PlaySoundCoroutine(AudioSource audioSource, AudioClip clip, SoundType soundType, float volume)
+    private IEnumerator PlaySoundCoroutine(AudioSource audioSource, SoundData data, float volume = 1f)
     {
-        activeSounds[soundType]++;
         audioSource.volume = volume;
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(data.GetRandomClip());
 
-        yield return new WaitForSeconds(clip.length);
+        yield return new WaitForSeconds(data.clipDuration);
 
-        activeSounds[soundType]--;
+        if (activeSounds.TryGetValue(data.soundType, out Queue<SoundData> soundQueue) && soundQueue.Count > 0)
+        {
+            soundQueue.Dequeue();
+        }
     }
 
     /// <summary>

@@ -6,6 +6,7 @@ public class SoundData : ScriptableObject
 {
     public SoundType soundType;
     public List<AudioClip> audioClips;
+    public float clipDuration;
 
     public AudioClip GetRandomClip()
     {
