@@ -15,6 +15,10 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
 
+      # Debugging - List directory to confirm project files
+      - name: List directory
+        run: ls -R
+
       # Set up Unity
       - name: Set up Unity
         uses: game-ci/unity-builder@v2
