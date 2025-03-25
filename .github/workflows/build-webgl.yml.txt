@@ -1,0 +1,35 @@
+name: Build WebGL
+
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      # Set up Unity
+      - name: Set up Unity
+        uses: game-ci/unity-builder@v2
+        with:
+          unityVersion: 2022.3.41f1
+
+      # Build the project for WebGL
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v2
+        with:
+          targetPlatform: WebGL
+
+      # Upload the build as an artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: WebGL-Build
+          path: Build/
