@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
-  m_Stats: 1
+  m_Stats: 0
   m_SelectedSizes: 01000000000000000000000000000000000000000000000000000000000000000000000000000000
   m_ZoomArea:
     m_HRangeLocked: 0
@@ -812,9 +812,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -11.226566, y: -3.4757776, z: -7.999098}
+    m_Target: {x: -13.699986, y: 5.898222, z: 9.606826}
     speed: 2
-    m_Value: {x: -11.226566, y: -3.4757776, z: -7.999098}
+    m_Value: {x: -13.699986, y: 5.898222, z: 9.606826}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -860,9 +860,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.06311788, y: -0.9275393, z: 0.18319812, w: 0.31956825}
+    m_Target: {x: 0.13276708, y: -0.85705316, z: 0.27359298, w: 0.41590458}
     speed: 2
-    m_Value: {x: -0.06311793, y: 0.92754006, z: -0.18319827, w: -0.3195685}
+    m_Value: {x: -0.13276729, y: 0.8570545, z: -0.2735934, w: -0.41590524}
   m_Size:
     m_Target: 13.18021
     speed: 2
@@ -888,7 +888,7 @@ MonoBehaviour:
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
-  m_SceneVisActive: 1
+  m_SceneVisActive: 0
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
 --- !u!114 &18
@@ -962,9 +962,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f4110000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 24fbffff
+      m_SelectedIDs: c8f5ffff
+      m_LastClickedID: -2616
+      m_ExpandedIDs: 30fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1023,7 +1023,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_SearchFilter:
-    m_NameFilter: getnew
+    m_NameFilter: 
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -1033,24 +1033,24 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Shoe/Scenes
+    - Assets/Shoe/Scripts/Services System
     m_Globs: []
-    m_OriginalText: getnew
+    m_OriginalText: 
     m_ImportLogFlags: 0
     m_FilterByTypeIntersection: 0
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Shoe/Scenes
+  - Assets/Shoe/Scripts/Services System
   m_LastFoldersGridSize: 16
   m_LastProjectPath: G:\Unity Projects\High Fantasy Tower Defense\HighFantasyTowerDefense
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 485c0000
-    m_LastClickedID: 23624
-    m_ExpandedIDs: 00000000f45b0000f65b0000f85b0000fa5b0000fc5b0000fe5b0000005c0000025c0000045c0000065c0000085c00000a5c00000c5c00000e5c0000105c0000125c0000145c0000165c0000185c000000ca9a3b
+    m_SelectedIDs: 54640000
+    m_LastClickedID: 25684
+    m_ExpandedIDs: 00000000fe63000000640000026400000464000006640000086400000a6400000c6400000e64000010640000126400001464000016640000186400001a6400001c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1078,7 +1078,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f45b0000f65b0000f85b0000fa5b0000fc5b0000fe5b0000005c0000025c0000045c0000065c0000085c00000a5c00000c5c00000e5c0000105c0000125c0000145c0000165c0000185c0000
+    m_ExpandedIDs: 00000000fe63000000640000026400000464000006640000086400000a6400000c6400000e64000010640000126400001464000016640000186400001a6400001c640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
