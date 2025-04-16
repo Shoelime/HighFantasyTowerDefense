@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
-public class EnemyCharacter : StateController
+public class EnemyCharacter : PooledMonoBehaviour
 {
     [SerializeField] private EnemyData enemyData;
     [SerializeField] private GameObject visualObject;
     [SerializeField] private SoundData deathSound;
+    [SerializeField] private State remainState;
+    [SerializeField] private State startState;
 
     public float CurrentMoveSpeed { get; private set; }
     public float RelativeSpeedMultiplier { get; private set; }
@@ -23,6 +25,7 @@ public class EnemyCharacter : StateController
     private HealthBar healthBar;
     private Collider enemyCollider;
     private AudioSource audioSource;
+    private StateMachine stateMachine;
 
     void OnEnable()
     {
@@ -35,8 +38,14 @@ public class EnemyCharacter : StateController
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
-        if (EnemyAiController == null)
-            EnemyAiController = this;
+        if (stateMachine == null)
+        {
+            stateMachine = new StateMachine
+            {
+                Owner = this,
+                RemainState = remainState
+            };
+        }
 
         enemyCollider.enabled = true;
         visualObject.SetActive(true);
@@ -54,6 +63,11 @@ public class EnemyCharacter : StateController
         SetEnemyState(EnemyUnitState.AssaultingBase);
 
         CurrentWaypointIndex = 0;
+    }
+
+    private void Update()
+    {
+        stateMachine.Update();
     }
 
     /// <summary>
@@ -131,7 +145,7 @@ public class EnemyCharacter : StateController
     /// <param name="waveManager"></param>
     public void SpawnEnemy()
     {
-        SetupAI(true);
+        stateMachine.Init(startState);
     }
 
     /// <summary>
@@ -183,7 +197,7 @@ public class EnemyCharacter : StateController
     public void EnemyArrivedHome()
     {
         EnemyArrivedHomeEvent?.Invoke(this);
-        ResetStateMachine();
+        stateMachine.Stop();
         ReturnToPool();
     }
 
@@ -205,7 +219,7 @@ public class EnemyCharacter : StateController
         HealthComponent.EffectApplied -= ApplyEffect;
         HealthComponent.EffectRemoved -= RemoveEffect;
 
-        ResetStateMachine();
+        stateMachine.Stop();
         ReturnToPool(1);
     }
 

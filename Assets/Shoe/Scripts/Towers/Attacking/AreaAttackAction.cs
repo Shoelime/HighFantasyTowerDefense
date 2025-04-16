@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class AreaAttackAction : ITowerAction
 {
-    public void Execute(StateController controller)
+    public void Execute(TowerAI controller)
     {
-        if (controller.TowerAiController.TargetToShoot == null)
+        if (controller.TargetToShoot == null)
         {
             return;
         }
 
-        var projectile = controller.TowerAiController.TowerData.ProjectileToShoot.Get<Projectile>(
-            controller.TowerAiController.transform.position,
+        var projectile = controller.TowerData.ProjectileToShoot.Get<Projectile>(
+            controller.transform.position,
             Quaternion.identity);
 
-        projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
+        projectile.SetDamageData(controller.GetTowerDamageData());
         projectile.DealDamage(null);
 
-        controller.TowerAiController.CooldownTrigger();
+        controller.CooldownTrigger();
     }
 }

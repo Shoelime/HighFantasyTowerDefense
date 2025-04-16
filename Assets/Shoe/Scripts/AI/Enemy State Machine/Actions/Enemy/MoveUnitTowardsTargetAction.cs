@@ -3,51 +3,55 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Shoe/AI/MoveUnitTowardsTargetAction")]
 public class MoveUnitTowardsTargetAction : StateAction
 {
-    public override void Act(StateController controller)
+    public override void Act(StateMachine controller)
     {
-        Transform target;
-        if (controller.EnemyAiController.CurrentEnemyState == EnemyUnitState.GoingHome)
+        if (controller.Owner is EnemyCharacter enemy)
         {
-            if (controller.EnemyAiController.CurrentWaypointIndex < 0)
+            Transform target;
+            if (enemy.CurrentEnemyState == EnemyUnitState.GoingHome)
             {
-                target = Services.Get<IPathFinder>().EntrancePoint;
+                if (enemy.CurrentWaypointIndex < 0)
+                {
+                    target = Services.Get<IPathFinder>().EntrancePoint;
+                }
+                else if (enemy.CurrentWaypointIndex == 0 &&
+                    Vector3.Distance(enemy.transform.position, Services.Get<IPathFinder>().Waypoints[0].transform.position) < 0.5f)
+                {
+                    target = Services.Get<IPathFinder>().EntrancePoint;
+                }
+                else target = Services.Get<IPathFinder>().Waypoints[enemy.CurrentWaypointIndex].transform;
             }
-            else if (controller.EnemyAiController.CurrentWaypointIndex == 0 &&
-                Vector3.Distance(controller.transform.position, Services.Get<IPathFinder>().Waypoints[0].transform.position) < 0.5f)
+            else target = Services.Get<IPathFinder>().Waypoints[enemy.CurrentWaypointIndex].transform;
+
+            // Calculate direction to the target
+            Vector3 direction = target.transform.position - enemy.transform.position;
+
+            // Ignore vertical movement
+            direction.y = 0f;
+
+            // Rotate towards the target direction
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+            enemy.PreviousPosition = enemy.transform.position;
+
+            // Move towards the target
+            Vector3 newPosition = enemy.transform.position + enemy.CurrentMoveSpeed * Time.deltaTime * direction.normalized;
+            Quaternion newRotation = Quaternion.Lerp(enemy.transform.rotation, targetRotation, enemy.EnemyData.TurnSpeed * Time.deltaTime);
+            enemy.transform.SetPositionAndRotation(newPosition, newRotation);
+
+            if (Vector3.Distance(enemy.transform.position, target.position) < 0.5f)
             {
-                target = Services.Get<IPathFinder>().EntrancePoint;
+                if (enemy.CurrentEnemyState == EnemyUnitState.AssaultingBase)
+                {
+                    if (enemy.CurrentWaypointIndex < Services.Get<IPathFinder>().Waypoints.Length - 1)
+                        enemy.IncrementWaypointIndex();
+                }
+                else
+                {
+                    enemy.DecreaseWaypointIndex();
+                }
             }
-            else target = Services.Get<IPathFinder>().Waypoints[controller.EnemyAiController.CurrentWaypointIndex].transform;
         }
-        else target = Services.Get<IPathFinder>().Waypoints[controller.EnemyAiController.CurrentWaypointIndex].transform;
-
-        // Calculate direction to the target
-        Vector3 direction = target.transform.position - controller.transform.position;
-
-        // Ignore vertical movement
-        direction.y = 0f;
-
-        // Rotate towards the target direction
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        controller.EnemyAiController.PreviousPosition = controller.transform.position;
-
-        // Move towards the target
-        Vector3 newPosition = controller.transform.position + controller.EnemyAiController.CurrentMoveSpeed * Time.deltaTime * direction.normalized;
-        Quaternion newRotation = Quaternion.Lerp(controller.transform.rotation, targetRotation, controller.EnemyAiController.EnemyData.TurnSpeed * Time.deltaTime);
-        controller.transform.SetPositionAndRotation(newPosition, newRotation);
-
-        if (Vector3.Distance(controller.transform.position, target.position) < 0.5f)
-        {
-            if (controller.EnemyAiController.CurrentEnemyState == EnemyUnitState.AssaultingBase)
-            {
-                if (controller.EnemyAiController.CurrentWaypointIndex < Services.Get<IPathFinder>().Waypoints.Length - 1)
-                    controller.EnemyAiController.IncrementWaypointIndex();
-            }
-            else
-            {
-                controller.EnemyAiController.DecreaseWaypointIndex();
-            }
-        }
+     
     }
 }

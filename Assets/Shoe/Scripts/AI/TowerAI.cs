@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerAI : StateController
+public class TowerAI : PooledMonoBehaviour
 {
     [Header("Child variables")]
     [SerializeField] private Vector3 projectileStartPosition;
     [SerializeField] private TowerData towerData;
     [SerializeField] private Transform basePieces;
     [SerializeField] private Transform[] upgradePieces;
+    [SerializeField] private State remainState;
+    [SerializeField] private State startState;
     public Vector3 ProjectileStartPosition => projectileStartPosition;
     public TowerData TowerData => towerData;
     public EnemyCharacter TargetToShoot { get; private set; }
@@ -20,13 +22,26 @@ public class TowerAI : StateController
     public bool IsMaxLevel() { return TowerLevel == 1; }
 
     private TowerPlate towerPlate;
+    public StateMachine stateMachine { get; private set; }
+    public State StartState => startState;
 
     private void OnEnable()
     {
         TowerLevel = -1;
 
-        if (TowerAiController == null)
-            TowerAiController = this;
+        if (stateMachine == null)
+        {
+            stateMachine = new StateMachine
+            {
+                Owner = this,
+                RemainState = remainState
+            };
+        }
+    }
+
+    private void Update()
+    {
+        stateMachine.Update();
     }
 
     public void BuildTower(TowerPlate towerPlate)
@@ -39,7 +54,8 @@ public class TowerAI : StateController
         TowerLevel++;
 
         SetAttackType();
-        SetupAI(true);
+
+        stateMachine.Init(StartState);
         Invoke(nameof(SetTowerStartingTimers), towerData.ConstructDuration);
 
         AllTargets = new List<Collider>();
@@ -72,6 +88,11 @@ public class TowerAI : StateController
             TowerType.Fire => new ShootProjectileAction(),
             _ => default,
         };
+    }
+
+    void SetTowerStartingTimers()
+    {
+        stateMachine.SetTimer(5);
     }
 
     public void ButtonPressed(Vector3 clickPosition, GameObject clickedObject)

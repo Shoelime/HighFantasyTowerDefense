@@ -60,7 +60,6 @@ GameObject:
   - component: {fileID: 1512252008699070832}
   - component: {fileID: -7699905441266893936}
   - component: {fileID: -1367518585415160100}
-  - component: {fileID: -6045490265009465074}
   - component: {fileID: 8363593459026873850}
   m_Layer: 8
   m_Name: Enemy_MASTER
@@ -99,11 +98,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 50
-  RemainState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}
-  StartState: {fileID: 11400000, guid: 2a28ee86443f5f546b1eb7372ba5de77, type: 2}
   enemyData: {fileID: 0}
   visualObject: {fileID: 8859128002565496720}
   deathSound: {fileID: 0}
+  remainState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}
+  startState: {fileID: 11400000, guid: 2a28ee86443f5f546b1eb7372ba5de77, type: 2}
 --- !u!82 &-1367518585415160100
 AudioSource:
   m_ObjectHideFlags: 0
@@ -200,19 +199,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-6045490265009465074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4496684360863103063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5db78f6d22b2554fa0951485df49115, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialPoolSize: 20
 --- !u!114 &8363593459026873850
 MonoBehaviour:
   m_ObjectHideFlags: 0

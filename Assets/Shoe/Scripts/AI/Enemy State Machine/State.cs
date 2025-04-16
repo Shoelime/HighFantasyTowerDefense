@@ -6,13 +6,13 @@ public class State : ScriptableObject
     [SerializeField] private StateAction[] actions;
     [SerializeField] private Transition[] transitions;
 
-    public void UpdateState(StateController controller)
+    public void UpdateState(StateMachine controller)
     {
         DoActions(controller);
         CheckTransitions(controller);
     }
 
-    private void DoActions(StateController controller)
+    private void DoActions(StateMachine controller)
     {
         for (int i = 0; i < actions.Length; i++)
         {
@@ -20,7 +20,7 @@ public class State : ScriptableObject
         }
     }
 
-    private void CheckTransitions(StateController controller)
+    private void CheckTransitions(StateMachine controller)
     {
         for (int i = 0; i < transitions.Length; i++)
         {

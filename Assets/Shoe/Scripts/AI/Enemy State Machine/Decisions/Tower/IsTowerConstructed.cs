@@ -3,8 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Shoe/AI/IsTowerConstructedDecision")]
 public class IsTowerConstructed : Decision
 {
-    public override bool Decide(StateController controller)
+    public override bool Decide(StateMachine controller)
     {
-        return controller.CheckIfCountDownElapsed(controller.TowerAiController.TowerData.ConstructDuration);
+        if (controller.Owner is TowerAI towerAI)
+        {
+            return controller.CheckIfCountDownElapsed(towerAI.TowerData.ConstructDuration);
+        }
+        return false;
     }
 }

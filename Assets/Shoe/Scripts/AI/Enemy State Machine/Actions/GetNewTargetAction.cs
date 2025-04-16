@@ -4,59 +4,62 @@ using UnityEngine;
 
 public class FindTargetAction : StateAction
 {
-    public override void Act(StateController controller)
+    public override void Act(StateMachine controller)
     {
-        if (!controller.CheckIfCountDownElapsed(controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).FireRate / 2))
-            return;
-
-        if (controller.TowerAiController.TargetToShoot != null)
+        if (controller.Owner is TowerAI towerAI)
         {
-            /// Find a new target to shoot if we can't see current target or current target is too far away
-            /// 
-            if (!MathUtils.HasLineOfSight(
-                controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
-                controller.TowerAiController.TargetToShoot.transform, controller.TowerAiController.TowerData.LineOfSightLayers,
-                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius)
-                ||
-                Vector3.Distance(controller.transform.position, controller.TowerAiController.TargetToShoot.transform.position) >
-                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius)
+            if (!controller.CheckIfCountDownElapsed(towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).FireRate / 2))
+                return;
+
+            if (towerAI.TargetToShoot != null)
             {
-                GetNearbyTargets(controller);
+                /// Find a new target to shoot if we can't see current target or current target is too far away
+                /// 
+                if (!MathUtils.HasLineOfSight(
+                    towerAI.transform.position + towerAI.ProjectileStartPosition,
+                    towerAI.TargetToShoot.transform, towerAI.TowerData.LineOfSightLayers,
+                    towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius)
+                    ||
+                    Vector3.Distance(towerAI.transform.position, towerAI.TargetToShoot.transform.position) >
+                    towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius)
+                {
+                    GetNearbyTargets(controller, towerAI);
+                }
             }
-        }
-        else
-        {
-            /// Find a new target to shoot if there are non to be seen
-            /// 
-            GetNearbyTargets(controller);
-        }
+            else
+            {
+                /// Find a new target to shoot if there are non to be seen
+                /// 
+                GetNearbyTargets(controller, towerAI);
+            }
 
-        controller.ResetStateTimer();
+            controller.ResetStateTimer();
+        }
     }
 
-    void GetNearbyTargets(StateController controller)
+    void GetNearbyTargets(StateMachine controller, TowerAI towerAI)
     {
-        Collider[] colliders = Physics.OverlapSphere(controller.transform.position, controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius, controller.TowerAiController.TowerData.EnemyLayer);
+        Collider[] colliders = Physics.OverlapSphere(towerAI.transform.position, towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius, towerAI.TowerData.EnemyLayer);
 
         if (colliders.Length == 0)
         {
-            controller.TowerAiController.ClearTarget();
+            towerAI.ClearTarget();
         }
-        else SetClosestTarget(controller, colliders);
+        else SetClosestTarget(controller, colliders, towerAI);
     }
 
-    void SetClosestTarget(StateController controller, Collider[] colliders)
+    void SetClosestTarget(StateMachine controller, Collider[] colliders, TowerAI towerAI)
     {
         Transform closestTarget = null;
         float closestDistance = float.MaxValue;
-        controller.TowerAiController.ClearEnemyList();
+        towerAI.ClearEnemyList();
 
         for (int i = 0; i < colliders.Length; i++)
         {
-            Debug.DrawRay(controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
-                (colliders[i].transform.position + (Vector3.up * 0.5f)) - (controller.transform.position + controller.TowerAiController.ProjectileStartPosition),
+            Debug.DrawRay(towerAI.transform.position + towerAI.ProjectileStartPosition,
+                (colliders[i].transform.position + (Vector3.up * 0.5f)) - (towerAI.transform.position + towerAI.ProjectileStartPosition),
                 Color.yellow,
-                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).FireRate);
+                towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).FireRate);
 
             /// Not adding inactive objects
             /// 
@@ -68,16 +71,16 @@ public class FindTargetAction : StateAction
             /// No line of sight
             /// 
             if (!MathUtils.HasLineOfSight(
-                controller.transform.position + controller.TowerAiController.ProjectileStartPosition,
-                colliders[i].transform, controller.TowerAiController.TowerData.LineOfSightLayers,
-                controller.TowerAiController.TowerData.GetTowerSpecs(controller.TowerAiController.TowerLevel).SightRadius))
+                towerAI.transform.position + towerAI.ProjectileStartPosition,
+                colliders[i].transform, towerAI.TowerData.LineOfSightLayers,
+                towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius))
             {
                 continue;
             }
 
-            controller.TowerAiController.AddEnemyToList(colliders[i]);
+            towerAI.AddEnemyToList(colliders[i]);
 
-            float distance = Vector3.Distance(controller.transform.position, colliders[i].transform.position);
+            float distance = Vector3.Distance(towerAI.transform.position, colliders[i].transform.position);
             if (distance < closestDistance)
             {
                 closestDistance = distance;
@@ -87,8 +90,8 @@ public class FindTargetAction : StateAction
 
         if (closestTarget != null)
         {
-            controller.TowerAiController.SetTarget(closestTarget.GetComponent<EnemyCharacter>());
+            towerAI.SetTarget(closestTarget.GetComponent<EnemyCharacter>());
         }
-        else controller.TowerAiController.ClearTarget();
+        else towerAI.ClearTarget();
     }
 }

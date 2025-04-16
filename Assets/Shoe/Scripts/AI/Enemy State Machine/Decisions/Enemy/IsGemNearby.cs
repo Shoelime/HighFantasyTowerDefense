@@ -3,33 +3,37 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Shoe/AI/IsGemNearby")]
 public class IsGemNearby : Decision
 {
-    public override bool Decide(StateController controller)
+    public override bool Decide(StateMachine controller)
     {
-        if (controller.EnemyAiController.GemBeingCarried != null)
-            return false;
-
-        if (!controller.CheckIfCountDownElapsed(controller.EnemyAiController.EnemyData.GemCheckInterval))
-            return false;
-        else
+        if (controller.Owner is EnemyCharacter enemy)
         {
-            controller.ResetStateTimer();
-            GameObject closestGem = MathUtils.FindClosestGameObject(controller.transform.position, Services.Get<IGemManager>().AvailableGems.ToArray());
+            if (enemy.GemBeingCarried != null)
+                return false;
 
-            if (closestGem != null)
+            if (!controller.CheckIfCountDownElapsed(enemy.EnemyData.GemCheckInterval))
+                return false;
+            else
             {
-                float dist = Vector3.Distance(controller.transform.position, closestGem.transform.position);
-                if (dist <= controller.EnemyAiController.EnemyData.GemPickupDistance)
+                controller.ResetStateTimer();
+                GameObject closestGem = MathUtils.FindClosestGameObject(enemy.transform.position, Services.Get<IGemManager>().AvailableGems.ToArray());
+
+                if (closestGem != null)
                 {
-                    if (controller.EnemyAiController.CurrentEnemyState == EnemyUnitState.AssaultingBase)
-                        controller.EnemyAiController.DecreaseWaypointIndex();
+                    float dist = Vector3.Distance(enemy.transform.position, closestGem.transform.position);
+                    if (dist <= enemy.EnemyData.GemPickupDistance)
+                    {
+                        if (enemy.CurrentEnemyState == EnemyUnitState.AssaultingBase)
+                            enemy.DecreaseWaypointIndex();
 
-                    Services.Get<IGemManager>().EnemySnatchesGem(controller.transform.position, controller.EnemyAiController);
+                        Services.Get<IGemManager>().EnemySnatchesGem(enemy.transform.position, enemy);
 
-                    return true;
+                        return true;
+                    }
                 }
             }
-        }
 
+            return false;
+        }
         return false;
     }
 }

@@ -2,27 +2,27 @@ using UnityEngine;
 
 public class InstantAttackAction : ITowerAction
 {
-    public void Execute(StateController controller)
+    public void Execute(TowerAI controller)
     {
-        if (controller.TowerAiController.TargetToShoot == null)
+        if (controller.TargetToShoot == null)
         {
             return;
         }
 
-        var projectile = controller.TowerAiController.TowerData.ProjectileToShoot.Get<Projectile>(
-            controller.TowerAiController.transform.position + controller.TowerAiController.ProjectileStartPosition,
+        var projectile = controller.TowerData.ProjectileToShoot.Get<Projectile>(
+            controller.transform.position + controller.ProjectileStartPosition,
             Quaternion.identity);
 
-        Vector3 startPosition = controller.TowerAiController.transform.TransformPoint(controller.TowerAiController.ProjectileStartPosition);
-        Vector3 endPosition = controller.TowerAiController.TargetToShoot.transform.position;
+        Vector3 startPosition = controller.transform.TransformPoint(controller.ProjectileStartPosition);
+        Vector3 endPosition = controller.TargetToShoot.transform.position;
 
         projectile.LineRenderer.enabled = true;
         projectile.LineRenderer.SetPosition(0, startPosition);
         projectile.LineRenderer.SetPosition(1, endPosition);
 
-        projectile.SetDamageData(controller.TowerAiController.GetTowerDamageData());
-        projectile.DealDamage(controller.TowerAiController.TargetToShoot);
+        projectile.SetDamageData(controller.GetTowerDamageData());
+        projectile.DealDamage(controller.TargetToShoot);
 
-        controller.TowerAiController.CooldownTrigger();
+        controller.CooldownTrigger();
     }
 }

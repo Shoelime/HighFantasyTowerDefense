@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class TowerAttackAction : StateAction
 {
-    public override void Act(StateController controller)
+    public override void Act(StateMachine controller)
     {
-        if (controller.TowerAiController.AttackCooldownActive)
-            return;
+        if (controller.Owner is TowerAI towerAI)
+        {
+            if (towerAI.AttackCooldownActive)
+                return;
 
-        controller.TowerAiController.TowerAction.Execute(controller);
+            towerAI.TowerAction.Execute(towerAI);
+        }
     }
 }

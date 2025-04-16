@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialPoolSize: 15
-  RemainState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}
-  StartState: {fileID: 11400000, guid: a9242d7dfe7031147aa0262cad88de52, type: 2}
   projectileStartPosition: {x: 0, y: 3, z: 0}
   towerData: {fileID: 0}
   basePieces: {fileID: 6420942659669674021}
   upgradePieces:
   - {fileID: 3704249876391974794}
+  remainState: {fileID: 11400000, guid: 34385d30f4317224386eda8253216348, type: 2}
+  startState: {fileID: 11400000, guid: a9242d7dfe7031147aa0262cad88de52, type: 2}
 --- !u!82 &-3046451914940766476
 AudioSource:
   m_ObjectHideFlags: 0

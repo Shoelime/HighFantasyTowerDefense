@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : IWaveManager, IDisposable
@@ -20,6 +21,7 @@ public class WaveManager : IWaveManager, IDisposable
     public static event Action<EnemyCharacter> SpawnedEnemy;
     public event Action NewWaveStarted;
 
+    private Dictionary<EnemyType, EnemyCharacter> enemyPrefabs;
     private GameObject spawnerCoroutineObject;
     private CoroutineMonoBehavior spawnerCoroutine;
 
@@ -46,6 +48,20 @@ public class WaveManager : IWaveManager, IDisposable
             for (int i = 0; i < wave.EnemyCountPerGroup.Length; i++)
             {
                 totalEnemyCount += wave.EnemyCountPerGroup[i];
+            }
+        }
+
+        enemyPrefabs = new Dictionary<EnemyType, EnemyCharacter>();
+
+        foreach (var e in enemies)
+        {
+            if (e.WorldPrefab.TryGetComponent(out EnemyCharacter character))
+            {
+                enemyPrefabs[e.EnemyType] = character;
+            }
+            else
+            {
+                Debug.LogWarning($"Prefab for {e.EnemyType} has no EnemyCharacter!");
             }
         }
     }
@@ -137,21 +153,18 @@ public class WaveManager : IWaveManager, IDisposable
     /// <param name="enemyType"></param>
     private void SpawnEnemy(EnemyType enemyType)
     {
-        foreach (var requestedEnemy in enemies)
+        if (!enemyPrefabs.TryGetValue(enemyType, out var enemyPrefab))
         {
-            if (requestedEnemy.EnemyType == enemyType)
-            {
-                // Randomise spawn position so they don't always spawn on top of each other
-                Vector3 randomVector = new Vector3(UnityEngine.Random.Range(-1, 1), 0, UnityEngine.Random.Range(-1, 1));
-                Vector3 spawnPosition = Services.Get<IPathFinder>().EntrancePoint.position + randomVector;
-
-                EnemyCharacter enemy = requestedEnemy.WorldPrefab.GetComponent<EnemyCharacter>().Get<EnemyCharacter>(spawnPosition, Quaternion.Euler(waveData.GetSpawnRotation));
-                enemy.SpawnEnemy();
-                SpawnedEnemy?.Invoke(enemy);
-
-                break;
-            }
+            Debug.LogWarning($"Enemy type {enemyType} not found!");
+            return;
         }
+
+        Vector3 offset = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0, UnityEngine.Random.Range(-1f, 1f));
+        Vector3 spawnPos = Services.Get<IPathFinder>().EntrancePoint.position + offset;
+
+        EnemyCharacter enemy = enemyPrefab.Get<EnemyCharacter>(spawnPos, Quaternion.Euler(waveData.GetSpawnRotation));
+        enemy.SpawnEnemy();
+        SpawnedEnemy?.Invoke(enemy);
     }
 
     /// <summary>

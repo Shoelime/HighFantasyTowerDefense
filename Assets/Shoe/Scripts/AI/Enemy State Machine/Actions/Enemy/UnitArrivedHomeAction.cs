@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class UnitArrivedHomeAction : StateAction
 {
-    public override void Act(StateController controller)
+    public override void Act(StateMachine controller)
     {
-        controller.EnemyAiController.EnemyArrivedHome();
+        if (controller.Owner is EnemyCharacter enemy)
+        {
+            enemy.EnemyArrivedHome();
+        }
     }
 }

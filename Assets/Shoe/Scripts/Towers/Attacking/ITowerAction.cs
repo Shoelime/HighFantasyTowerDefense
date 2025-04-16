@@ -1,4 +1,4 @@
 public interface ITowerAction
 {
-    void Execute(StateController controller);
+    void Execute(TowerAI controller);
 }
