@@ -133,7 +133,7 @@ public class TowerMenuUI : MonoBehaviour, IUIElementSound
 
         if (plate.ContainsTower())
         {
-            if (plate.PlacedTower.IsMaxLevel() || plate.PlacedTower.stateMachine.CurrentState == plate.PlacedTower.StartState)
+            if (plate.PlacedTower.IsMaxLevel() || plate.PlacedTower.IsBeingBuilt)
                 return;
 
             Upgrading = true;

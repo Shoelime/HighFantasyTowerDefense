@@ -12,16 +12,16 @@ public class MoveUnitTowardsTargetAction : StateAction
             {
                 if (enemy.CurrentWaypointIndex < 0)
                 {
-                    target = Services.Get<IPathFinder>().EntrancePoint;
+                    target = enemy.PathFinder.EntrancePoint;
                 }
                 else if (enemy.CurrentWaypointIndex == 0 &&
-                    Vector3.Distance(enemy.transform.position, Services.Get<IPathFinder>().Waypoints[0].transform.position) < 0.5f)
+                    Vector3.Distance(enemy.transform.position, enemy.PathFinder.Waypoints[0].transform.position) < 0.5f)
                 {
-                    target = Services.Get<IPathFinder>().EntrancePoint;
+                    target = enemy.PathFinder.EntrancePoint;
                 }
-                else target = Services.Get<IPathFinder>().Waypoints[enemy.CurrentWaypointIndex].transform;
+                else target = enemy.PathFinder.Waypoints[enemy.CurrentWaypointIndex].transform;
             }
-            else target = Services.Get<IPathFinder>().Waypoints[enemy.CurrentWaypointIndex].transform;
+            else target = enemy.PathFinder.Waypoints[enemy.CurrentWaypointIndex].transform;
 
             // Calculate direction to the target
             Vector3 direction = target.transform.position - enemy.transform.position;
@@ -43,7 +43,7 @@ public class MoveUnitTowardsTargetAction : StateAction
             {
                 if (enemy.CurrentEnemyState == EnemyUnitState.AssaultingBase)
                 {
-                    if (enemy.CurrentWaypointIndex < Services.Get<IPathFinder>().Waypoints.Length - 1)
+                    if (enemy.CurrentWaypointIndex < enemy.PathFinder.Waypoints.Length - 1)
                         enemy.IncrementWaypointIndex();
                 }
                 else
@@ -52,6 +52,6 @@ public class MoveUnitTowardsTargetAction : StateAction
                 }
             }
         }
-     
+
     }
 }

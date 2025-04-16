@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3abdde6433359842843816862dda007, type: 3}
   m_Name: StatusEffect-Freeze
   m_EditorClassIdentifier: 
-  effectType: 1
+  effectId: Freeze
   chanceToApply: 100
   duration: 2
   speedReductionPercentage: 0.8

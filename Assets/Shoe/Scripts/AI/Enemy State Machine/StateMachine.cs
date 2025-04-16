@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StateMachine
@@ -27,7 +25,7 @@ public class StateMachine
 
     public void Update()
     {
-        if (!IsActive || CurrentState == null) 
+        if (!IsActive || CurrentState == null)
             return;
 
         CurrentState.UpdateState(this);

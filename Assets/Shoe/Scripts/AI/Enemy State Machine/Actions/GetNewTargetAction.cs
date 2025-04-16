@@ -23,21 +23,21 @@ public class FindTargetAction : StateAction
                     Vector3.Distance(towerAI.transform.position, towerAI.TargetToShoot.transform.position) >
                     towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius)
                 {
-                    GetNearbyTargets(controller, towerAI);
+                    GetNearbyTargets(towerAI);
                 }
             }
             else
             {
                 /// Find a new target to shoot if there are non to be seen
                 /// 
-                GetNearbyTargets(controller, towerAI);
+                GetNearbyTargets(towerAI);
             }
 
             controller.ResetStateTimer();
         }
     }
 
-    void GetNearbyTargets(StateMachine controller, TowerAI towerAI)
+    void GetNearbyTargets(TowerAI towerAI)
     {
         Collider[] colliders = Physics.OverlapSphere(towerAI.transform.position, towerAI.TowerData.GetTowerSpecs(towerAI.TowerLevel).SightRadius, towerAI.TowerData.EnemyLayer);
 
@@ -45,10 +45,10 @@ public class FindTargetAction : StateAction
         {
             towerAI.ClearTarget();
         }
-        else SetClosestTarget(controller, colliders, towerAI);
+        else SetClosestTarget(colliders, towerAI);
     }
 
-    void SetClosestTarget(StateMachine controller, Collider[] colliders, TowerAI towerAI)
+    void SetClosestTarget(Collider[] colliders, TowerAI towerAI)
     {
         Transform closestTarget = null;
         float closestDistance = float.MaxValue;

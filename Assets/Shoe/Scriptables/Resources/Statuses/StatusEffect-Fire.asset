@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3abdde6433359842843816862dda007, type: 3}
   m_Name: StatusEffect-Fire
   m_EditorClassIdentifier: 
-  effectType: 2
+  effectId: Burn
   chanceToApply: 25
   duration: 5
   speedReductionPercentage: 0
-  damagePerSecond: 2
+  damagePerSecond: 3

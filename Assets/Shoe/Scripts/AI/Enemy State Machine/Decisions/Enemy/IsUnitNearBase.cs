@@ -7,7 +7,7 @@ public class IsUnitNearBase : Decision
     {
         if (controller.Owner is EnemyCharacter enemy)
         {
-            if (Vector3.Distance(enemy.transform.position, Services.Get<IPathFinder>().Waypoints[^1].transform.position) < 0.5f)
+            if (Vector3.Distance(enemy.transform.position, enemy.PathFinder.Waypoints[^1].transform.position) < 0.5f)
             {
                 enemy.EnemyReachedBase();
                 return true;

@@ -9,7 +9,7 @@ public class IsUnitNearHome : Decision
         {
             return Vector3.Distance(
                 enemy.transform.position,
-                Services.Get<IPathFinder>().EntrancePoint.position
+                enemy.PathFinder.EntrancePoint.position
             ) < 0.3f;
         }
 

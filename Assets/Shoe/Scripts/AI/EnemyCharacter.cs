@@ -10,12 +10,13 @@ public class EnemyCharacter : PooledMonoBehaviour
 
     public float CurrentMoveSpeed { get; private set; }
     public float RelativeSpeedMultiplier { get; private set; }
+    public int CurrentWaypointIndex { get; private set; }
+    public Vector3 PreviousPosition { get; internal set; }
+    public IPathFinder PathFinder { get; private set; }
     public EnemyData EnemyData => enemyData;
     public GameObject GemBeingCarried { get; private set; }
     public Health HealthComponent { get; private set; }
     public EnemyUnitState CurrentEnemyState { get; private set; }
-    public Vector3 PreviousPosition { get; internal set; }
-    public int CurrentWaypointIndex { get; private set; }
 
     public static event Action<EnemyData, Vector3> EnemyDied;
     public static event Action<EnemyCharacter> EnemySnatchedGem;
@@ -37,6 +38,9 @@ public class EnemyCharacter : PooledMonoBehaviour
 
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
+
+        if(PathFinder == null)
+            PathFinder = Services.Get<IPathFinder>();
 
         if (stateMachine == null)
         {

@@ -22,8 +22,8 @@ public class TowerAI : PooledMonoBehaviour
     public bool IsMaxLevel() { return TowerLevel == 1; }
 
     private TowerPlate towerPlate;
-    public StateMachine stateMachine { get; private set; }
-    public State StartState => startState;
+    private StateMachine stateMachine;
+    public bool IsBeingBuilt => stateMachine.CurrentState == startState;
 
     private void OnEnable()
     {
@@ -55,7 +55,7 @@ public class TowerAI : PooledMonoBehaviour
 
         SetAttackType();
 
-        stateMachine.Init(StartState);
+        stateMachine.Init(startState);
         Invoke(nameof(SetTowerStartingTimers), towerData.ConstructDuration);
 
         AllTargets = new List<Collider>();

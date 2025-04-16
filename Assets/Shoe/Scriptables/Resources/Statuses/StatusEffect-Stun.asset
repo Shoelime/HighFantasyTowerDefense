@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3abdde6433359842843816862dda007, type: 3}
   m_Name: StatusEffect-Stun
   m_EditorClassIdentifier: 
-  effectType: 0
+  effectId: Stun
   chanceToApply: 20
   duration: 1.5
   speedReductionPercentage: 0

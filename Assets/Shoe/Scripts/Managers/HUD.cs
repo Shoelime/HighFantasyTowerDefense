@@ -85,16 +85,6 @@ public class HUD : MonoBehaviour, IUIElementSound
         OnUIElementOpened();
     }
 
-    void OnDisable()
-    {
-        Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateGoldText;
-        Services.Get<IGameManager>().VictoryEvent -= DisplayVictoryCanvas;
-        Services.Get<IGameManager>().DefeatEvent -= DisplayDefeatText;
-        Services.Get<IWaveManager>().NewWaveStarted -= UpdateWaveCounter;
-
-        CancelInvoke(nameof(UpdateWaveTimerText));
-    }
-
     public void OnUIElementOpened()
     {
         Services.Get<ISoundManager>().PlaySound(audioSource, onUISelectSound, 1);
@@ -103,5 +93,16 @@ public class HUD : MonoBehaviour, IUIElementSound
     public void OnUIElementClosed()
     {
         Services.Get<ISoundManager>().PlaySound(audioSource, onUIDeSelectSound, 1);
+    }
+
+
+    private void OnDestroy()
+    {
+        Services.Get<IEconomicsManager>().GoldAmountChanged -= UpdateGoldText;
+        Services.Get<IGameManager>().VictoryEvent -= DisplayVictoryCanvas;
+        Services.Get<IGameManager>().DefeatEvent -= DisplayDefeatText;
+        Services.Get<IWaveManager>().NewWaveStarted -= UpdateWaveCounter;
+
+        CancelInvoke(nameof(UpdateWaveTimerText));
     }
 }
