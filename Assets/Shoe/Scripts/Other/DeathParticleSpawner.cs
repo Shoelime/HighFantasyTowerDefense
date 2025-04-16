@@ -46,7 +46,7 @@ public class DeathParticleSpawner : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         EnemyCharacter.EnemyDied -= SpawnDeathParticles;
     }

@@ -8,11 +8,6 @@ public class Pool : MonoBehaviour
     private Queue<PooledMonoBehaviour> objects = new Queue<PooledMonoBehaviour>();
     private PooledMonoBehaviour prefab;
 
-    static Pool()
-    {
-        Loader.OnSceneLoaded += ClearPools;
-    }
-
     public static Pool GetPool(PooledMonoBehaviour prefab)
     {
         if (pools.ContainsKey(prefab))
@@ -71,10 +66,5 @@ public class Pool : MonoBehaviour
             pooledObject.transform.SetParent(this.transform);
         }
         objects.Enqueue(pooledObject);
-    }
-
-    private static void ClearPools()
-    {
-        pools.Clear();
     }
 }

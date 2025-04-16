@@ -11,9 +11,9 @@ public class EnemyWobble : MonoBehaviour
     private Quaternion startRotation;
     private float timeOffset;
 
-    EnemyCharacter enemyCharacter;
+    private EnemyCharacter enemyCharacter;
 
-    void Start()
+    private void Start()
     {
         startPosition = transform.localPosition;
         startRotation = transform.localRotation;
@@ -24,12 +24,12 @@ public class EnemyWobble : MonoBehaviour
         enemyCharacter = GetComponentInParent<EnemyCharacter>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Wobble();
     }
 
-    void Wobble()
+    private void Wobble()
     {
         // Calculate the wobble 
         float wobble = Mathf.Sin((Time.time + timeOffset) * wobbleSpeed * enemyCharacter.RelativeSpeedMultiplier) * wobbleAmount;
@@ -43,7 +43,6 @@ public class EnemyWobble : MonoBehaviour
         // Apply the tilt to the rotation
         Quaternion newRotation = startRotation * Quaternion.Euler(0f, 0f, tilt);
 
-        transform.localPosition = newPosition;
-        transform.localRotation = newRotation;
+        transform.SetLocalPositionAndRotation(newPosition, newRotation);
     }
 }

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class SoundManager : ISoundManager
 {
-    int maxSimultaneousImpactSounds = 3;
-    int maxSimultaneousDeathSounds = 3;
-    int maxSimultaneousLaunchSounds = 3;
-    int maxSimultaneousOtherSounds = 10;
+    private int maxSimultaneousImpactSounds = 3;
+    private int maxSimultaneousDeathSounds = 3;
+    private int maxSimultaneousLaunchSounds = 3;
+    private int maxSimultaneousOtherSounds = 10;
 
     private Dictionary<SoundType, Queue<SoundData>> activeSounds;
     private CoroutineMonoBehavior audioPlayerCoroutine;

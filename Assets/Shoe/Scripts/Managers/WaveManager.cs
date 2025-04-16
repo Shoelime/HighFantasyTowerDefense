@@ -20,8 +20,8 @@ public class WaveManager : IWaveManager, IDisposable
     public static event Action<EnemyCharacter> SpawnedEnemy;
     public event Action NewWaveStarted;
 
-    GameObject spawnerCoroutineObject;
-    CoroutineMonoBehavior spawnerCoroutine;
+    private GameObject spawnerCoroutineObject;
+    private CoroutineMonoBehavior spawnerCoroutine;
 
     public void Initialize()
     {

@@ -24,7 +24,7 @@ public class HealthBar : PooledMonoBehaviour
             CallReturnToPool();
     }
 
-    void UpdatePosition()
+    private void UpdatePosition()
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(healthTarget.position);
 

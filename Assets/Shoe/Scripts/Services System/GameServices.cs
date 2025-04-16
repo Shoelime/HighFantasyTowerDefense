@@ -20,9 +20,6 @@ public class GameServices : Services
         var gameStateHandler = new GameStateHandler();
         AddService<IGameStateHandler>(gameStateHandler);
 
-        var timeManager = new TimeManager();
-        AddService<ITimeManager>(timeManager);
-
         var waveManager = new WaveManager();
         AddService<IWaveManager>(waveManager);
 

@@ -25,7 +25,12 @@ public class GameManager : IGameManager, IDisposable
         WaveManager.AllEnemiesProcessed += GameWon;
         HUD.OnRestartButton += RestartGame;
 
-        Services.Get<ITimeManager>().SetTimeScale(1f);
+        SetTimeScale(1f);
+    }
+
+    private void SetTimeScale(float newTimeScale)
+    {
+        Time.timeScale = newTimeScale;
     }
 
     private void RestartGame()
@@ -69,12 +74,12 @@ public class GameManager : IGameManager, IDisposable
         if (pauseOn)
         {
             GamePaused?.Invoke();
-            Services.Get<ITimeManager>().SetTimeScale(0.0000001f);
+            SetTimeScale(0.0000001f);
         }
         else
         {
             GameUnPaused?.Invoke();
-            Services.Get<ITimeManager>().SetTimeScale(1f);
+            SetTimeScale(1f);
         }
     }
 

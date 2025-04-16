@@ -10,7 +10,12 @@ public class EconomicManager : IEconomicsManager, IDisposable
     public void Initialize()
     {
         AddGold(Services.Get<IGameManager>().GetLevelData.StartingGold);
-        EnemyCharacter.EnemyDied += (enemyData, pos) => AddGold(enemyData.GoldCarryCount);
+        EnemyCharacter.EnemyDied += OnEnemyDied;
+    }
+
+    private void OnEnemyDied(EnemyData enemyData, Vector3 pos)
+    {
+        AddGold(enemyData.GoldCarryCount);
     }
 
     public bool AttemptToPurchase(int cost)
@@ -41,6 +46,6 @@ public class EconomicManager : IEconomicsManager, IDisposable
 
     public void Dispose()
     {
-        EnemyCharacter.EnemyDied -= (enemyData, pos) => AddGold(enemyData.GoldCarryCount);
+        EnemyCharacter.EnemyDied -= OnEnemyDied;
     }
 }

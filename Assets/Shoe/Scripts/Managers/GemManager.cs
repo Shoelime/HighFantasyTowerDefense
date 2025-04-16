@@ -18,11 +18,14 @@ public class GemManager : IGemManager, IDisposable
     {
         gemPrefabs = Resources.LoadAll<GameObject>("Gems");
 
-        EnemyCharacter.EnemyArrivedToBase += (enemyData) => EnemyReachedBase(enemyData);
-        EnemyCharacter.EnemyArrivedHomeEvent += (enemyData) => GemStolen(enemyData.GemBeingCarried);
+        EnemyCharacter.EnemyArrivedToBase += OnEnemyArrivedToBase;
+        EnemyCharacter.EnemyArrivedHomeEvent += OnEnemyArrivedHome;
 
         SpawnGems();
     }
+
+    private void OnEnemyArrivedToBase(EnemyCharacter enemy) => EnemyReachedBase(enemy);
+    private void OnEnemyArrivedHome(EnemyCharacter enemy) => GemStolen(enemy.GemBeingCarried);
 
     /// <summary>
     /// Spawn the gems at startup
@@ -109,13 +112,13 @@ public class GemManager : IGemManager, IDisposable
 
     public void Dispose()
     {
-        EnemyCharacter.EnemyArrivedToBase -= (enemyData) => EnemyReachedBase(enemyData);
-        EnemyCharacter.EnemyArrivedHomeEvent -= (enemyData) => GemStolen(enemyData.GemBeingCarried);
+        EnemyCharacter.EnemyArrivedToBase -= OnEnemyArrivedToBase;
+        EnemyCharacter.EnemyArrivedHomeEvent -= OnEnemyArrivedHome;
     }
 
+#if UNITY_EDITOR
     public void Update()
     {
-#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.K))
         {
             AllGemsLost?.Invoke();
