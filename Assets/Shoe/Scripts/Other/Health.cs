@@ -1,26 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static StatusEffectData;
 
 public class Health : MonoBehaviour, IHealth
 {
     private int currentHealth = 0;
-    private int damageTickCount = 0;
 
     public event Action HealthReachedZero;
     public event Action<int> HealthReduced;
-    public event Action<StatusEffectData> EffectApplied;
-    public event Action<StatusEffectData> EffectRemoved;
+    public event Action<IStatusEffect> EffectApplied;
+    public event Action<IStatusEffect> EffectRemoved;
 
-    private HashSet<EffectType> currentEffects = new HashSet<EffectType>();
-    private Dictionary<EffectType, Coroutine> runningCoroutines = new Dictionary<EffectType, Coroutine>();
+    private readonly HashSet<IStatusEffect> currentEffects = new();
+    private readonly Dictionary<IStatusEffect, Coroutine> runningCoroutines = new();
 
     public void SetStartingHealth(int health)
     {
         currentHealth = health;
-        damageTickCount = 0;
     }
 
     public void TakeDamage(DamageData damageData)
@@ -28,93 +24,74 @@ public class Health : MonoBehaviour, IHealth
         ReduceHealth(damageData.DamagePerHit);
     }
 
-    private void ReduceHealth(int amount)
+    public void ReduceHealth(int amount)
     {
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
             HealthReachedZero?.Invoke();
-            StopCoroutine(nameof(DamageTick));
+            StopAllCoroutines();
             RemoveAllEffects();
         }
-        else HealthReduced?.Invoke(currentHealth);
-    }
-
-    private IEnumerator DamageTick(int damagePerSecond, float duration)
-    {
-        damageTickCount = (int)duration;
-
-        while (damageTickCount > 0)
+        else
         {
-            yield return new WaitForSeconds(1);
-            damageTickCount--;
-            ReduceHealth(damagePerSecond);
+            HealthReduced?.Invoke(currentHealth);
         }
     }
 
-    public void ApplyEffect(StatusEffectData status)
+    public void ApplyEffect(IStatusEffect effect)
     {
-        if (currentEffects.Contains(status.effectType))
+        if (currentEffects.Contains(effect))
         {
-            // Reset the effect's timer
-            ApplyEffectWithTimer(status);
+            RestartEffect(effect);
             return;
         }
 
-        EffectApplied?.Invoke(status);
-        currentEffects.Add(status.effectType);
-        ApplyEffectWithTimer(status);
+        EffectApplied?.Invoke(effect);
+        currentEffects.Add(effect);
+        Coroutine routine = StartCoroutine(effect.Tick(this));
+        runningCoroutines[effect] = routine;
     }
 
-    private IEnumerator EffectTick(StatusEffectData status)
+    public void RemoveEffect(IStatusEffect effect)
     {
-        float timer = status.duration;
+        if (!currentEffects.Contains(effect)) return;
 
-        while (timer > 0)
+        currentEffects.Remove(effect);
+
+        if (runningCoroutines.TryGetValue(effect, out var coroutine))
         {
-            yield return new WaitForSeconds(1);
-            timer -= 1;
-
-            if (status.effectType == EffectType.Burn)
-            {
-                ReduceHealth(status.damagePerSecond);
-            }
+            StopCoroutine(coroutine);
+            runningCoroutines.Remove(effect);
         }
 
-        RemoveEffect(status);
+        EffectRemoved?.Invoke(effect);
     }
 
-    private void ApplyEffectWithTimer(StatusEffectData status)
+    private void RestartEffect(IStatusEffect effect)
     {
-        // Stop any existing coroutine for this effect type
-        if (runningCoroutines.ContainsKey(status.effectType))
+        RemoveEffect(effect);
+        ApplyEffect(effect);
+    }
+
+    private void RemoveAllEffects()
+    {
+        foreach (var effect in currentEffects)
         {
-            StopCoroutine(runningCoroutines[status.effectType]);
-            runningCoroutines.Remove(status.effectType);
+            EffectRemoved?.Invoke(effect);
         }
 
-        // Start a new coroutine and store its reference
-        Coroutine coroutine = StartCoroutine(EffectTick(status));
-        runningCoroutines[status.effectType] = coroutine;
-    }
+        foreach (var coroutine in runningCoroutines.Values)
+        {
+            StopCoroutine(coroutine);
+        }
 
-    void RemoveEffect(StatusEffectData status)
-    {
-        currentEffects.Remove(status.effectType);
-        runningCoroutines.Remove(status.effectType);
-        EffectRemoved?.Invoke(status);
-    }
-
-    void RemoveAllEffects()
-    {
         currentEffects.Clear();
         runningCoroutines.Clear();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        currentEffects.Clear();
-        runningCoroutines.Clear();
-        StopAllCoroutines();
+        RemoveAllEffects();
     }
 }

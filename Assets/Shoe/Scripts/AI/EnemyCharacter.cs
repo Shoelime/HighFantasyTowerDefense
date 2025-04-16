@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using static StatusEffectData;
 public class EnemyCharacter : StateController
 {
     [SerializeField] private EnemyData enemyData;
@@ -61,18 +60,15 @@ public class EnemyCharacter : StateController
     /// Apply effect from damage
     /// </summary>
     /// <param name="status"></param>
-    private void ApplyEffect(StatusEffectData status)
+    private void ApplyEffect(IStatusEffect status)
     {
-        switch (status.effectType)
+        if (status is FrozenEffect)
         {
-            case EffectType.Freeze:
-                CurrentMoveSpeed *= status.speedReductionPercentage;
-                break;
-            case EffectType.Burn:
-                break;
-            case EffectType.Stun:
-                CurrentMoveSpeed = 0;
-                break;
+            CurrentMoveSpeed *= status.EffectData.speedReductionPercentage;
+        }
+        else if (status is StunnedEffect)
+        {
+            CurrentMoveSpeed = 0;
         }
     }
 
@@ -80,18 +76,15 @@ public class EnemyCharacter : StateController
     /// Remove effect that was applied from damage
     /// </summary>
     /// <param name="status"></param>
-    private void RemoveEffect(StatusEffectData status)
+    private void RemoveEffect(IStatusEffect status)
     {
-        switch (status.effectType)
+        if (status is FrozenEffect)
         {
-            case EffectType.Freeze:
-                CurrentMoveSpeed = enemyData.MoveSpeed;
-                break;
-            case EffectType.Burn:
-                break;
-            case EffectType.Stun:
-                CurrentMoveSpeed = enemyData.MoveSpeed;
-                break;
+            CurrentMoveSpeed = enemyData.MoveSpeed;
+        }
+        else if (status is StunnedEffect)
+        {
+            CurrentMoveSpeed = enemyData.MoveSpeed;
         }
     }
 

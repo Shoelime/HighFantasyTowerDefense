@@ -1,4 +1,7 @@
-﻿public class StunnedEffect : IStatusEffect
+﻿using System.Collections;
+using UnityEngine;
+
+public class StunnedEffect : IStatusEffect
 {
     public StatusEffectData EffectData { get; set; }
 
@@ -7,11 +10,16 @@
         EffectData = data;
     }
 
-    public void Apply(IHealth target)
+    public IEnumerator Tick(Health target)
     {
-        if (target is Health healthComponent)
+        float timer = EffectData.duration;
+
+        while (timer > 0)
         {
-            healthComponent.ApplyEffect(EffectData);
+            yield return new WaitForSeconds(1f);
+            timer -= 1;
         }
+
+        target.RemoveEffect(this);
     }
 }

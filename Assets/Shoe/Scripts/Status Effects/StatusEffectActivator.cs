@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using static StatusEffectData;
 
 public class StatusEffectActivator : MonoBehaviour
 {
@@ -30,67 +28,56 @@ public class StatusEffectActivator : MonoBehaviour
         enemyCharacter.HealthComponent.EffectApplied += Activate;
         enemyCharacter.HealthComponent.EffectRemoved += Restore;
 
-        foreach (EffectType effect in Enum.GetValues(typeof(EffectType)))
-        {
-            Restore(effect);
-        }
+        ResetAllEffects();
     }
 
-    void Activate(StatusEffectData status)
+    void Activate(IStatusEffect effect)
     {
-        switch (status.effectType)
+        switch (effect)
         {
-            case EffectType.Freeze:
+            case BurningEffect:
+                fireObject.SetActive(true);
+                break;
+            case FrozenEffect:
                 for (int i = 0; i < meshRenderers.Length; i++)
                 {
                     meshRenderers[i].material.color = frozenColor;
                 }
                 break;
-            case EffectType.Burn:
-                fireObject.SetActive(true);
-                break;
-            case EffectType.Stun:
+            case StunnedEffect:
                 break;
         }
 
         hasEffect = true;
     }
 
-    void Restore(StatusEffectData status)
+    void Restore(IStatusEffect effect)
     {
-        switch (status.effectType)
+        switch (effect)
         {
-            case EffectType.Freeze:
+            case BurningEffect:
+                fireObject.SetActive(false);
+                break;
+            case FrozenEffect:
                 for (int i = 0; i < meshRenderers.Length; i++)
                 {
                     meshRenderers[i].material.color = originalColors[i];
                 }
                 break;
-            case EffectType.Burn:
-                fireObject.SetActive(false);
-                break;
-            case EffectType.Stun:
+            case StunnedEffect:
                 break;
         }
 
         hasEffect = false;
     }
 
-    void Restore(EffectType effectType)
+    void ResetAllEffects()
     {
-        switch (effectType)
+        fireObject.SetActive(false);
+
+        for (int i = 0; i < meshRenderers.Length; i++)
         {
-            case EffectType.Freeze:
-                for (int i = 0; i < meshRenderers.Length; i++)
-                {
-                    meshRenderers[i].material.color = originalColors[i];
-                }
-                break;
-            case EffectType.Burn:
-                fireObject.SetActive(false);
-                break;
-            case EffectType.Stun:
-                break;
+            meshRenderers[i].material.color = originalColors[i];
         }
 
         hasEffect = false;

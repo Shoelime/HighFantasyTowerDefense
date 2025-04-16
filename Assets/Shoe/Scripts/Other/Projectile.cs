@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static StatusEffectData;
 
 public class Projectile : PooledMonoBehaviour
 {
@@ -90,24 +89,8 @@ public class Projectile : PooledMonoBehaviour
 
             foreach (var status in damageData.StatusEffects)
             {
-                if (randomInt < status.chanceToApply)
-                {
-                    IStatusEffect effect = null;
-                    switch (status.effectType)
-                    {
-                        case EffectType.Burn:
-                            effect = new BurningEffect(status);
-                            break;
-                        case EffectType.Freeze:
-                            effect = new FrozenEffect(status);
-                            break;
-                        case EffectType.Stun:
-                            effect = new StunnedEffect(status);
-                            break;
-                    }
-
-                    effect?.Apply(healthComponent);
-                }
+                var effect = StatusEffectFactory.Create(status.effectId, status);
+                healthComponent.ApplyEffect(effect);
             }
         }
     }
